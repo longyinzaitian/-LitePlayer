@@ -6,3 +6,13 @@ build/
 local.properties
 app/build/
 app/*.iml
+*.apk
+*.ap_
+*.dex
+*.class
+*.log
+*.jks
+.externalNativeBuild
+freeline.py
+freeline/
+freeline_project_description.json
