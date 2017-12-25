@@ -18,18 +18,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.loader.liteplayer.R;
@@ -44,7 +41,7 @@ import org.loader.liteplayer.pojo.SearchResult;
 import org.loader.liteplayer.utils.Constants;
 import org.loader.liteplayer.utils.MobileUtils;
 import org.loader.liteplayer.utils.MusicUtils;
-import org.loader.liteplayer.utils.NetWorkUtil;
+import org.loader.liteplayer.network.NetWorkUtil;
 
 import java.io.File;
 import java.util.ArrayList;
