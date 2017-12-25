@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import org.loader.liteplayer.R;
 
 /**
- * @author longyin
+ * @author longyinzaitian
  * @date 2017年12月24日
  */
 public class StatusBarCompat {

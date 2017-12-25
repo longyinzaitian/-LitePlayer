@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
  * 2015年8月15日 16:34:37
  * 博文地址：http://blog.csdn.net/u010156024
  * dot指示符 播放界面的圆点的指示符组件
- * @author longyin
+ * @author longyinzaitian
  */
 public class PagerIndicator extends LinearLayout {
 

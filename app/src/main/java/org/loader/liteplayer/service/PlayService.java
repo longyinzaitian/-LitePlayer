@@ -41,7 +41,7 @@ import android.widget.Toast;
  * 博文地址：http://blog.csdn.net/u010156024
  * 音乐播放服务 服务中启动了硬件加速器感应器
  * 实现功能：摇动手机自动播放下一首歌曲
- * @author longyin
+ * @author longyinzaitian
  */
 public class PlayService extends Service implements
 		MediaPlayer.OnCompletionListener {

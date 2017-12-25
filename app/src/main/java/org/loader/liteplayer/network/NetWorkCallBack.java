@@ -3,7 +3,7 @@ package org.loader.liteplayer.network;
 import org.json.JSONObject;
 
 /**
- * @author 15361
+ * @author longyinzaitian
  * @date 2017/12/26.
  */
 public interface NetWorkCallBack {

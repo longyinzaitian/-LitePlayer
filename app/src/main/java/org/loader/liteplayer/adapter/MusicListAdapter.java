@@ -19,7 +19,7 @@ import org.loader.liteplayer.utils.MusicUtils;
  * 2015年8月15日 16:34:37
  * 博文地址：http://blog.csdn.net/u010156024
  * 歌曲列表适配器
- * @author longyin
+ * @author longyinzaitian
  */
 public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.ViewHolder> {
 	private int mPlayingPosition;

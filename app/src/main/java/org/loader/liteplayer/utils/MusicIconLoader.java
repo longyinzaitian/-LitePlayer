@@ -10,7 +10,7 @@ import java.io.File;
 /**
  * 2015年8月15日 16:34:37
  * 博文地址：http://blog.csdn.net/u010156024
- * @author longin
+ * @author longyinzaitian
  */
 public class MusicIconLoader {
 	private static final String TAG = "MusicIconLoader";

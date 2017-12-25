@@ -1,7 +1,7 @@
 package org.loader.liteplayer.pojo;
 
 /**
- * @author 15361
+ * @author longyinzaitian
  * @date 2017/12/26.
  */
 public class SearchSong {

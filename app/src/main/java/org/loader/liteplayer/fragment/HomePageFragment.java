@@ -43,7 +43,7 @@ import android.widget.Toast;
 /**
  * 2015年8月15日 16:34:37
  * 博文地址：http://blog.csdn.net/u010156024
- * @author longyin
+ * @author longyinzaitian
  */
 public class HomePageFragment extends BaseFragment implements OnClickListener {
 

@@ -3,7 +3,7 @@ package org.loader.liteplayer.pojo;
 /**
  * 2015年8月15日 16:34:37
  * 博文地址：http://blog.csdn.net/u010156024
- * @author longyin
+ * @author longyinzaitian
  */
 public class Music {
 	/**id title singer data time image

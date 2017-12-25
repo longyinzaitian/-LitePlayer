@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
  * 2015年8月15日 16:34:37
  * 博文地址：http://blog.csdn.net/u010156024
  * 显示lrc歌词控件
- * @author longyin
+ * @author longyinzaitian
  */
 @SuppressLint("DrawAllocation")
 public class LrcView extends View {

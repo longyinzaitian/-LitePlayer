@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
  * 2015年8月15日 15:54:43
  * 博文地址：http://blog.csdn.net/u010156024
  * 该类完成功能： 有URL链接解析出推荐的歌曲列表
- * @author longyin
+ * @author longyinzaitian
  *
  * // http://music.baidu.com/top/new/?pst=shouyeTop
  */

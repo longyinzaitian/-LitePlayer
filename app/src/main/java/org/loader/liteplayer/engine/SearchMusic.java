@@ -15,7 +15,7 @@ import javax.xml.parsers.ParserConfigurationException;
 /**
  * 2015年8月15日 16:34:37
  * 博文地址：http://blog.csdn.net/u010156024
- * @author longyin
+ * @author longyinzaitian
  */
 public class SearchMusic {
 	/**http://music.baidu.com/top/new/?pst=shouyeTop*/

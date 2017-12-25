@@ -21,7 +21,7 @@ import org.loader.liteplayer.R;
  * 博文地址：http://blog.csdn.net/u010156024
  * 2.0版本 使用Handler替代Timer
  *
- * @author longyin
+ * @author longyinzaitian
  */
 @SuppressLint("HandlerLeak")
 public class CDView extends View {

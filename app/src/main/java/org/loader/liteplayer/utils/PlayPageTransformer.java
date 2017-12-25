@@ -9,7 +9,7 @@ import android.view.View;
  * 博文地址：http://blog.csdn.net/u010156024
  * 功能：
  * 实现viewpager的界面的切换动画
- * @author longyin
+ * @author longyinzaitian
  */
 public class PlayPageTransformer implements PageTransformer {
 

@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * @author longyin
+ * @author longyinzaitian
  * @date 2017年12月24日
  */
 public abstract class BaseFragment extends Fragment {

@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
  * 2015年8月15日 16:34:37
  * 博文地址：http://blog.csdn.net/u010156024
  * viewpager导航指示符
- * @author  longyin
+ * @author  longyinzaitian
  */
 public class Indicator extends LinearLayout {
 	/** 画指示符的paint*/

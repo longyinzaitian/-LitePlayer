@@ -16,7 +16,7 @@ import org.loader.liteplayer.utils.StatusBarCompat;
 /**
  * 2015年8月15日 16:34:37
  * 博文地址：http://blog.csdn.net/u010156024
- * @author longyin
+ * @author longyinzaitian
  */
 public abstract class BaseActivity extends AppCompatActivity {
 	protected PlayService mPlayService;

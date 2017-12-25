@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * 2015年8月15日 15:51:26
  * 博文地址：http://blog.csdn.net/u010156024
- * @author longyin
+ * @author longyinzaitian
  */
 public class SearchResult implements Serializable {
 	private String musicName;

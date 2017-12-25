@@ -12,7 +12,7 @@ import org.loader.liteplayer.utils.L;
 import java.io.IOException;
 
 /**
- * @author 15361
+ * @author longyinzaitian
  * @date 2017/12/26.
  */
 public class NetWorkUtil {
