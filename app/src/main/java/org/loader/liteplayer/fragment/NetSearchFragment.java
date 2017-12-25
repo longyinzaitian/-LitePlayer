@@ -44,6 +44,7 @@ import org.loader.liteplayer.pojo.SearchResult;
 import org.loader.liteplayer.utils.Constants;
 import org.loader.liteplayer.utils.MobileUtils;
 import org.loader.liteplayer.utils.MusicUtils;
+import org.loader.liteplayer.utils.NetWorkUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -106,6 +107,10 @@ public class NetSearchFragment extends BaseFragment
 
 		mDownloadManager = (DownloadManager) mActivity
 				.getSystemService(Context.DOWNLOAD_SERVICE);
+
+		NetWorkUtil.getHotSongRank("5");
+		NetWorkUtil.getSongLrcById("");
+		NetWorkUtil.SearchSongByKeyword("邓紫棋", "2");
 		return layout;
 	}
 
