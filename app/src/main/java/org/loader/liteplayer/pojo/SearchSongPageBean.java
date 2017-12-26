@@ -18,12 +18,26 @@ public class SearchSongPageBean {
     private int allNum;
     private int maxResult;
 
-    public int getAllNum() {
-        return allNum;
+    @Override
+    public String toString() {
+        return "SearchSongPageBean{" +
+                "w='" + w + '\'' +
+                ", allPages=" + allPages +
+                ", ret_code=" + ret_code +
+                ", contentlist=" + contentlist +
+                ", currentPage=" + currentPage +
+                ", notice='" + notice + '\'' +
+                ", allNum=" + allNum +
+                ", maxResult=" + maxResult +
+                '}';
     }
 
-    public void setAllNum(int allNum) {
-        this.allNum = allNum;
+    public String getW() {
+        return w;
+    }
+
+    public void setW(String w) {
+        this.w = w;
     }
 
     public int getAllPages() {
@@ -32,6 +46,14 @@ public class SearchSongPageBean {
 
     public void setAllPages(int allPages) {
         this.allPages = allPages;
+    }
+
+    public int getRet_code() {
+        return ret_code;
+    }
+
+    public void setRet_code(int ret_code) {
+        this.ret_code = ret_code;
     }
 
     public List<SearchSong> getContentlist() {
@@ -50,12 +72,20 @@ public class SearchSongPageBean {
         this.currentPage = currentPage;
     }
 
-    public String getKeyword() {
-        return keyword;
+    public String getNotice() {
+        return notice;
     }
 
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
+    public void setNotice(String notice) {
+        this.notice = notice;
+    }
+
+    public int getAllNum() {
+        return allNum;
+    }
+
+    public void setAllNum(int allNum) {
+        this.allNum = allNum;
     }
 
     public int getMaxResult() {
@@ -64,26 +94,5 @@ public class SearchSongPageBean {
 
     public void setMaxResult(int maxResult) {
         this.maxResult = maxResult;
-    }
-
-    public int getRet_code() {
-        return ret_code;
-    }
-
-    public void setRet_code(int ret_code) {
-        this.ret_code = ret_code;
-    }
-
-    @Override
-    public String toString() {
-        return "SearchSongPageBean{" +
-                "allNum=" + allNum +
-                ", allPages=" + allPages +
-                ", contentlist=" + contentlist +
-                ", currentPage=" + currentPage +
-                ", keyword='" + keyword + '\'' +
-                ", maxResult=" + maxResult +
-                ", ret_code=" + ret_code +
-                '}';
     }
 }
