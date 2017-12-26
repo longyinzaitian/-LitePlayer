@@ -9,13 +9,14 @@ import java.util.List;
  * 关键词搜索
  */
 public class SearchSongPageBean {
-    private int allNum;
+    private String w;
     private int allPages;
+    private int ret_code;
     private List<SearchSong> contentlist;
     private int currentPage;
-    private String keyword;
+    private String notice;
+    private int allNum;
     private int maxResult;
-    private int ret_code;
 
     public int getAllNum() {
         return allNum;
