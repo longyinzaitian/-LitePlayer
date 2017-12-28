@@ -4,6 +4,7 @@
         <attr name="indicatorColor" format="color|reference" />
         <attr name="indicatorHeight" format="dimension|reference" />
     </declare-styleable>
+
     <declare-styleable name="LrcView">
         <attr name="textSize" format="dimension" />
         <attr name="normalTextColor" format="reference|color" />
