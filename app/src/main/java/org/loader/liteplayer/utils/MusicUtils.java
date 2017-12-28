@@ -14,68 +14,68 @@ import android.os.Environment;
  * @author longyinzaitian
  */
 public class MusicUtils {
-	private static final String TAG = "MusicUtils";
+    private static final String TAG = "MusicUtils";
 
-	/**存放歌曲列表*/
-	public static ArrayList<Music> sMusicList = new ArrayList<>();
+    /**存放歌曲列表*/
+    public static ArrayList<Music> sMusicList = new ArrayList<>();
 
-	public static void initMusicList() {
-		// 获取歌曲列表
-		sMusicList.clear();
-		sMusicList.addAll(LocalMusicUtils.queryMusic());
-	}
+    public static void initMusicList() {
+        // 获取歌曲列表
+        sMusicList.clear();
+        sMusicList.addAll(LocalMusicUtils.queryMusic());
+    }
 
-	/**
-	 * 获取应用程序使用的本地目录
-	 * @return String
-	 */
-	private static String getAppLocalDir() {
-		String dir;
+    /**
+     * 获取应用程序使用的本地目录
+     * @return String
+     */
+    private static String getAppLocalDir() {
+        String dir;
 
-		if (!Environment.getExternalStorageState().equals(Environment.MEDIA_UNMOUNTED)) {
-			dir = Environment.getExternalStorageDirectory() + File.separator
-					+ "liteplayer" + File.separator;
-		} else {
-			dir = App.getContext().getFilesDir() + File.separator + "liteplayer" + File.separator;
-		}
+        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_UNMOUNTED)) {
+            dir = Environment.getExternalStorageDirectory() + File.separator
+                    + "liteplayer" + File.separator;
+        } else {
+            dir = App.getContext().getFilesDir() + File.separator + "liteplayer" + File.separator;
+        }
 
-		return mkDir(dir);
-	}
+        return mkDir(dir);
+    }
 
-	/**
-	 * 获取音乐存放目录
-	 * @return String
-	 */
-	public static String getMusicDir() {
-		String musicDir = getAppLocalDir() + "music" + File.separator;
-		return mkDir(musicDir);
-	}
+    /**
+     * 获取音乐存放目录
+     * @return String
+     */
+    public static String getMusicDir() {
+        String musicDir = getAppLocalDir() + "music" + File.separator;
+        return mkDir(musicDir);
+    }
 
-	/**
-	 * 获取歌词存放目录
-	 * 
-	 * @return String
-	 */
-	public static String getLrcDir() {
-		String lrcDir = getAppLocalDir() + "lrc" + File.separator;
-		return mkDir(lrcDir);
-	}
+    /**
+     * 获取歌词存放目录
+     * 
+     * @return String
+     */
+    public static String getLrcDir() {
+        String lrcDir = getAppLocalDir() + "lrc" + File.separator;
+        return mkDir(lrcDir);
+    }
 
-	/**
-	 * 创建文件夹
-	 * @param dir String
-	 * @return String
-	 */
-	private static String mkDir(String dir) {
-		File f = new File(dir);
-		if (!f.exists()) {
-			if(f.mkdirs()){
-				return dir;
-			}
-			return null;
-		}
-		L.l(TAG, "file.path="+f.getAbsolutePath());
+    /**
+     * 创建文件夹
+     * @param dir String
+     * @return String
+     */
+    private static String mkDir(String dir) {
+        File f = new File(dir);
+        if (!f.exists()) {
+            if(f.mkdirs()){
+                return dir;
+            }
+            return null;
+        }
+        L.l(TAG, "file.path="+f.getAbsolutePath());
 
-		return dir;
-	}
+        return dir;
+    }
 }

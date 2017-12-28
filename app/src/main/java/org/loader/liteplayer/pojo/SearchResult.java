@@ -8,40 +8,40 @@ import java.io.Serializable;
  * @author longyinzaitian
  */
 public class SearchResult implements Serializable {
-	private String musicName;
-	private String url;
-	private String artist;
-	private String album;
+    private String musicName;
+    private String url;
+    private String artist;
+    private String album;
 
-	public String getArtist() {
-		return artist;
-	}
+    public String getArtist() {
+        return artist;
+    }
 
-	public void setArtist(String artist) {
-		this.artist = artist;
-	}
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
 
-	public String getMusicName() {
-		return musicName;
-	}
+    public String getMusicName() {
+        return musicName;
+    }
 
-	public void setMusicName(String musicName) {
-		this.musicName = musicName;
-	}
+    public void setMusicName(String musicName) {
+        this.musicName = musicName;
+    }
 
-	public String getUrl() {
-		return url;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-	public String getAlbum() {
-		return album;
-	}
+    public String getAlbum() {
+        return album;
+    }
 
-	public void setAlbum(String album) {
-		this.album = album;
-	}
+    public void setAlbum(String album) {
+        this.album = album;
+    }
 }

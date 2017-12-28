@@ -11,13 +11,13 @@ import org.loader.liteplayer.service.PlayService;
  * @author longyinzaitian
  */
 public class App extends BaseApplication {
-	
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		startService(new Intent(context, PlayService.class));
-		startService(new Intent(context, DownloadService.class));
-	}
+    
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        startService(new Intent(context, PlayService.class));
+        startService(new Intent(context, DownloadService.class));
+    }
 
 
 

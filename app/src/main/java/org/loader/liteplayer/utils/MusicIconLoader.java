@@ -13,80 +13,80 @@ import java.io.File;
  * @author longyinzaitian
  */
 public class MusicIconLoader {
-	private static final String TAG = "MusicIconLoader";
-	private static MusicIconLoader sInstance;
+    private static final String TAG = "MusicIconLoader";
+    private static MusicIconLoader sInstance;
 
-	private LruCache<String, Bitmap> mCache;
+    private LruCache<String, Bitmap> mCache;
 
-	/**
-	 *  获取MusicIconLoader的实例
-	 * @return MusicIconLoader
-	 */
-	public synchronized static MusicIconLoader getInstance() {
-		if (sInstance == null) {
-			sInstance = new MusicIconLoader();
-		}
-		return sInstance;
-	}
+    /**
+     *  获取MusicIconLoader的实例
+     * @return MusicIconLoader
+     */
+    public synchronized static MusicIconLoader getInstance() {
+        if (sInstance == null) {
+            sInstance = new MusicIconLoader();
+        }
+        return sInstance;
+    }
 
-	/**
-	 * 构造方法， 初始化LruCache
-	 */
-	private MusicIconLoader() {
-		int maxSize = (int) (Runtime.getRuntime().maxMemory() / 8);
-		mCache = new LruCache<String, Bitmap>(maxSize) {
-			@Override
-			protected int sizeOf(String key, Bitmap value) {
-				return value.getByteCount();
-			}
-		};
-	}
+    /**
+     * 构造方法， 初始化LruCache
+     */
+    private MusicIconLoader() {
+        int maxSize = (int) (Runtime.getRuntime().maxMemory() / 8);
+        mCache = new LruCache<String, Bitmap>(maxSize) {
+            @Override
+            protected int sizeOf(String key, Bitmap value) {
+                return value.getByteCount();
+            }
+        };
+    }
 
-	/**
-	 * 根据路径获取图片
-	 * @param uri String
-	 * @return Bitmap
-	 */
-	public Bitmap load(final String uri) {
-		if (TextUtils.isEmpty(uri)){
-			return null;
-		}
+    /**
+     * 根据路径获取图片
+     * @param uri String
+     * @return Bitmap
+     */
+    public Bitmap load(final String uri) {
+        if (TextUtils.isEmpty(uri)){
+            return null;
+        }
 
-		final String key = Encrypt.md5(uri);
-		Bitmap bmp = getFromCache(key);
+        final String key = Encrypt.md5(uri);
+        Bitmap bmp = getFromCache(key);
 
-		if (bmp != null) {
-			return bmp;
-		}
+        if (bmp != null) {
+            return bmp;
+        }
 
-		if (!new File(uri).exists()){
-			L.l(TAG, "file:"+uri+" is not exist");
-			return null;
-		}
+        if (!new File(uri).exists()){
+            L.l(TAG, "file:"+uri+" is not exist");
+            return null;
+        }
 
-		bmp = BitmapFactory.decodeFile(uri);
-		addToCache(key, bmp);
+        bmp = BitmapFactory.decodeFile(uri);
+        addToCache(key, bmp);
 
-		return bmp;
-	}
+        return bmp;
+    }
 
-	/**
-	 * 从内存中获取图片
-	 * @param key String
-	 * @return Bitmap
-	 */
-	private Bitmap getFromCache(final String key) {
-		return mCache.get(key);
-	}
+    /**
+     * 从内存中获取图片
+     * @param key String
+     * @return Bitmap
+     */
+    private Bitmap getFromCache(final String key) {
+        return mCache.get(key);
+    }
 
-	/**
-	 * 将图片缓存到内存中
-	 * @param key String
-	 * @param bmp Bitmap
-	 */
-	private void addToCache(final String key, final Bitmap bmp) {
-		if (getFromCache(key) == null && key != null && bmp != null){
-			mCache.put(key, bmp);
-		}
-	}
+    /**
+     * 将图片缓存到内存中
+     * @param key String
+     * @param bmp Bitmap
+     */
+    private void addToCache(final String key, final Bitmap bmp) {
+        if (getFromCache(key) == null && key != null && bmp != null){
+            mCache.put(key, bmp);
+        }
+    }
 }

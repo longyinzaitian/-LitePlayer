@@ -15,54 +15,54 @@ import android.view.inputmethod.InputMethodManager;
  * @author longyinzaitian
  */
 public class MobileUtils {
-	/**
-	 * 隐藏输入法软键盘
-	 * @param view attachview
-	 */
-	public static void hideInputMethod(View view) {
-		InputMethodManager imm = (InputMethodManager) App.getContext()
-				.getSystemService(Context.INPUT_METHOD_SERVICE);
-		if (imm == null){
-			return;
-		}
+    /**
+     * 隐藏输入法软键盘
+     * @param view attachview
+     */
+    public static void hideInputMethod(View view) {
+        InputMethodManager imm = (InputMethodManager) App.getContext()
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm == null){
+            return;
+        }
 
-		if(imm.isActive()) {
-			imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-		}
-	}
+        if(imm.isActive()) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
 
-	/**
-	 * 获取屏幕宽度
-	 */
-	public static int getScreenWidth() {
-		WindowManager wm = (WindowManager) App.getContext().getSystemService(Context.WINDOW_SERVICE);
-		if (wm == null){
-			return 0;
-		}
+    /**
+     * 获取屏幕宽度
+     */
+    public static int getScreenWidth() {
+        WindowManager wm = (WindowManager) App.getContext().getSystemService(Context.WINDOW_SERVICE);
+        if (wm == null){
+            return 0;
+        }
 
-		DisplayMetrics dm = new DisplayMetrics();
-		Display display = wm.getDefaultDisplay();
+        DisplayMetrics dm = new DisplayMetrics();
+        Display display = wm.getDefaultDisplay();
 
-		if (display == null){
-			return 0;
-		}
+        if (display == null){
+            return 0;
+        }
 
-		display.getMetrics(dm);
+        display.getMetrics(dm);
 
-		return dm.widthPixels;
-	}
+        return dm.widthPixels;
+    }
 
-	/**
-	 * 获取屏幕宽度
-	 */
-	public static int getScreenHeight(){
-		WindowManager wm = (WindowManager) App.getContext().getSystemService(Context.WINDOW_SERVICE);
-		if (wm == null){
-			return 0;
-		}
+    /**
+     * 获取屏幕宽度
+     */
+    public static int getScreenHeight(){
+        WindowManager wm = (WindowManager) App.getContext().getSystemService(Context.WINDOW_SERVICE);
+        if (wm == null){
+            return 0;
+        }
 
-		DisplayMetrics dm = new DisplayMetrics();
-		wm.getDefaultDisplay().getMetrics(dm);
-		return dm.heightPixels;
-	}
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(dm);
+        return dm.heightPixels;
+    }
 }
