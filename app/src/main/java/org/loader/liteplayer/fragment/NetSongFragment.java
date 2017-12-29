@@ -51,10 +51,10 @@ import java.util.ArrayList;
  * 博文地址：http://blog.csdn.net/u010156024
  * @author longyinzaitian
  */
-public class NetSearchFragment extends BaseFragment
+public class NetSongFragment extends BaseFragment
                     implements OnClickListener {
 
-    private static NetSearchFragment instance;
+    private static NetSongFragment instance;
 
     private MainActivity mActivity;
 
@@ -81,9 +81,9 @@ public class NetSearchFragment extends BaseFragment
 
     private boolean isFirstShown = true;
 
-    public static NetSearchFragment getInstance(){
+    public static NetSongFragment getInstance(){
         if (instance == null){
-            instance = new NetSearchFragment();
+            instance = new NetSongFragment();
         }
 
         return instance;

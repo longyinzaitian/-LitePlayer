@@ -11,7 +11,7 @@ import org.loader.liteplayer.R;
 import org.loader.liteplayer.fragment.BaseFragment;
 import org.loader.liteplayer.fragment.HomePageFragment;
 import org.loader.liteplayer.fragment.MinePageFragment;
-import org.loader.liteplayer.fragment.NetSearchFragment;
+import org.loader.liteplayer.fragment.NetSongFragment;
 import org.loader.liteplayer.service.PlayService;
 
 /**
@@ -28,7 +28,7 @@ public class MainActivity extends BaseActivity {
     private RadioGroup mRbGroup;
 
     private HomePageFragment mHomePageFrm;
-    private NetSearchFragment mNetworkPageFrm;
+    private NetSongFragment mNetworkPageFrm;
     private MinePageFragment mMinePageFrm;
     private BaseFragment mPreShowFrm;
 
@@ -46,7 +46,7 @@ public class MainActivity extends BaseActivity {
 
     private void initFragments() {
         mHomePageFrm = HomePageFragment.getInstance();
-        mNetworkPageFrm = NetSearchFragment.getInstance();
+        mNetworkPageFrm = NetSongFragment.getInstance();
         mMinePageFrm = MinePageFragment.getInstance();
     }
 
