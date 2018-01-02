@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:background="@color/lime_green"
+        app:title="音乐播放器"
+        app:titleTextColor="@color/white"
+        >
+    </android.support.v7.widget.Toolbar>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@color/lightgray"/>
+
+    <TextView
+        android:id="@+id/act_setting_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="版本"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:paddingLeft="15dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@color/lightgray"/>
+
+    <TextView
+        android:id="@+id/act_setting_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="退出"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:paddingLeft="15dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/lightgray"/>
+
+</LinearLayout>

@@ -1,5 +1,6 @@
 package org.loader.liteplayer.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -24,8 +25,6 @@ public class MainActivity extends BaseActivity {
     private RadioButton mRbHomePage;
     private RadioButton mRbNetworkPage;
     private RadioButton mRbMinePage;
-
-    private RadioGroup mRbGroup;
 
     private HomePageFragment mHomePageFrm;
     private NetSongFragment mNetworkPageFrm;
@@ -54,7 +53,7 @@ public class MainActivity extends BaseActivity {
         mRbHomePage = (RadioButton)findViewById(R.id.ac_rb_home_page);
         mRbNetworkPage = (RadioButton)findViewById(R.id.ac_rb_network_page);
         mRbMinePage = (RadioButton)findViewById(R.id.ac_rb_mine_page);
-        mRbGroup =(RadioGroup) findViewById(R.id.ac_radio_group);
+        RadioGroup mRbGroup =(RadioGroup) findViewById(R.id.ac_radio_group);
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.am_content, mHomePageFrm, "HOME_PAGE")
@@ -83,22 +82,7 @@ public class MainActivity extends BaseActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         switch (id){
-            case R.id.ac_rb_home_page:
-                mRbHomePage.setChecked(true);
-                mRbHomePage.setTextColor(getResources().getColor(R.color.springgreen));
-
-                if (mHomePageFrm.isAdded()){
-                    fragmentTransaction.hide(mPreShowFrm)
-                            .show(mHomePageFrm)
-                            .commitAllowingStateLoss();
-                }else {
-                    fragmentTransaction.hide(mPreShowFrm)
-                            .add(R.id.am_content, mHomePageFrm, "HOME_PAGE")
-                            .commitAllowingStateLoss();
-                }
-
-                mPreShowFrm = mHomePageFrm;
-                break;
+            //网络歌曲页
             case R.id.ac_rb_network_page:
                 mRbNetworkPage.setChecked(true);
                 mRbNetworkPage.setTextColor(getResources().getColor(R.color.springgreen));
@@ -115,6 +99,7 @@ public class MainActivity extends BaseActivity {
 
                 mPreShowFrm = mNetworkPageFrm;
                 break;
+            //我的页
             case R.id.ac_rb_mine_page:
                 mRbMinePage.setChecked(true);
                 mRbMinePage.setTextColor(getResources().getColor(R.color.springgreen));
@@ -131,7 +116,27 @@ public class MainActivity extends BaseActivity {
 
                 mPreShowFrm = mMinePageFrm;
                 break;
+            //首页
             default:
+            case R.id.ac_rb_home_page:
+                mRbHomePage.setChecked(true);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    mRbHomePage.setTextColor(getResources().getColor(R.color.springgreen, null));
+                }else {
+                    mRbHomePage.setTextColor(getResources().getColor(R.color.springgreen));
+                }
+
+                if (mHomePageFrm.isAdded()){
+                    fragmentTransaction.hide(mPreShowFrm)
+                            .show(mHomePageFrm)
+                            .commitAllowingStateLoss();
+                }else {
+                    fragmentTransaction.hide(mPreShowFrm)
+                            .add(R.id.am_content, mHomePageFrm, "HOME_PAGE")
+                            .commitAllowingStateLoss();
+                }
+
+                mPreShowFrm = mHomePageFrm;
                 break;
         }
     }

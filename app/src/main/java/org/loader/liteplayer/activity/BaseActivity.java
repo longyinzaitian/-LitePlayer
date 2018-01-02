@@ -96,16 +96,46 @@ public abstract class BaseActivity extends AppCompatActivity {
         bindService(new Intent(this, DownloadService.class),
                 mDownloadServiceConnection,
                 Context.BIND_AUTO_CREATE);
-
+        setContentView(getLayoutId());
+        bindView();
+        bindListener();
+        loadData();
     }
 
     @Override
     protected void onDestroy() {
         unbindService(mDownloadServiceConnection);
         super.onDestroy();
+        clearData();
     }
 
     public DownloadService getDownloadService() {
         return mDownloadService;
     }
+
+    /**
+     * 获取布局文件
+     * @return
+     */
+    protected abstract int getLayoutId();
+
+    /**
+     * 绑定view
+     */
+    protected abstract void bindView();
+
+    /**
+     * 初始化监听器
+     */
+    protected abstract void bindListener();
+
+    /**
+     * 拉取数据
+     */
+    protected abstract void loadData();
+
+    /**
+     * 做一些清理工作
+     */
+    protected abstract void clearData();
 }
