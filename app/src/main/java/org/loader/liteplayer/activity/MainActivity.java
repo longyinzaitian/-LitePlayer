@@ -33,16 +33,6 @@ public class MainActivity extends BaseActivity {
 
     private    FragmentManager fragmentManager = getSupportFragmentManager();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar =(Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        initFragments();
-        setupViews();
-    }
-
     private void initFragments() {
         mHomePageFrm = HomePageFragment.getInstance();
         mNetworkPageFrm = NetSongFragment.getInstance();
@@ -143,12 +133,15 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.activity_main;
     }
 
     @Override
     protected void bindView() {
-
+        Toolbar toolbar =(Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        initFragments();
+        setupViews();
     }
 
     @Override
