@@ -35,7 +35,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -90,7 +89,7 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.local_music_layout, null);
+        View layout = inflater.inflate(R.layout.fragment_home_page_layout, null);
         setupViews(layout);
 
         return layout;

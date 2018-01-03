@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 
 import org.loader.liteplayer.service.DownloadService;
@@ -115,9 +116,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 获取布局文件
-     * @return
+     * @return int
      */
-    protected abstract int getLayoutId();
+    protected abstract @LayoutRes int getLayoutId();
 
     /**
      * 绑定view
