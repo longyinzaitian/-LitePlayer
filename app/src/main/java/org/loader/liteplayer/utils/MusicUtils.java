@@ -3,6 +3,9 @@ package org.loader.liteplayer.utils;
 import java.io.File;
 import java.util.ArrayList;
 
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.mp3.MP3AudioHeader;
+import org.jaudiotagger.audio.mp3.MP3File;
 import org.loader.liteplayer.application.App;
 import org.loader.liteplayer.pojo.Music;
 
@@ -77,5 +80,38 @@ public class MusicUtils {
         L.l(TAG, "file.path="+f.getAbsolutePath());
 
         return dir;
+    }
+
+    public static String getMp3Time(File file)
+    {
+        int t = 0;
+        try {
+            MP3File f = (MP3File) AudioFileIO.read(file);
+            MP3AudioHeader audioHeader = (MP3AudioHeader)f.getAudioHeader();
+            t = (int)audioHeader.getPreciseTrackLength();
+            return getTimeStr(t);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return "00:00";
+    }
+
+    private static String getTimeStr(int t){
+        int minute = t/60;
+        int  seconds = t%60;
+        StringBuilder builder = new StringBuilder();
+        if (minute > 9){
+            builder.append(minute).append(":");
+        }else{
+            builder.append("0").append(minute).append(":");
+        }
+
+        if (seconds > 9){
+            builder.append(seconds);
+        }else {
+            builder.append("0").append(seconds);
+        }
+
+        return builder.toString();
     }
 }

@@ -323,7 +323,27 @@ public class PlayActivity extends BaseActivity implements OnClickListener {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected int getLayoutId() {
+        return 0;
+    }
+
+    @Override
+    protected void bindView() {
+
+    }
+
+    @Override
+    protected void bindListener() {
+
+    }
+
+    @Override
+    protected void loadData() {
+
+    }
+
+    @Override
+    protected void clearData() {
+
     }
 }

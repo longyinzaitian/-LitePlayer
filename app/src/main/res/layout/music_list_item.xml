@@ -5,6 +5,7 @@
     android:orientation="horizontal"
     android:paddingBottom="10dp"
     android:paddingTop="10dp"
+    android:paddingRight="15dp"
     android:id="@+id/item_ll"
     >
 
@@ -32,15 +33,41 @@
             android:id="@+id/tv_music_list_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/main_dark" />
+            android:textColor="@color/green" />
 
         <TextView
             android:id="@+id/tv_music_list_artist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@color/green"
             android:textSize="12sp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            >
+            <TextView
+                android:id="@+id/home_page_song_time_length"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="时长 00:00"
+                android:textSize="14sp"
+                android:textColor="@color/green"
+                android:layout_alignParentLeft="true"
+                />
+            <TextView
+                android:id="@+id/home_page_song_file_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="大小: 0KB"
+                android:textSize="14sp"
+                android:textColor="@color/green"
+                android:layout_alignParentRight="true"
+                />
+
+        </RelativeLayout>
     </LinearLayout>
 
 </LinearLayout>

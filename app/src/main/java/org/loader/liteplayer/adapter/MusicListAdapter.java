@@ -15,6 +15,9 @@ import org.loader.liteplayer.utils.ImageTools;
 import org.loader.liteplayer.utils.MusicIconLoader;
 import org.loader.liteplayer.utils.MusicUtils;
 
+import java.io.File;
+import java.util.Locale;
+
 /**
  * 2015年8月15日 16:34:37
  * 博文地址：http://blog.csdn.net/u010156024
@@ -35,13 +38,13 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MusicListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(View.inflate(BaseApplication.getContext(),
                 R.layout.music_list_item, null));
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final MusicListAdapter.ViewHolder holder, int position) {
         if(mPlayingPosition == holder.getAdapterPosition()) {
             holder.mark.setVisibility(View.VISIBLE);
         }else {
@@ -51,6 +54,7 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
         Bitmap icon = MusicIconLoader.getInstance()
                         .load(MusicUtils.sMusicList.get(holder.getAdapterPosition())
                         .getImage());
+
         holder.icon.setImageBitmap(icon == null ?
                 ImageTools.scaleBitmap(R.drawable.ic_launcher)
                 : ImageTools.scaleBitmap(icon));
@@ -59,6 +63,10 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
                 .getTitle());
         holder.artist.setText(MusicUtils.sMusicList.get(holder.getAdapterPosition())
                 .getArtist());
+
+        holder.timeLength.setText(String.format(Locale.CHINA, "时长：%s",
+                MusicUtils.getMp3Time(new File(MusicUtils.sMusicList.get(holder.getAdapterPosition()).getUri()))));
+        holder.fileSize.setText(String.format(Locale.CHINA, "大小：%s", MusicUtils.sMusicList.get(holder.getAdapterPosition()).getLength()));
 
         holder.itemRoot.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,12 +101,14 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
         return position;
     }
     
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder{
         ImageView icon;
         TextView title;
         TextView artist;
         View mark;
         LinearLayout itemRoot;
+        TextView timeLength;
+        TextView fileSize;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -107,6 +117,8 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
             artist = itemView.findViewById(R.id.tv_music_list_artist);
             mark = itemView.findViewById(R.id.music_list_selected);
             itemRoot = itemView.findViewById(R.id.item_ll);
+            timeLength = itemView.findViewById(R.id.home_page_song_time_length);
+            fileSize = itemView.findViewById(R.id.home_page_song_file_size);
         }
     }
 

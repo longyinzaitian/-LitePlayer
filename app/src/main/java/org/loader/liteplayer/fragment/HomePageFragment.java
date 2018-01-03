@@ -12,6 +12,7 @@ import org.loader.liteplayer.utils.ImageTools;
 import org.loader.liteplayer.utils.L;
 import org.loader.liteplayer.utils.MusicIconLoader;
 import org.loader.liteplayer.utils.MusicUtils;
+import org.loader.liteplayer.utils.ThreadCenter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -287,13 +288,12 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
         }
 
         //新启动一个线程更新通知栏，防止更新时间过长，导致界面卡顿！
-        new Thread(){
+        ThreadCenter.getInstance().executeTask(new Runnable() {
             @Override
             public void run() {
-                super.run();
                 mActivity.getPlayService().setRemoteViews();
             }
-        }.start();
+        });
     }
 
     @Override
