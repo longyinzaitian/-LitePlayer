@@ -15,7 +15,7 @@ import org.loader.liteplayer.application.BaseApplication;
  * @date 2018/1/3
  */
 
-public class HomePageFramAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HomePageFrmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

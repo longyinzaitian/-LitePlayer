@@ -1,19 +1,5 @@
 package org.loader.liteplayer.fragment;
 
-import java.io.File;
-
-import org.loader.liteplayer.R;
-import org.loader.liteplayer.activity.MainActivity;
-import org.loader.liteplayer.activity.PlayActivity;
-import org.loader.liteplayer.adapter.MusicListAdapter;
-import org.loader.liteplayer.application.BaseApplication;
-import org.loader.liteplayer.pojo.Music;
-import org.loader.liteplayer.utils.ImageTools;
-import org.loader.liteplayer.utils.L;
-import org.loader.liteplayer.utils.MusicIconLoader;
-import org.loader.liteplayer.utils.MusicUtils;
-import org.loader.liteplayer.utils.ThreadCenter;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -40,6 +26,20 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.loader.liteplayer.R;
+import org.loader.liteplayer.activity.MainActivity;
+import org.loader.liteplayer.activity.PlayActivity;
+import org.loader.liteplayer.adapter.HomePageFrmAdapter;
+import org.loader.liteplayer.application.BaseApplication;
+import org.loader.liteplayer.pojo.Music;
+import org.loader.liteplayer.utils.ImageTools;
+import org.loader.liteplayer.utils.L;
+import org.loader.liteplayer.utils.MusicIconLoader;
+import org.loader.liteplayer.utils.MusicUtils;
+import org.loader.liteplayer.utils.ThreadCenter;
+
+import java.io.File;
+
 /**
  * 2015年8月15日 16:34:37
  * 博文地址：http://blog.csdn.net/u010156024
@@ -60,7 +60,7 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
 
     private SeekBar mMusicProgress;
 
-    private MusicListAdapter mMusicListAdapter = new MusicListAdapter();
+    private HomePageFrmAdapter mHomePageFrmAdapter = new HomePageFrmAdapter();
 
     private MainActivity mActivity;
 
@@ -141,10 +141,7 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
         mMusicProgress = layout.findViewById(R.id.play_progress);
 
         mMusicListView.setLayoutManager(new LinearLayoutManager(BaseApplication.getContext()));
-        mMusicListView.setAdapter(mMusicListAdapter);
-
-        mMusicListAdapter.setOnItemClickListener(mMusicItemClickListener);
-        mMusicListAdapter.setOnItemLongClickListener(mItemLongClickListener);
+        mMusicListView.setAdapter(mHomePageFrmAdapter);
 
         mMusicIcon.setOnClickListener(this);
         mPreImageView.setOnClickListener(this);
@@ -167,7 +164,7 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
                 @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Music music = MusicUtils.sMusicList.remove(pos);
-                        mMusicListAdapter.notifyDataSetChanged();
+//                        mMusicListAdapter.notifyDataSetChanged();
                         if (new File(music.getUri()).delete()) {
                             scanSDCard();
                         }
@@ -344,6 +341,6 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
      * 主界面MainActivity.java中调用更新歌曲列表
      */
     public void onMusicListChanged() {
-        mMusicListAdapter.notifyDataSetChanged();
+//        mMusicListAdapter.notifyDataSetChanged();
     }
 }

@@ -2,6 +2,7 @@ package org.loader.liteplayer.utils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.mp3.MP3AudioHeader;
@@ -82,21 +83,8 @@ public class MusicUtils {
         return dir;
     }
 
-    public static String getMp3Time(File file)
-    {
-        int t = 0;
-        try {
-            MP3File f = (MP3File) AudioFileIO.read(file);
-            MP3AudioHeader audioHeader = (MP3AudioHeader)f.getAudioHeader();
-            t = (int)audioHeader.getPreciseTrackLength();
-            return getTimeStr(t);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        return "00:00";
-    }
-
-    private static String getTimeStr(int t){
+    public static String getSongTimeLength(int t){
+        t = t/1000;
         int minute = t/60;
         int  seconds = t%60;
         StringBuilder builder = new StringBuilder();
@@ -113,5 +101,11 @@ public class MusicUtils {
         }
 
         return builder.toString();
+    }
+
+    public static String getFileLength(long size){
+        size = size / 1000;
+        float d = size / 1000.0f;
+        return String.format(Locale.CHINA, "%.2fMB", d);
     }
 }

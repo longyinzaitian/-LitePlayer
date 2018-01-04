@@ -39,25 +39,6 @@ public class MainActivity extends BaseActivity {
         mMinePageFrm = MinePageFragment.getInstance();
     }
 
-    private void setupViews() {
-        mRbHomePage = (RadioButton)findViewById(R.id.ac_rb_home_page);
-        mRbNetworkPage = (RadioButton)findViewById(R.id.ac_rb_network_page);
-        mRbMinePage = (RadioButton)findViewById(R.id.ac_rb_mine_page);
-        RadioGroup mRbGroup =(RadioGroup) findViewById(R.id.ac_radio_group);
-
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.am_content, mHomePageFrm, "HOME_PAGE")
-                .commitAllowingStateLoss();
-        mPreShowFrm = mHomePageFrm;
-
-        mRbGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                int id = radioGroup.getCheckedRadioButtonId();
-                onClick(id);
-            }
-        });
-    }
     /**
      * 获取音乐播放服务
      */
@@ -144,8 +125,27 @@ public class MainActivity extends BaseActivity {
         setupViews();
     }
 
+    private void setupViews() {
+        mRbHomePage = (RadioButton)findViewById(R.id.ac_rb_home_page);
+        mRbNetworkPage = (RadioButton)findViewById(R.id.ac_rb_network_page);
+        mRbMinePage = (RadioButton)findViewById(R.id.ac_rb_mine_page);
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.am_content, mHomePageFrm, "HOME_PAGE")
+                .commitAllowingStateLoss();
+        mPreShowFrm = mHomePageFrm;
+    }
+
     @Override
     protected void bindListener() {
+        RadioGroup mRbGroup =(RadioGroup) findViewById(R.id.ac_radio_group);
+        mRbGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                int id = radioGroup.getCheckedRadioButtonId();
+                onClick(id);
+            }
+        });
 
     }
 

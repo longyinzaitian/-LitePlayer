@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import org.loader.liteplayer.R;
 import org.loader.liteplayer.application.BaseApplication;
+import org.loader.liteplayer.pojo.Music;
 import org.loader.liteplayer.utils.ImageTools;
 import org.loader.liteplayer.utils.MusicIconLoader;
 import org.loader.liteplayer.utils.MusicUtils;
@@ -65,12 +66,17 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
                 .getArtist());
 
         holder.timeLength.setText(String.format(Locale.CHINA, "时长：%s",
-                MusicUtils.getMp3Time(new File(MusicUtils.sMusicList.get(holder.getAdapterPosition()).getUri()))));
-        holder.fileSize.setText(String.format(Locale.CHINA, "大小：%s", MusicUtils.sMusicList.get(holder.getAdapterPosition()).getLength()));
+                MusicUtils.getSongTimeLength(MusicUtils.sMusicList.get(holder.getAdapterPosition()).getLength())));
+        holder.fileSize.setText(String.format(Locale.CHINA, "大小：%s",
+                MusicUtils.getFileLength(new File(MusicUtils.sMusicList.get(holder.getAdapterPosition()).getUri()).length())));
 
         holder.itemRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (mOnItemClickListener == null){
+                    return;
+                }
+
                 mOnItemClickListener.onItemClick(null,
                         null,
                         holder.getAdapterPosition(),
@@ -81,6 +87,10 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
         holder.itemRoot.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
+                if (mOnItemLongClickListener == null){
+                    return true;
+                }
+
                 mOnItemLongClickListener.onItemLongClick(null,
                         null,
                         holder.getAdapterPosition(),
