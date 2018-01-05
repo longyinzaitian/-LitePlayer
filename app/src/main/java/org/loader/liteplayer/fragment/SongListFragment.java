@@ -26,20 +26,28 @@ public class SongListFragment extends BaseFragment{
         return songListFragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_song_list, container, false);
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected int getLayoutId() {
+        return R.layout.fragment_song_list;
+    }
+
+    @Override
+    protected void bindView(View view) {
         recyclerView = view.findViewById(R.id.rv_song_list);
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    protected void bindListener() {
+
+    }
+
+    @Override
+    protected void loadData() {
+
     }
 }

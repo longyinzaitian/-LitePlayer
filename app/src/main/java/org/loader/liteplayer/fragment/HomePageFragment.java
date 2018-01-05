@@ -1,6 +1,5 @@
 package org.loader.liteplayer.fragment;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,13 +10,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -86,16 +82,6 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
         mActivity = (MainActivity) activity;
     }
 
-    @SuppressLint("InflateParams")
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-            ViewGroup container, Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_home_page_layout, null);
-        setupViews(layout);
-
-        return layout;
-    }
-
     /**
      * view创建完毕 回调通知activity绑定歌曲播放服务
      */
@@ -128,7 +114,13 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
         mActivity.allowUnbindService();
     }
 
-    private void setupViews(View layout) {
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_home_page_layout;
+    }
+
+    @Override
+    protected void bindView(View layout) {
         mMusicListView = layout.findViewById(R.id.lv_music_list);
         mMusicIcon = layout.findViewById(R.id.iv_play_icon);
         mMusicTitle = layout.findViewById(R.id.tv_play_title);
@@ -142,11 +134,19 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
 
         mMusicListView.setLayoutManager(new LinearLayoutManager(BaseApplication.getContext()));
         mMusicListView.setAdapter(mHomePageFrmAdapter);
+    }
 
+    @Override
+    protected void bindListener() {
         mMusicIcon.setOnClickListener(this);
         mPreImageView.setOnClickListener(this);
         mPlayImageView.setOnClickListener(this);
         mNextImageView.setOnClickListener(this);
+    }
+
+    @Override
+    protected void loadData() {
+
     }
 
     private OnItemLongClickListener mItemLongClickListener = 

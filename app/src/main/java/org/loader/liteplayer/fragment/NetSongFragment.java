@@ -1,32 +1,22 @@
 package org.loader.liteplayer.fragment;
 
-import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.app.DownloadManager.Request;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.loader.liteplayer.R;
@@ -39,9 +29,7 @@ import org.loader.liteplayer.engine.SearchMusic;
 import org.loader.liteplayer.engine.SongsRecommendation;
 import org.loader.liteplayer.pojo.SearchResult;
 import org.loader.liteplayer.utils.Constants;
-import org.loader.liteplayer.utils.MobileUtils;
 import org.loader.liteplayer.utils.MusicUtils;
-import org.loader.liteplayer.network.NetWorkUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -56,14 +44,7 @@ public class NetSongFragment extends BaseFragment
 
     private static NetSongFragment instance;
 
-    private MainActivity mActivity;
-
-    private LinearLayout mSearchShowLinearLayout;
-    private LinearLayout mSearchLinearLayout;
-    private ImageButton mSearchButton;
-    private EditText mSearchEditText;
     private RecyclerView mSearchResultListView;
-    private ProgressBar mSearchProgressBar;
     private View mPopView;
 
     private PopupWindow mPopupWindow;
@@ -90,25 +71,28 @@ public class NetSongFragment extends BaseFragment
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mActivity = (MainActivity) context;
+    protected int getLayoutId() {
+        return R.layout.search_music_layout;
     }
 
-    @SuppressLint("InflateParams")
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-        ViewGroup container, Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.search_music_layout, null);
-        setupViews(layout);
+    protected void bindView(View view) {
+        setupViews(view);
+        Toolbar toolbar = view.findViewById(R.id.tool_bar);
+        ((MainActivity)getActivity()).setSupportActionBar(toolbar);
 
-        mDownloadManager = (DownloadManager) mActivity
+        mDownloadManager = (DownloadManager) BaseApplication.getContext()
                 .getSystemService(Context.DOWNLOAD_SERVICE);
+    }
 
-        NetWorkUtil.getHotSongRank("5");
-        NetWorkUtil.getSongLrcById("");
-        NetWorkUtil.SearchSongByKeyword("邓紫棋", "2");
-        return layout;
+    @Override
+    protected void bindListener() {
+
+    }
+
+    @Override
+    protected void loadData() {
+
     }
 
     /**
@@ -121,7 +105,6 @@ public class NetSongFragment extends BaseFragment
         super.setUserVisibleHint(isVisibleToUser);
         // 当Fragment可见且是第一次加载时
         if (isVisibleToUser && isFirstShown) {
-            mSearchProgressBar.setVisibility(View.VISIBLE);
             mSearchResultListView.setVisibility(View.GONE);
             SongsRecommendation
                 .getInstance()
@@ -135,7 +118,6 @@ public class NetSongFragment extends BaseFragment
                                 return;
                             }
 
-                            mSearchProgressBar.setVisibility(View.GONE);
                             mSearchResultListView
                                     .setVisibility(View.VISIBLE);
                             mResultData.clear();
@@ -148,15 +130,8 @@ public class NetSongFragment extends BaseFragment
     }
 
     private void setupViews(View layout) {
-        mSearchShowLinearLayout = layout.findViewById(R.id.ll_search_btn_container);
-        mSearchLinearLayout = layout.findViewById(R.id.ll_search_container);
-        mSearchButton = layout.findViewById(R.id.ib_search_btn);
-        mSearchEditText = layout.findViewById(R.id.et_search_content);
-        mSearchResultListView = layout.findViewById(R.id.lv_search_result);
-        mSearchProgressBar = layout.findViewById(R.id.pb_search_wait);
 
-        mSearchShowLinearLayout.setOnClickListener(this);
-        mSearchButton.setOnClickListener(this);
+        mSearchResultListView = layout.findViewById(R.id.lv_search_result);
 
         mSearchResultAdapter = new SearchResultAdapter(mResultData);
         mSearchResultListView.setLayoutManager(new LinearLayoutManager(BaseApplication.getContext()));
@@ -193,7 +168,7 @@ public class NetSongFragment extends BaseFragment
     private void showDownloadDialog(final int position) {
 
         if (mPopupWindow == null) {
-            mPopView = View.inflate(mActivity, R.layout.download_pop_layout,
+            mPopView = View.inflate(BaseApplication.getContext(), R.layout.download_pop_layout,
                     null);
 
             mPopupWindow = new PopupWindow(mPopView, LayoutParams.MATCH_PARENT,
@@ -232,8 +207,8 @@ public class NetSongFragment extends BaseFragment
             });
 
         //设置对话框展示的位置
-        mPopupWindow.showAtLocation(mActivity.getWindow().getDecorView(),
-                Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+//        mPopupWindow.showAtLocation(BaseApplication.getContext().getWindow().getDecorView(),
+//                Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 
     private void dismissDialog() {
@@ -247,14 +222,14 @@ public class NetSongFragment extends BaseFragment
         @Override
         public void onMusic(int position, String url) {
             if (position == -1 || url == null) {
-                Toast.makeText(mActivity, "歌曲链接失效",
+                Toast.makeText(BaseApplication.getContext(), "歌曲链接失效",
                         Toast.LENGTH_SHORT).show();
                 return;
             }
 
             String musicName = mResultData.get(position).getMusicName();
-            mActivity.getDownloadService().download(position,
-                    Constants.MUSIC_URL + url, musicName + ".mp3");
+//            BaseApplication.getContext().getDownloadService().download(position,
+//                    Constants.MUSIC_URL + url, musicName + ".mp3");
         }
 
         @Override
@@ -281,11 +256,7 @@ public class NetSongFragment extends BaseFragment
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (mLastItem == mSearchResultAdapter.getItemCount() && hasMoreData
                         && newState == OnScrollListener.SCROLL_STATE_IDLE) {
-                    String searchText = mSearchEditText.getText().toString().trim();
-                    if (TextUtils.isEmpty(searchText)) {
-                        return;
-                    }
-                    startSearch(searchText);
+
                 }
             }
 
@@ -296,20 +267,6 @@ public class NetSongFragment extends BaseFragment
             }
     };
 
-    private void search() {
-        MobileUtils.hideInputMethod(mSearchEditText);
-        String content = mSearchEditText.getText().toString().trim();
-        if (TextUtils.isEmpty(content)) {
-            Toast.makeText(mActivity, "请输入关键词", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        mPage = 0;
-        mSearchProgressBar.setVisibility(View.VISIBLE);
-        mSearchResultListView.setVisibility(View.GONE);
-        startSearch(content);
-    }
-
     private void startSearch(String content) {
         SearchMusic.getInstance()
             .setListener(new SearchMusic.OnSearchResultListener() {
@@ -317,7 +274,6 @@ public class NetSongFragment extends BaseFragment
                 public void onSearchResult(ArrayList<SearchResult> results) {
                     if (mPage == 1) {
                         hasMoreData = true;
-                        mSearchProgressBar.setVisibility(View.GONE);
                         mSearchResultListView.setVisibility(View.VISIBLE);
                     }
 
@@ -339,17 +295,6 @@ public class NetSongFragment extends BaseFragment
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-        case R.id.ll_search_btn_container:
-
-            mSearchShowLinearLayout.setVisibility(View.GONE);
-            mSearchLinearLayout.setVisibility(View.VISIBLE);
-            break;
-
-        case R.id.ib_search_btn:
-            mSearchShowLinearLayout.setVisibility(View.VISIBLE);
-            mSearchLinearLayout.setVisibility(View.GONE);
-            search();
-            break;
         default:
             break;
         }

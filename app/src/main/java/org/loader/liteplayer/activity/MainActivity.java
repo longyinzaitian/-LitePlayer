@@ -119,8 +119,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void bindView() {
-        Toolbar toolbar =(Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         initFragments();
         setupViews();
     }
