@@ -3,7 +3,10 @@ package org.loader.liteplayer.fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import org.json.JSONObject;
 import org.loader.liteplayer.R;
+import org.loader.liteplayer.network.NetWorkCallBack;
+import org.loader.liteplayer.network.NetWorkUtil;
 
 /**
  * @author longyinzaitian
@@ -36,6 +39,16 @@ public class SongListFragment extends BaseFragment{
     @Override
     protected void loadData() {
         hotId = getArguments().getInt("id", 0);
+        NetWorkUtil.getHotSongRank(String.valueOf(hotId), new NetWorkCallBack() {
+            @Override
+            public JSONObject onResponse(JSONObject jsonObject) {
+                return null;
+            }
 
+            @Override
+            public void onError(String errorMsg) {
+
+            }
+        });
     }
 }
