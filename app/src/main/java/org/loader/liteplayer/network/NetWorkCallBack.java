@@ -9,9 +9,10 @@ import org.json.JSONObject;
 public interface NetWorkCallBack {
     /**
      * 回掉
-     * @return
+     * @param jsonObject  json
+     * @return jsonobject
      */
-    JSONObject onResponse();
+    JSONObject onResponse(JSONObject jsonObject);
 
     /**
      * 错误

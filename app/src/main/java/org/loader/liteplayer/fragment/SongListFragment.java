@@ -1,12 +1,7 @@
 package org.loader.liteplayer.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import org.loader.liteplayer.R;
 
@@ -15,16 +10,8 @@ import org.loader.liteplayer.R;
  * @date 2017/12/27.
  */
 public class SongListFragment extends BaseFragment{
-    private static SongListFragment songListFragment;
-
     private RecyclerView recyclerView;
-
-    public SongListFragment getInstance(){
-        if (songListFragment == null){
-            songListFragment = new SongListFragment();
-        }
-        return songListFragment;
-    }
+    private int hotId;
 
     @Override
     public void onDestroy() {
@@ -48,6 +35,7 @@ public class SongListFragment extends BaseFragment{
 
     @Override
     protected void loadData() {
+        hotId = getArguments().getInt("id", 0);
 
     }
 }

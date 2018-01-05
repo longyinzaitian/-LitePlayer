@@ -4,9 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import org.jaudiotagger.audio.AudioFileIO;
-import org.jaudiotagger.audio.mp3.MP3AudioHeader;
-import org.jaudiotagger.audio.mp3.MP3File;
 import org.loader.liteplayer.application.App;
 import org.loader.liteplayer.pojo.Music;
 
@@ -78,7 +75,7 @@ public class MusicUtils {
             }
             return null;
         }
-        L.l(TAG, "file.path="+f.getAbsolutePath());
+        LogUtil.l(TAG, "file.path="+f.getAbsolutePath());
 
         return dir;
     }

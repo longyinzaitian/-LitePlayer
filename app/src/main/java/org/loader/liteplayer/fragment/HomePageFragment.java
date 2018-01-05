@@ -29,7 +29,7 @@ import org.loader.liteplayer.adapter.HomePageFrmAdapter;
 import org.loader.liteplayer.application.BaseApplication;
 import org.loader.liteplayer.pojo.Music;
 import org.loader.liteplayer.utils.ImageTools;
-import org.loader.liteplayer.utils.L;
+import org.loader.liteplayer.utils.LogUtil;
 import org.loader.liteplayer.utils.MusicIconLoader;
 import org.loader.liteplayer.utils.MusicUtils;
 import org.loader.liteplayer.utils.ThreadCenter;
@@ -61,6 +61,11 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
     private MainActivity mActivity;
 
     private boolean isPause;
+    /*28=网络歌曲
+        3=欧美
+        4=流行榜
+        32=音乐人
+        36=K歌金曲*/
 
     public static HomePageFragment getInstance(){
         if (instance == null){
@@ -88,7 +93,7 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        L.l(TAG, "onViewCreated");
+        LogUtil.l(TAG, "onViewCreated");
         mActivity.allowBindService();
     }
 
@@ -110,7 +115,7 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
     @Override
     public void onStop() {
         super.onStop();
-        L.l(TAG, "onDestroyView");
+        LogUtil.l(TAG, "onDestroyView");
         mActivity.allowUnbindService();
     }
 

@@ -10,7 +10,7 @@ import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.loader.liteplayer.utils.L;
+import org.loader.liteplayer.utils.LogUtil;
 
 import android.annotation.SuppressLint;
 import android.os.Handler;
@@ -87,7 +87,7 @@ public class Download implements Serializable {
             new File(localPath).getParentFile().mkdirs();
         }
         
-        L.l("下载地址", url);
+        LogUtil.l("下载地址", url);
         
         mDownloadId = downloadId;
         mUrl = url;
@@ -175,7 +175,7 @@ public class Download implements Serializable {
      */
     private void download(boolean isGoon, Handler handler) {
         Message msg;
-        L.l("开始下载。。。");
+        LogUtil.l("开始下载。。。");
         try {
             RandomAccessFile localFile =
                     new RandomAccessFile(new File(mLocalPath), "rwd");
@@ -184,7 +184,7 @@ public class Download implements Serializable {
             conn.connect();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK){
-                L.l(TAG, "下载失败");
+                LogUtil.l(TAG, "下载失败");
                 handler.sendEmptyMessage(ERROR);
                 return;
             }
@@ -195,7 +195,7 @@ public class Download implements Serializable {
             
             // 远程文件不存在
             if (remoteFileLength == -1L) {
-                L.l("下载文件不存在...");
+                LogUtil.l("下载文件不存在...");
                 localFile.close();
                 handler.sendEmptyMessage(ERROR);
                 return;
@@ -203,7 +203,7 @@ public class Download implements Serializable {
 
             // 本地文件存在
             if (localFileLength > -1L && localFileLength < remoteFileLength) {
-                L.l("本地文件存在...");
+                LogUtil.l("本地文件存在...");
                 localFile.seek(localFileLength);
 //                get.addHeader("Range", "bytes=" + localFileLength + "-"
 //                        + remoteFileLength);
@@ -243,16 +243,16 @@ public class Download implements Serializable {
                     if (isPause) {
                         // 发送暂停的消息
                         handler.sendEmptyMessage(PAUSE);
-                        L.l("下载暂停...");
+                        LogUtil.l("下载暂停...");
                         break;
                     }
                     
                     // 取消下载， 删除文件并退出方法
                     if (isCanceled) {
-                        L.l("手动关闭下载。。");
+                        LogUtil.l("手动关闭下载。。");
                         localFile.close();
                         boolean delete = new File(mLocalPath).delete();
-                        L.l(TAG, "delete:" + delete);
+                        LogUtil.l(TAG, "delete:" + delete);
                         // 发送取消下载的消息
                         handler.sendEmptyMessage(CANCEL);
                         return;
@@ -280,12 +280,12 @@ public class Download implements Serializable {
      */
     public synchronized boolean pause(boolean pause) {
         if(!pause) {
-            L.l("继续下载");
+            LogUtil.l("继续下载");
             isPause = false;
             //开始下载
             start(true);
         }else {
-            L.l("暂停下载");
+            LogUtil.l("暂停下载");
             isPause = true;
         }
         return isPause;
@@ -298,7 +298,7 @@ public class Download implements Serializable {
         isCanceled = true;
         if(isPause) {
             boolean delete = new File(mLocalPath).delete();
-            L.l(TAG, "delete:" + delete);
+            LogUtil.l(TAG, "delete:" + delete);
         }
     }
 
@@ -312,7 +312,7 @@ public class Download implements Serializable {
         if (localFile.exists()) {
             size = localFile.length();
         }
-        L.l("本地文件大小" + size);
+        LogUtil.l("本地文件大小" + size);
         return size <= 0 ? -1L : size;
     }
 
@@ -333,7 +333,7 @@ public class Download implements Serializable {
             e.printStackTrace();
         }
 
-        L.l("远程文件大小" + size);
+        LogUtil.l("远程文件大小" + size);
         return size;
     }
     

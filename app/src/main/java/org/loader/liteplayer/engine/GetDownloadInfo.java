@@ -6,7 +6,7 @@ import android.os.Message;
 import android.util.Log;
 
 import org.loader.liteplayer.utils.Constants;
-import org.loader.liteplayer.utils.L;
+import org.loader.liteplayer.utils.LogUtil;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -113,9 +113,9 @@ public class GetDownloadInfo {
         mThreadPool.execute(new Runnable() {
             @Override
             public void run() {
-                L.l(TAG, "postion=" + position + ",url=" + url);
+                LogUtil.l(TAG, "postion=" + position + ",url=" + url);
                 String songId = getSongId(url);
-                L.l(TAG, "解析出的歌曲ID =" + songId);
+                LogUtil.l(TAG, "解析出的歌曲ID =" + songId);
                 getDownloadUrl(position, songId);
                 getLrcUrl(position, url);
             }

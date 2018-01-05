@@ -6,6 +6,10 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -21,18 +25,22 @@ import android.widget.Toast;
 
 import org.loader.liteplayer.R;
 import org.loader.liteplayer.activity.MainActivity;
+import org.loader.liteplayer.adapter.NetSongPagerAdapter;
 import org.loader.liteplayer.adapter.SearchResultAdapter;
 import org.loader.liteplayer.application.BaseApplication;
 import org.loader.liteplayer.engine.GetDownloadInfo;
 import org.loader.liteplayer.engine.GetDownloadInfo.OnDownloadGetListener;
 import org.loader.liteplayer.engine.SearchMusic;
 import org.loader.liteplayer.engine.SongsRecommendation;
+import org.loader.liteplayer.pojo.HotSong;
+import org.loader.liteplayer.pojo.Item;
 import org.loader.liteplayer.pojo.SearchResult;
 import org.loader.liteplayer.utils.Constants;
 import org.loader.liteplayer.utils.MusicUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 2015年8月15日 16:34:37
@@ -44,13 +52,15 @@ public class NetSongFragment extends BaseFragment
 
     private static NetSongFragment instance;
 
-    private RecyclerView mSearchResultListView;
+    private ViewPager mViewPager;
     private View mPopView;
+    private TabLayout mTabLayout;
 
     private PopupWindow mPopupWindow;
 
     private SearchResultAdapter mSearchResultAdapter;
-    private ArrayList<SearchResult> mResultData = new ArrayList<SearchResult>();
+    private ArrayList<HotSong> mResultData = new ArrayList<>();
+    private ArrayList<Item> items;
 
     private int mPage = 0;
     private int mLastItem;
@@ -77,7 +87,9 @@ public class NetSongFragment extends BaseFragment
 
     @Override
     protected void bindView(View view) {
-        setupViews(view);
+        mViewPager = view.findViewById(R.id.net_song_view_pager);
+        mTabLayout = view.findViewById(R.id.net_song_tab_layout);
+
         Toolbar toolbar = view.findViewById(R.id.tool_bar);
         ((MainActivity)getActivity()).setSupportActionBar(toolbar);
 
@@ -87,12 +99,62 @@ public class NetSongFragment extends BaseFragment
 
     @Override
     protected void bindListener() {
+        mSearchResultAdapter.setOnItemClickListener(mResultItemClickListener);
 
     }
 
     @Override
     protected void loadData() {
+        initItem();
+        initAdapter();
+    }
 
+    private void initItem(){
+        items = new ArrayList<>();
+        items.add(new Item("内地", 5));
+        items.add(new Item("港台", 6));
+        items.add(new Item("韩国", 16));
+        items.add(new Item("日本", 17));
+        items.add(new Item("热歌", 26));
+        items.add(new Item("新歌", 27));
+        for (Item item : items){
+            mTabLayout.newTab().setText(item.getTitle());
+        }
+
+        mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.main));
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int pos = tab.getPosition();
+                mViewPager.setCurrentItem(pos);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
+    private void initAdapter(){
+        List<Fragment> fragments = new ArrayList<>();
+        for (Item item : items){
+            SongListFragment songListFragment = new SongListFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt("id", item.getId());
+            songListFragment.setArguments(bundle);
+            fragments.add(songListFragment);
+        }
+
+        NetSongPagerAdapter adapter = new NetSongPagerAdapter(getChildFragmentManager(), fragments);
+        mViewPager.setAdapter(adapter);
+        mViewPager.setOffscreenPageLimit(items.size());
+        mViewPager.setCurrentItem(0);
     }
 
     /**
@@ -105,39 +167,9 @@ public class NetSongFragment extends BaseFragment
         super.setUserVisibleHint(isVisibleToUser);
         // 当Fragment可见且是第一次加载时
         if (isVisibleToUser && isFirstShown) {
-            mSearchResultListView.setVisibility(View.GONE);
-            SongsRecommendation
-                .getInstance()
-                .setListener(
-                    new SongsRecommendation.OnRecommendationListener() {
-                        @Override
-                        public void onRecommend(
-                            ArrayList<SearchResult> results) {
 
-                            if (results == null || results.isEmpty()){
-                                return;
-                            }
-
-                            mSearchResultListView
-                                    .setVisibility(View.VISIBLE);
-                            mResultData.clear();
-                            mResultData.addAll(results);
-                            mSearchResultAdapter.notifyDataSetChanged();
-                        }
-                    }).get();
             isFirstShown = false;
         }
-    }
-
-    private void setupViews(View layout) {
-
-        mSearchResultListView = layout.findViewById(R.id.lv_search_result);
-
-        mSearchResultAdapter = new SearchResultAdapter(mResultData);
-        mSearchResultListView.setLayoutManager(new LinearLayoutManager(BaseApplication.getContext()));
-        mSearchResultListView.setAdapter(mSearchResultAdapter);
-        mSearchResultListView.setOnScrollListener(mListViewScrollListener);
-        mSearchResultAdapter.setOnItemClickListener(mResultItemClickListener);
     }
 
     @Override
@@ -227,9 +259,6 @@ public class NetSongFragment extends BaseFragment
                 return;
             }
 
-            String musicName = mResultData.get(position).getMusicName();
-//            BaseApplication.getContext().getDownloadService().download(position,
-//                    Constants.MUSIC_URL + url, musicName + ".mp3");
         }
 
         @Override
@@ -238,15 +267,6 @@ public class NetSongFragment extends BaseFragment
                 return;
             }
 
-            String musicName = mResultData.get(position).getMusicName();
-            DownloadManager.Request request = new DownloadManager.Request(
-                    Uri.parse(Constants.MUSIC_URL + url));
-            request.setVisibleInDownloadsUi(false);
-            request.setNotificationVisibility(Request.VISIBILITY_HIDDEN);
-            /* request.setShowRunningNotification(false);*/
-            request.setDestinationUri(Uri.fromFile(new File(MusicUtils
-                    .getLrcDir() + musicName + ".lrc")));
-            mDownloadManager.enqueue(request);
         }
     };
 
@@ -266,31 +286,6 @@ public class NetSongFragment extends BaseFragment
 //                    mLastItem = firstVisibleItem + visibleItemCount;
             }
     };
-
-    private void startSearch(String content) {
-        SearchMusic.getInstance()
-            .setListener(new SearchMusic.OnSearchResultListener() {
-                @Override
-                public void onSearchResult(ArrayList<SearchResult> results) {
-                    if (mPage == 1) {
-                        hasMoreData = true;
-                        mSearchResultListView.setVisibility(View.VISIBLE);
-                    }
-
-                    if (results == null || results.isEmpty()) {
-                        hasMoreData = false;
-                        return;
-                    }
-
-                    if (mPage == 1) {
-                        mResultData.clear();
-                    }
-
-                    mResultData.addAll(results);
-                    mSearchResultAdapter.notifyDataSetChanged();
-                }
-            }).search(content, ++mPage);
-    }
 
     @Override
     public void onClick(View v) {

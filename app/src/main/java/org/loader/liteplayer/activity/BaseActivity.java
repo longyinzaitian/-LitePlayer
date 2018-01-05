@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import org.loader.liteplayer.service.DownloadService;
 import org.loader.liteplayer.service.PlayService;
-import org.loader.liteplayer.utils.L;
+import org.loader.liteplayer.utils.LogUtil;
 import org.loader.liteplayer.utils.StatusBarCompat;
 
 /**
@@ -27,7 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private ServiceConnection mPlayServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            L.l(TAG, "play--->onServiceDisconnected");
+            LogUtil.l(TAG, "play--->onServiceDisconnected");
             mPlayService = null;
         }
         
@@ -41,7 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private ServiceConnection mDownloadServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            L.l(TAG, "download--->onServiceDisconnected");
+            LogUtil.l(TAG, "download--->onServiceDisconnected");
             mDownloadService = null;
         }
         

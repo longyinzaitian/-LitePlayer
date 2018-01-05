@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import org.loader.liteplayer.R;
 import org.loader.liteplayer.engine.Download;
-import org.loader.liteplayer.utils.L;
+import org.loader.liteplayer.utils.LogUtil;
 import org.loader.liteplayer.utils.MusicUtils;
 
 /**
@@ -45,7 +45,7 @@ public class DownloadService extends Service {
     }
     
     public void download(final int id, final String url, final String name) {
-        L.l(TAG, url);
+        LogUtil.l(TAG, url);
         Download d = new Download(id, url, MusicUtils.getMusicDir() + name);
         d.setOnDownloadListener(mDownloadListener).start(false);
         mDownloads.put(id, d);
@@ -110,7 +110,7 @@ public class DownloadService extends Service {
         
         @Override
         public void onSuccess(int downloadId) {
-            L.l(TAG, "success");
+            LogUtil.l(TAG, "success");
             Toast.makeText(DownloadService.this, 
                     mDownloads.get(downloadId).getLocalFileName() + "下载完成",
                     Toast.LENGTH_SHORT).show();
@@ -120,7 +120,7 @@ public class DownloadService extends Service {
         
         @Override
         public void onStart(int downloadId, long fileSize) {
-            L.l(TAG, "start");
+            LogUtil.l(TAG, "start");
             refreshRemoteView();
             Toast.makeText(DownloadService.this, "开始下载" + 
                     mDownloads.get(downloadId).getLocalFileName(),
@@ -129,22 +129,22 @@ public class DownloadService extends Service {
         
         @Override
         public void onPublish(int downloadId, long size) {
-//            L.l(TAG, "publish" + size);
+//            LogUtil.l(TAG, "publish" + size);
         }
         
         @Override
         public void onPause(int downloadId) {
-            L.l(TAG, "pause");
+            LogUtil.l(TAG, "pause");
         }
         
         @Override
         public void onGoon(int downloadId, long localSize) {
-            L.l(TAG, "goon");
+            LogUtil.l(TAG, "goon");
         }
         
         @Override
         public void onError(int downloadId) {
-            L.l(TAG, "error");
+            LogUtil.l(TAG, "error");
             Toast.makeText(DownloadService.this, 
                     mDownloads.get(downloadId).getLocalFileName() + "下载失败",
                     Toast.LENGTH_SHORT).show();
@@ -153,7 +153,7 @@ public class DownloadService extends Service {
         
         @Override
         public void onCancel(int downloadId) {
-            L.l(TAG, "cancel");
+            LogUtil.l(TAG, "cancel");
             onDownloadComplete(downloadId);
         }
     };

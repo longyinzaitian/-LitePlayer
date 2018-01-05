@@ -7,7 +7,7 @@ import org.loader.liteplayer.R;
 import org.loader.liteplayer.activity.PlayActivity;
 import org.loader.liteplayer.utils.Constants;
 import org.loader.liteplayer.utils.ImageTools;
-import org.loader.liteplayer.utils.L;
+import org.loader.liteplayer.utils.LogUtil;
 import org.loader.liteplayer.utils.MusicIconLoader;
 import org.loader.liteplayer.utils.MusicUtils;
 import org.loader.liteplayer.utils.SpUtils;
@@ -167,7 +167,7 @@ public class PlayService extends Service implements
     }
     
     public void setRemoteViews(){
-        L.l(TAG, "进入——》setRemoteViews()");
+        LogUtil.l(TAG, "进入——》setRemoteViews()");
 
         if(getPlayingPosition()>0){
             remoteViews.setTextViewText(R.id.music_name,
@@ -278,7 +278,7 @@ public class PlayService extends Service implements
      * @return 当前播放的位置
      */
     public int play(int position) {
-        L.l(TAG, "play(int position)方法");
+        LogUtil.l(TAG, "play(int position)方法");
 
         if(MusicUtils.sMusicList.size()<=0){
             Toast.makeText(getApplicationContext(),
@@ -445,7 +445,7 @@ public class PlayService extends Service implements
 
     @Override
     public boolean onUnbind(Intent intent) {
-        L.l("play service", "unbind");
+        LogUtil.l("play service", "unbind");
         mSensorManager.unregisterListener(mSensorEventListener);
         return true;
     }
@@ -460,7 +460,7 @@ public class PlayService extends Service implements
 
     @Override
     public void onDestroy() {
-        L.l(TAG, "PlayService.java的onDestroy()方法调用");
+        LogUtil.l(TAG, "PlayService.java的onDestroy()方法调用");
 
         release();
         stopForeground(true);
@@ -496,7 +496,7 @@ public class PlayService extends Service implements
      * 申请设备电源锁
      */
     private void acquireWakeLock() {
-        L.l(TAG, "正在申请电源锁");
+        LogUtil.l(TAG, "正在申请电源锁");
 
         if (null == mWakeLock) {
             PowerManager pm = (PowerManager) this
@@ -511,7 +511,7 @@ public class PlayService extends Service implements
 
             if (null != mWakeLock) {
                 mWakeLock.acquire(5000);
-                L.l(TAG, "电源锁申请成功");
+                LogUtil.l(TAG, "电源锁申请成功");
             }
         }
     }
@@ -520,12 +520,12 @@ public class PlayService extends Service implements
      * 释放设备电源锁
      */
     private void releaseWakeLock() {
-        L.l(TAG, "正在释放电源锁");
+        LogUtil.l(TAG, "正在释放电源锁");
 
         if (null != mWakeLock) {
             mWakeLock.release();
             mWakeLock = null;
-            L.l(TAG, "电源锁释放成功");
+            LogUtil.l(TAG, "电源锁释放成功");
         }
     }
 
@@ -534,8 +534,8 @@ public class PlayService extends Service implements
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction()!= null && intent.getAction().equals(
                     PlayService.class.getSimpleName())) {
-                L.l(TAG, "MyBroadCastReceiver类——》onReceive（）");
-                L.l(TAG, "button_noti-->"
+                LogUtil.l(TAG, "MyBroadCastReceiver类——》onReceive（）");
+                LogUtil.l(TAG, "button_noti-->"
                 +intent.getIntExtra("BUTTON_NOTI", 0));
 
                 switch (intent.getIntExtra("BUTTON_NOTI", 0)) {

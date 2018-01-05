@@ -3,7 +3,6 @@ package org.loader.liteplayer.utils;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 
 import org.loader.liteplayer.application.App;
 import org.loader.liteplayer.pojo.Music;
@@ -67,7 +66,7 @@ public class LocalMusicUtils {
 
         addMedia(cursor, results);
         cursor.close();
-        L.l(TAG, "results.size="+results.size());
+        LogUtil.l(TAG, "results.size="+results.size());
 
         return results;
     }
@@ -81,8 +80,8 @@ public class LocalMusicUtils {
             String uri = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA));
             //系统铃声过滤掉
             if (uri.startsWith("/system/")){
-                L.l(TAG, "title:"+cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)));
-                L.l(TAG, "artist:"+cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)));
+                LogUtil.l(TAG, "title:"+cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)));
+                LogUtil.l(TAG, "artist:"+cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)));
                 continue;
             }
             
@@ -90,8 +89,8 @@ public class LocalMusicUtils {
             String artist = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST));
             
             if(isRepeat(title, artist)){
-                L.l(TAG, "title:" + title);
-                L.l(TAG, "artist:" + artist);
+                LogUtil.l(TAG, "title:" + title);
+                LogUtil.l(TAG, "artist:" + artist);
                 continue;
             }
             
@@ -100,7 +99,7 @@ public class LocalMusicUtils {
             music.setTitle(title);
             music.setArtist(artist);
             music.setUri(uri);
-            L.l(TAG, "uri:"+music.getUri());
+            LogUtil.l(TAG, "uri:"+music.getUri());
             music.setLength(cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)));
             music.setImage(getAlbumImage(cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID))));
             results.add(music);

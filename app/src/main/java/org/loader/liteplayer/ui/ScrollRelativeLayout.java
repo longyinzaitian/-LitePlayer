@@ -1,6 +1,6 @@
 package org.loader.liteplayer.ui;
 
-import org.loader.liteplayer.utils.L;
+import org.loader.liteplayer.utils.LogUtil;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -33,7 +33,7 @@ public class ScrollRelativeLayout extends RelativeLayout {
         View indicator = getChildAt(0);
         mIndicatorHeight = indicator.getMeasuredHeight();
         
-        L.l("indicator height", mIndicatorHeight);
+        LogUtil.l("indicator height", mIndicatorHeight);
     }
     
     @Override

@@ -60,7 +60,7 @@ public class MusicIconLoader {
         }
 
         if (!new File(uri).exists()){
-            L.l(TAG, "file:"+uri+" is not exist");
+            LogUtil.l(TAG, "file:"+uri+" is not exist");
             return null;
         }
 
