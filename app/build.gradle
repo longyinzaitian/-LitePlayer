@@ -10,7 +10,6 @@ android {
         targetSdkVersion 27
     }
 
-
     buildTypes {
         release {
             minifyEnabled false

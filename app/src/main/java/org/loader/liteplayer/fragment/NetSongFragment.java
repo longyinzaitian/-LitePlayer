@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
 import org.loader.liteplayer.R;
@@ -58,7 +59,6 @@ public class NetSongFragment extends BaseFragment
 
     private PopupWindow mPopupWindow;
 
-    private SearchResultAdapter mSearchResultAdapter;
     private ArrayList<HotSong> mResultData = new ArrayList<>();
     private ArrayList<Item> items;
 
@@ -91,7 +91,9 @@ public class NetSongFragment extends BaseFragment
         mTabLayout = view.findViewById(R.id.net_song_tab_layout);
 
         Toolbar toolbar = view.findViewById(R.id.tool_bar);
-        ((MainActivity)getActivity()).setSupportActionBar(toolbar);
+        if (getActivity() != null){
+            ((MainActivity)getActivity()).setSupportActionBar(toolbar);
+        }
 
         mDownloadManager = (DownloadManager) BaseApplication.getContext()
                 .getSystemService(Context.DOWNLOAD_SERVICE);
@@ -99,7 +101,6 @@ public class NetSongFragment extends BaseFragment
 
     @Override
     protected void bindListener() {
-        mSearchResultAdapter.setOnItemClickListener(mResultItemClickListener);
 
     }
 
@@ -117,10 +118,8 @@ public class NetSongFragment extends BaseFragment
         items.add(new Item("日本", 17));
         items.add(new Item("热歌", 26));
         items.add(new Item("新歌", 27));
-        for (Item item : items){
-            mTabLayout.newTab().setText(item.getTitle());
-        }
 
+        mTabLayout.setOverScrollMode(TabLayout.MODE_SCROLLABLE);
         mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.main));
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -155,6 +154,7 @@ public class NetSongFragment extends BaseFragment
         mViewPager.setAdapter(adapter);
         mViewPager.setOffscreenPageLimit(items.size());
         mViewPager.setCurrentItem(0);
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     /**
@@ -178,21 +178,6 @@ public class NetSongFragment extends BaseFragment
         SongsRecommendation.getInstance().cleanWork();
     }
 
-    /**
-     * 列表中每一列的点击时间监听器
-     */
-    private OnItemClickListener mResultItemClickListener
-                            = new OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position,
-                long id) {
-            if (position >= mResultData.size() || position < 0) {
-                return;
-            }
-
-            showDownloadDialog(position);
-        }
-    };
     /**
      * 底部对话框
      * @param position 位置
@@ -268,23 +253,6 @@ public class NetSongFragment extends BaseFragment
             }
 
         }
-    };
-
-    private RecyclerView.OnScrollListener mListViewScrollListener =
-        new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (mLastItem == mSearchResultAdapter.getItemCount() && hasMoreData
-                        && newState == OnScrollListener.SCROLL_STATE_IDLE) {
-
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                // 计算可见列表的最后一条的列表是不是最后一个
-//                    mLastItem = firstVisibleItem + visibleItemCount;
-            }
     };
 
     @Override

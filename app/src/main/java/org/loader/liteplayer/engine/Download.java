@@ -175,7 +175,7 @@ public class Download implements Serializable {
      */
     private void download(boolean isGoon, Handler handler) {
         Message msg;
-        LogUtil.l("开始下载。。。");
+        LogUtil.l(TAG, "开始下载。。。");
         try {
             RandomAccessFile localFile =
                     new RandomAccessFile(new File(mLocalPath), "rwd");
@@ -195,7 +195,7 @@ public class Download implements Serializable {
             
             // 远程文件不存在
             if (remoteFileLength == -1L) {
-                LogUtil.l("下载文件不存在...");
+                LogUtil.l(TAG, "下载文件不存在...");
                 localFile.close();
                 handler.sendEmptyMessage(ERROR);
                 return;
@@ -203,7 +203,7 @@ public class Download implements Serializable {
 
             // 本地文件存在
             if (localFileLength > -1L && localFileLength < remoteFileLength) {
-                LogUtil.l("本地文件存在...");
+                LogUtil.l(TAG, "本地文件存在...");
                 localFile.seek(localFileLength);
 //                get.addHeader("Range", "bytes=" + localFileLength + "-"
 //                        + remoteFileLength);
@@ -243,13 +243,13 @@ public class Download implements Serializable {
                     if (isPause) {
                         // 发送暂停的消息
                         handler.sendEmptyMessage(PAUSE);
-                        LogUtil.l("下载暂停...");
+                        LogUtil.l(TAG, "下载暂停...");
                         break;
                     }
                     
                     // 取消下载， 删除文件并退出方法
                     if (isCanceled) {
-                        LogUtil.l("手动关闭下载。。");
+                        LogUtil.l(TAG, "手动关闭下载。。");
                         localFile.close();
                         boolean delete = new File(mLocalPath).delete();
                         LogUtil.l(TAG, "delete:" + delete);
@@ -280,12 +280,12 @@ public class Download implements Serializable {
      */
     public synchronized boolean pause(boolean pause) {
         if(!pause) {
-            LogUtil.l("继续下载");
+            LogUtil.l(TAG, "继续下载");
             isPause = false;
             //开始下载
             start(true);
         }else {
-            LogUtil.l("暂停下载");
+            LogUtil.l(TAG, "暂停下载");
             isPause = true;
         }
         return isPause;
@@ -312,7 +312,7 @@ public class Download implements Serializable {
         if (localFile.exists()) {
             size = localFile.length();
         }
-        LogUtil.l("本地文件大小" + size);
+        LogUtil.l(TAG, "本地文件大小" + size);
         return size <= 0 ? -1L : size;
     }
 
@@ -333,7 +333,7 @@ public class Download implements Serializable {
             e.printStackTrace();
         }
 
-        LogUtil.l("远程文件大小" + size);
+        LogUtil.l(TAG, "远程文件大小" + size);
         return size;
     }
     

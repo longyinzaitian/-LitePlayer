@@ -3,6 +3,7 @@ package org.loader.liteplayer.fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -59,7 +60,17 @@ public class SongListFragment extends BaseFragment{
                     return;
                 }
 
-                HotSongPageBean hotSongPageBean = AppUtil.getGson().fromJson(jsonObject.toString(),
+                JSONObject resBody = jsonObject.optJSONObject("showapi_res_body");
+                if (resBody == null){
+                    return;
+                }
+
+                JSONObject pageBean = resBody.optJSONObject("pagebean");
+                if (pageBean == null){
+                    return;
+                }
+
+                HotSongPageBean hotSongPageBean = AppUtil.getGson().fromJson(pageBean.toString(),
                         new TypeToken<HotSongPageBean>(){}.getType());
                 int code = hotSongPageBean.getCode();
                 if (code == 0){

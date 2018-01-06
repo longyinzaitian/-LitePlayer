@@ -33,7 +33,7 @@ public class ScrollRelativeLayout extends RelativeLayout {
         View indicator = getChildAt(0);
         mIndicatorHeight = indicator.getMeasuredHeight();
         
-        LogUtil.l("indicator height", mIndicatorHeight);
+        LogUtil.l("indicator height", "mIndicatorHeight:" + mIndicatorHeight);
     }
     
     @Override

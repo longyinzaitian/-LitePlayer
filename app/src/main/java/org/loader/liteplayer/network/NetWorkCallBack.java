@@ -10,13 +10,13 @@ public interface NetWorkCallBack {
     /**
      * 回掉
      * @param jsonObject  json
-     * @return jsonobject
+     * @return jsonObject
      */
     void onResponse(JSONObject jsonObject);
 
     /**
      * 错误
-     * @param errorMsg
+     * @param errorMsg String
      */
     void onError(String errorMsg);
 }

@@ -2,6 +2,7 @@ package org.loader.liteplayer.network;
 
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import com.squareup.okhttp.ResponseBody;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.builder.PostFormBuilder;
 import com.zhy.http.okhttp.callback.Callback;
@@ -29,8 +30,14 @@ public class NetWorkUtil {
         .execute(new Callback() {
             @Override
             public Object parseNetworkResponse(Response response) throws IOException {
-                LogUtil.l(TAG, "getHotSongRank parseNetworkResponse response.body:"+response.body().string());
-                return response.body().string();
+                ResponseBody responseBody = response.body();
+                if (responseBody == null){
+                    return null;
+                }
+
+                String responseStr = responseBody.string();
+                LogUtil.l(TAG, "getHotSongRank parseNetworkResponse response.body:"+responseStr);
+                return responseStr;
             }
 
             @Override
@@ -44,6 +51,10 @@ public class NetWorkUtil {
             @Override
             public void onResponse(Object response) {
                 LogUtil.l(TAG, "getHotSongRank response:" + response);
+                if (response == null){
+                    return;
+                }
+
                 JSONObject jsonObject = null;
                 if (netWorkCallBack != null){
                     try{
