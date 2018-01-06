@@ -6,11 +6,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import org.loader.liteplayer.R;
 import org.loader.liteplayer.application.BaseApplication;
 import org.loader.liteplayer.pojo.HotSong;
+import org.loader.liteplayer.utils.LogUtil;
 import org.loader.liteplayer.utils.MusicUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +22,9 @@ import java.util.List;
  * @date 2017/12/27.
  */
 public class HotSongListAdapter extends RecyclerView.Adapter {
-    private List<HotSong> hotSongs = null;
+    private static final String TAG = "HotSongListAdapter";
+    private List<HotSong> hotSongs = new ArrayList<>();
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ItemSongViewHolder(View.inflate(BaseApplication.getContext(), R.layout.search_result_item, null));
@@ -34,6 +40,7 @@ public class HotSongListAdapter extends RecyclerView.Adapter {
 
             ItemSongViewHolder itemSongViewHolder = (ItemSongViewHolder) holder;
 
+            Glide.with(BaseApplication.getContext()).load(hotSong.getAlbumpic_small()).into(itemSongViewHolder.img);
             itemSongViewHolder.songName.setText(hotSong.getSongname());
             itemSongViewHolder.singerName.setText(hotSong.getSingername());
             itemSongViewHolder.timeLength.setText(MusicUtils.getSongTimeLength(hotSong.getSeconds()));
@@ -42,7 +49,7 @@ public class HotSongListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return hotSongs == null ? 0 : hotSongs.size();
+        return hotSongs.size();
     }
 
     private class ItemSongViewHolder extends RecyclerView.ViewHolder{
@@ -64,7 +71,8 @@ public class HotSongListAdapter extends RecyclerView.Adapter {
             return;
         }
 
-        this.hotSongs = hotSongs;
+        this.hotSongs.addAll(hotSongs);
+        LogUtil.l(TAG, "hotSongs：" + hotSongs);
         notifyDataSetChanged();
     }
 }

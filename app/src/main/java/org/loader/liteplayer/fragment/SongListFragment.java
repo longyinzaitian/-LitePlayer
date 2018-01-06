@@ -1,5 +1,6 @@
 package org.loader.liteplayer.fragment;
 
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -47,6 +48,7 @@ public class SongListFragment extends BaseFragment{
     protected void bindListener() {
         mAdapter = new HotSongListAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(BaseApplication.getContext()));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(BaseApplication.getContext(), RecyclerView.HORIZONTAL));
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -72,6 +74,7 @@ public class SongListFragment extends BaseFragment{
 
                 HotSongPageBean hotSongPageBean = AppUtil.getGson().fromJson(pageBean.toString(),
                         new TypeToken<HotSongPageBean>(){}.getType());
+
                 int code = hotSongPageBean.getCode();
                 if (code == 0){
                     List<HotSong> hotSongs = hotSongPageBean.getSonglist();

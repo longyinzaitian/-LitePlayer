@@ -20,6 +20,7 @@ public class HotSongPageBean {
     private int song_begin;
     private String day_of_year;
     private int totalpage;
+    private int ret_code;
 
     public List<HotSong> getSonglist() {
         return songlist;
@@ -109,6 +110,14 @@ public class HotSongPageBean {
         this.totalpage = totalpage;
     }
 
+    public int getRet_code() {
+        return ret_code;
+    }
+
+    public void setRet_code(int ret_code) {
+        this.ret_code = ret_code;
+    }
+
     @Override
     public String toString() {
         return "HotSongPageBean{" +
@@ -123,6 +132,7 @@ public class HotSongPageBean {
                 ", song_begin=" + song_begin +
                 ", day_of_year='" + day_of_year + '\'' +
                 ", totalpage=" + totalpage +
+                ", ret_code=" + ret_code +
                 '}';
     }
 }

@@ -3,6 +3,7 @@ package org.loader.liteplayer.fragment;
 import android.app.DownloadManager;
 import android.app.DownloadManager.Request;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -42,6 +44,8 @@ import org.loader.liteplayer.utils.MusicUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.id.text1;
 
 /**
  * 2015年8月15日 16:34:37
@@ -90,10 +94,10 @@ public class NetSongFragment extends BaseFragment
         mViewPager = view.findViewById(R.id.net_song_view_pager);
         mTabLayout = view.findViewById(R.id.net_song_tab_layout);
 
-        Toolbar toolbar = view.findViewById(R.id.tool_bar);
-        if (getActivity() != null){
-            ((MainActivity)getActivity()).setSupportActionBar(toolbar);
-        }
+//        Toolbar toolbar = view.findViewById(R.id.tool_bar);
+//        if (getActivity() != null){
+//            ((MainActivity)getActivity()).setSupportActionBar(toolbar);
+//        }
 
         mDownloadManager = (DownloadManager) BaseApplication.getContext()
                 .getSystemService(Context.DOWNLOAD_SERVICE);
@@ -119,13 +123,10 @@ public class NetSongFragment extends BaseFragment
         items.add(new Item("热歌", 26));
         items.add(new Item("新歌", 27));
 
-        mTabLayout.setOverScrollMode(TabLayout.MODE_SCROLLABLE);
-        mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.main));
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int pos = tab.getPosition();
-                mViewPager.setCurrentItem(pos);
             }
 
             @Override
@@ -150,10 +151,9 @@ public class NetSongFragment extends BaseFragment
             fragments.add(songListFragment);
         }
 
-        NetSongPagerAdapter adapter = new NetSongPagerAdapter(getChildFragmentManager(), fragments);
+        NetSongPagerAdapter adapter = new NetSongPagerAdapter(getChildFragmentManager(), fragments, items);
         mViewPager.setAdapter(adapter);
         mViewPager.setOffscreenPageLimit(items.size());
-        mViewPager.setCurrentItem(0);
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
