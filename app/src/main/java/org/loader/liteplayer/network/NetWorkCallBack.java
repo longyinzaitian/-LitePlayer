@@ -12,7 +12,7 @@ public interface NetWorkCallBack {
      * @param jsonObject  json
      * @return jsonobject
      */
-    JSONObject onResponse(JSONObject jsonObject);
+    void onResponse(JSONObject jsonObject);
 
     /**
      * 错误

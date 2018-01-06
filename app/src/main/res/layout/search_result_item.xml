@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lines="1"
-            android:text="未知专辑"
+            android:text="时长"
             android:layout_marginTop="8dp"
             android:textColor="@color/main"
             android:textSize="12sp" />

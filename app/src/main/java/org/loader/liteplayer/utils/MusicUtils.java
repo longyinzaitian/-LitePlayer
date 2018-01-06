@@ -80,10 +80,10 @@ public class MusicUtils {
         return dir;
     }
 
-    public static String getSongTimeLength(int t){
+    public static String getSongTimeLength(long t){
         t = t/1000;
-        int minute = t/60;
-        int  seconds = t%60;
+        long minute = t/60;
+        long  seconds = t%60;
         StringBuilder builder = new StringBuilder();
         if (minute > 9){
             builder.append(minute).append(":");
