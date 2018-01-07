@@ -31,7 +31,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:title="网络歌曲"
+                app:title="在线歌曲"
                 app:titleTextColor="@color/white"
                 />
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -61,6 +61,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginRight="15dp"
+        android:src="@drawable/icon_net_work_search_song"
+        app:borderWidth="0dp"
         app:layout_anchor="@id/toolbar"
         app:layout_anchorGravity="bottom|end|right"
         app:layout_scrollFlags="scroll|enterAlwaysCollapsed"

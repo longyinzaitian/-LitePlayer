@@ -8,6 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:contentDescription="@null"
+        android:src="@drawable/pic_home_page_network_song"
+        android:scaleType="fitXY"
         />
     <View
         android:layout_width="match_parent"
@@ -33,6 +35,8 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:contentDescription="@null"
+                android:src="@drawable/icon_home_page_liu_xing"
+                android:padding="8dp"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -53,6 +57,8 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:contentDescription="@null"
+                android:src="@drawable/icon_home_page_yin_yue"
+                android:padding="8dp"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -73,6 +79,8 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:contentDescription="@null"
+                android:src="@drawable/icon_home_page_k_ge"
+                android:padding="8dp"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -88,12 +96,18 @@
         android:background="@color/lightgray"
         />
 
-    <ImageView
-        android:id="@+id/item_home_page_bottom_iv"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:contentDescription="@null"
-        />
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/item_home_page_bottom_iv"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:contentDescription="@null"
+            android:src="@drawable/pic_home_page_ou_mei_song"
+            android:scaleType="fitXY"
+            />
+    </RelativeLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
