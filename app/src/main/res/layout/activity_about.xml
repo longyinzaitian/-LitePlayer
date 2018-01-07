@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:layout_height="fill_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:background="@color/lime_green"
+        app:title="音乐播放器"
+        app:titleTextColor="@color/white"
+        >
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:text="关于我们"
+        android:id="@+id/au_title"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:layout_marginTop="100dp"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:layout_marginTop="10px"
+        android:paddingLeft="15px"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:text=""
+        android:layout_width="fill_parent"
+        android:id="@+id/au_content"/>
+    <View android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_marginTop="10px"
+        android:background="#CCCCCC" />
+
+    <TextView android:layout_marginTop="10px"
+        android:layout_height="40dp"
+        android:textColor="#000000"
+        android:paddingLeft="15px"
+        android:text="音乐播放器"
+        android:layout_width="fill_parent"
+        android:autoLink="phone"
+        android:gravity="center_vertical"
+        />
+    <View android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_marginTop="10px"
+        android:background="#CCCCCC"
+        />
+    <TextView android:layout_marginTop="10px"
+        android:layout_height="40dp"
+        android:textColor="#000000"
+        android:paddingLeft="15px"
+        android:text="个人博客：http://blog.csdn.net/u010156024"
+        android:layout_width="fill_parent"
+        android:autoLink="web"
+        android:gravity="center_vertical"
+        />
+
+</LinearLayout>

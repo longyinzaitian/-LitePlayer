@@ -1,16 +1,14 @@
 package org.loader.liteplayer.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
+import android.content.Intent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.loader.liteplayer.R;
+import org.loader.liteplayer.activity.AboutActivity;
+import org.loader.liteplayer.activity.SettingActivity;
 import org.loader.liteplayer.application.BaseApplication;
 
 /**
@@ -50,11 +48,28 @@ public class MinePageFragment extends BaseFragment {
 
     @Override
     protected void bindListener() {
-
+        mSettingLv.setOnClickListener(onClickListener);
+        mAboutLv.setOnClickListener(onClickListener);
     }
 
     @Override
     protected void loadData() {
 
     }
+
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.frm_mine_setting:
+                    startActivity(new Intent(BaseApplication.getContext(), SettingActivity.class));
+                    break;
+                case R.id.frm_mine_about:
+                    startActivity(new Intent(BaseApplication.getContext(), AboutActivity.class));
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 }

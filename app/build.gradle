@@ -8,6 +8,8 @@ android {
         applicationId "org.loader.liteplayer"
         minSdkVersion 14
         targetSdkVersion 27
+        versionCode 1
+        versionName "1.0.1"
     }
 
     buildTypes {

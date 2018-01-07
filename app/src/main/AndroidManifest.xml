@@ -41,6 +41,8 @@
             android:name=".activity.PlayActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.SettingActivity"/>
+        <activity android:name=".activity.AboutActivity"/>
 
         <service android:name=".service.PlayService" />
         <service android:name=".service.DownloadService" />
