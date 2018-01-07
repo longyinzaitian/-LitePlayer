@@ -43,6 +43,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".activity.SettingActivity"/>
         <activity android:name=".activity.AboutActivity"/>
+        <activity android:name=".activity.SongListActivity"/>
 
         <service android:name=".service.PlayService" />
         <service android:name=".service.DownloadService" />

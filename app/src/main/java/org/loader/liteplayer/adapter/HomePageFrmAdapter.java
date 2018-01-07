@@ -1,5 +1,6 @@
 package org.loader.liteplayer.adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import org.loader.liteplayer.R;
+import org.loader.liteplayer.activity.SongListActivity;
 import org.loader.liteplayer.application.BaseApplication;
 
 /**
@@ -52,7 +54,7 @@ public class HomePageFrmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         ImageView topImg;
         ImageView centerStartImg,centerMiddleImg,centerEndImg;
         ImageView bottomImg;
-        public HeaderViewHolder(View itemView) {
+        HeaderViewHolder(View itemView) {
             super(itemView);
             topImg = itemView.findViewById(R.id.item_home_page_top_iv);
             centerStartImg = itemView.findViewById(R.id.item_home_page_center_start_iv);
@@ -64,7 +66,7 @@ public class HomePageFrmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private class BottomViewHolder extends RecyclerView.ViewHolder{
         RecyclerView recyclerView;
-        public BottomViewHolder(View itemView) {
+        BottomViewHolder(View itemView) {
             super(itemView);
             recyclerView = itemView.findViewById(R.id.home_page_local_songs_list);
         }
@@ -84,23 +86,43 @@ public class HomePageFrmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Intent intent = new Intent(BaseApplication.getContext(), SongListActivity.class);
+
             switch (v.getId()){
                 //顶部
+                /*
+                28=网络歌曲
+                4=流行榜
+                32=音乐人
+                36=K歌金曲
+                3=欧美
+                */
                 case R.id.item_home_page_top_iv:
+                    intent.putExtra("id", 28);
+                    intent.putExtra("title", "网络歌曲");
                     break;
                 //中间
                 case R.id.item_home_page_center_start_iv:
+                    intent.putExtra("id", 4);
+                    intent.putExtra("title", "流行榜");
                     break;
                 case R.id.item_home_page_center_middle_iv:
+                    intent.putExtra("id", 32);
+                    intent.putExtra("title", "音乐人");
                     break;
                 case R.id.item_home_page_center_end_iv:
+                    intent.putExtra("id", 36);
+                    intent.putExtra("title", "K歌金曲");
                     break;
                 //底部
                 case R.id.item_home_page_bottom_iv:
+                    intent.putExtra("id", 3);
+                    intent.putExtra("title", "欧美歌曲");
                     break;
                 default:
                     break;
             }
+            BaseApplication.getContext().startActivity(intent);
         }
     };
 

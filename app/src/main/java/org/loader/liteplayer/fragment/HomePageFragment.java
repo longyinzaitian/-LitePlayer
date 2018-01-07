@@ -61,11 +61,6 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
     private MainActivity mActivity;
 
     private boolean isPause;
-    /*28=网络歌曲
-        3=欧美
-        4=流行榜
-        32=音乐人
-        36=K歌金曲*/
 
     public static HomePageFragment getInstance(){
         if (instance == null){

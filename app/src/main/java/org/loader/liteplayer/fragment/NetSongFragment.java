@@ -94,7 +94,7 @@ public class NetSongFragment extends BaseFragment
         mViewPager = view.findViewById(R.id.net_song_view_pager);
         mTabLayout = view.findViewById(R.id.net_song_tab_layout);
 
-//        Toolbar toolbar = view.findViewById(R.id.tool_bar);
+//        Toolbar toolbar = view.findViewById(R.id.toolbar);
 //        if (getActivity() != null){
 //            ((MainActivity)getActivity()).setSupportActionBar(toolbar);
 //        }
