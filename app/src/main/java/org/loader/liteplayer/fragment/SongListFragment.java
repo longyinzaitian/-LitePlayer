@@ -1,10 +1,10 @@
 package org.loader.liteplayer.fragment;
 
+import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -48,12 +48,16 @@ public class SongListFragment extends BaseFragment{
     protected void bindListener() {
         mAdapter = new HotSongListAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(BaseApplication.getContext()));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(BaseApplication.getContext(), RecyclerView.HORIZONTAL));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(BaseApplication.getContext(), RecyclerView.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
     protected void loadData() {
+        Bundle bundle = getArguments();
+        if (bundle == null){
+            return;
+        }
         mHotId = getArguments().getInt("id", 0);
         NetWorkUtil.getHotSongRank(String.valueOf(mHotId), new NetWorkCallBack() {
             @Override

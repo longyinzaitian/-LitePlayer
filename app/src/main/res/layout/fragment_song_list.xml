@@ -7,5 +7,9 @@
         android:id="@+id/rv_song_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:alwaysDrawnWithCache="false"
+        android:animationCache="false"
+        android:drawingCacheQuality="auto"
+        android:persistentDrawingCache="none"
         />
 </LinearLayout>

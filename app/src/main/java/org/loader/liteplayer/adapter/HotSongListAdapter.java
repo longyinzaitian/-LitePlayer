@@ -32,7 +32,7 @@ public class HotSongListAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ItemSongViewHolder){
+//        if (holder instanceof ItemSongViewHolder){
             HotSong hotSong = hotSongs.get(holder.getAdapterPosition());
             if (hotSong == null){
                 return;
@@ -43,8 +43,8 @@ public class HotSongListAdapter extends RecyclerView.Adapter {
             Glide.with(BaseApplication.getContext()).load(hotSong.getAlbumpic_small()).into(itemSongViewHolder.img);
             itemSongViewHolder.songName.setText(hotSong.getSongname());
             itemSongViewHolder.singerName.setText(hotSong.getSingername());
-            itemSongViewHolder.timeLength.setText(MusicUtils.getSongTimeLength(hotSong.getSeconds()));
-        }
+            itemSongViewHolder.timeLength.setText("时长："+MusicUtils.getSongTimeLength(hotSong.getSeconds()));
+//        }
     }
 
     @Override

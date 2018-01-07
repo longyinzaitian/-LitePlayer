@@ -81,7 +81,6 @@ public class MusicUtils {
     }
 
     public static String getSongTimeLength(long t){
-        t = t/1000;
         long minute = t/60;
         long  seconds = t%60;
         StringBuilder builder = new StringBuilder();

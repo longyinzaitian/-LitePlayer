@@ -66,7 +66,7 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
                 .getArtist());
 
         holder.timeLength.setText(String.format(Locale.CHINA, "时长：%s",
-                MusicUtils.getSongTimeLength(MusicUtils.sMusicList.get(holder.getAdapterPosition()).getLength())));
+                MusicUtils.getSongTimeLength(MusicUtils.sMusicList.get(holder.getAdapterPosition()).getLength()/1000)));
         holder.fileSize.setText(String.format(Locale.CHINA, "大小：%s",
                 MusicUtils.getFileLength(new File(MusicUtils.sMusicList.get(holder.getAdapterPosition()).getUri()).length())));
 
