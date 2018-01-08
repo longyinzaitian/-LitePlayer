@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import org.loader.liteplayer.R;
@@ -18,7 +19,7 @@ import org.loader.liteplayer.application.BaseApplication;
  */
 
 public class HomePageFrmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+    private MusicListAdapter adapter;
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 0){
@@ -130,10 +131,18 @@ public class HomePageFrmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
      * 设置页面下部数据
      */
     private void setBottomViewHolderData(BottomViewHolder bottomViewHolder){
-        MusicListAdapter adapter = new MusicListAdapter();
+        adapter = new MusicListAdapter();
         bottomViewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(BaseApplication.getContext()));
         bottomViewHolder.recyclerView.addItemDecoration(new DividerItemDecoration(BaseApplication.getContext(), RecyclerView.HORIZONTAL));
         bottomViewHolder.recyclerView.setAdapter(adapter);
+        bottomViewHolder.recyclerView.setFocusable(false);
+        bottomViewHolder.recyclerView.requestFocus();
+    }
+
+    public void setItemClickListener(AdapterView.OnItemClickListener onItemClickListener){
+        if (adapter != null){
+            adapter.setOnItemClickListener(onItemClickListener);
+        }
     }
 
 }

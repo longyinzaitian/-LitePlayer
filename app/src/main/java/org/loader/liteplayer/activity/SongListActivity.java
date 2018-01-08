@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import org.loader.liteplayer.R;
 import org.loader.liteplayer.fragment.SongListFragment;
@@ -24,6 +25,9 @@ public class SongListActivity extends BaseActivity{
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getIntent().getStringExtra("title"));
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -53,5 +57,17 @@ public class SongListActivity extends BaseActivity{
     @Override
     protected void clearData() {
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

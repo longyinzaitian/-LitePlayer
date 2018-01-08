@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import org.loader.liteplayer.R;
 import org.loader.liteplayer.application.BaseApplication;
-import org.loader.liteplayer.pojo.Music;
 import org.loader.liteplayer.utils.ImageTools;
 import org.loader.liteplayer.utils.MusicIconLoader;
 import org.loader.liteplayer.utils.MusicUtils;
@@ -29,14 +28,6 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
     private int mPlayingPosition;
     private AdapterView.OnItemClickListener mOnItemClickListener;
     private AdapterView.OnItemLongClickListener mOnItemLongClickListener;
-
-    public void setPlayingPosition(int position) {
-        mPlayingPosition = position;
-    }
-    
-    public int getPlayingPosition() {
-        return mPlayingPosition;
-    }
 
     @Override
     public MusicListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -76,6 +67,9 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
                 if (mOnItemClickListener == null){
                     return;
                 }
+
+                mPlayingPosition = holder.getAdapterPosition();
+                notifyDataSetChanged();
 
                 mOnItemClickListener.onItemClick(null,
                         null,

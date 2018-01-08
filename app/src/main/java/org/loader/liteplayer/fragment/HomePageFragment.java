@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -134,6 +135,7 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
 
         mMusicListView.setLayoutManager(new LinearLayoutManager(BaseApplication.getContext()));
         mMusicListView.setAdapter(mHomePageFrmAdapter);
+        mHomePageFrmAdapter.setItemClickListener(mMusicItemClickListener);
     }
 
     @Override
@@ -207,45 +209,6 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
     }
 
     /**
-     * 播放时高亮当前播放条目
-     * 实现播放的歌曲条目可见，且实现指示标记可见
-     * @param position int
-     */
-    private void onItemPlay(int position) {
-//        // 将ListView列表滑动到播放的歌曲的位置，是播放的歌曲可见
-//        mMusicListView.smoothScrollToPosition(position);
-//        // 获取上次播放的歌曲的position
-//        int prePlayingPosition = mMusicListAdapter.getPlayingPosition();
-//
-//        // 如果上次播放的位置在可视区域内
-//        // 则手动设置invisible
-//        if (prePlayingPosition >= mMusicListView.getFirstVisiblePosition()
-//                && prePlayingPosition <= mMusicListView
-//                        .getLastVisiblePosition()) {
-//            int preItem = prePlayingPosition
-//                    - mMusicListView.getFirstVisiblePosition();
-//            ((ViewGroup) mMusicListView.getChildAt(preItem)).getChildAt(0)
-//                    .setVisibility(View.INVISIBLE);
-//        }
-//
-//        // 设置新的播放位置
-//        mMusicListAdapter.setPlayingPosition(position);
-//
-//        // 如果新的播放位置不在可视区域
-//        // 则直接返回
-//        if (mMusicListView.getLastVisiblePosition() < position
-//                || mMusicListView.getFirstVisiblePosition() > position){
-//            return;
-//        }
-//
-//        // 如果在可视区域
-//        // 手动设置改item visible
-//        int currentItem = position - mMusicListView.getFirstVisiblePosition();
-//        ((ViewGroup) mMusicListView.getChildAt(currentItem)).getChildAt(0)
-//                .setVisibility(View.VISIBLE);
-    }
-
-    /**
      * 播放音乐item
      * 
      * @param position int
@@ -268,7 +231,6 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
 
         //设置进度条的总长度
         mMusicProgress.setMax(mActivity.getPlayService().getDuration());
-        onItemPlay(position);
 
         Music music = MusicUtils.sMusicList.get(position);
         Bitmap icon = MusicIconLoader.getInstance().load(music.getImage());
