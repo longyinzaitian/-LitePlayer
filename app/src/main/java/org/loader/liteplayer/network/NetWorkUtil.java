@@ -1,15 +1,21 @@
 package org.loader.liteplayer.network;
 
+import android.util.Log;
+
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.ResponseBody;
 import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.builder.GetBuilder;
+import com.zhy.http.okhttp.builder.OkHttpRequestBuilder;
 import com.zhy.http.okhttp.builder.PostFormBuilder;
 import com.zhy.http.okhttp.callback.Callback;
+import com.zhy.http.okhttp.callback.FileCallBack;
 
 import org.json.JSONObject;
 import org.loader.liteplayer.utils.LogUtil;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -162,12 +168,45 @@ public class NetWorkUtil {
             });
     }
 
-    private static void addSystemParams(PostFormBuilder builder){
+    private static void addSystemParams(OkHttpRequestBuilder builder){
         builder.addParams("showapi_appid", "44940");
         builder.addParams("showapi_sign", "121b5eab89134b539fdf85b527ad30b9");
         builder.addParams("showapi_timestamp", "");
         builder.addParams("showapi_sign_method", "md5");
         builder.addParams("showapi_res_gzip", "1");
+    }
+
+    public static void startDownFile(String url, String directory, String fileName, final DownFileCallback callback){
+        GetBuilder builder = OkHttpUtils.get()
+                .url(url);
+        addSystemParams(builder);
+
+        builder.build().execute(new FileCallBack(directory, fileName)
+        {
+            @Override
+            public void inProgress(float progress)
+            {
+                if (callback == null){
+                    return;
+                }
+                callback.updateProgress((int) (100 * progress));
+            }
+
+            @Override
+            public void onError(Request request, Exception e)
+            {
+                Log.e(TAG, "onError :" + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(File file)
+            {
+                if (callback == null){
+                    return;
+                }
+                callback.onResponseFile(file);
+            }
+        });
     }
 
     private static boolean checkResult(JSONObject result){

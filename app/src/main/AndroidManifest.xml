@@ -46,7 +46,6 @@
         <activity android:name=".activity.SongListActivity"/>
 
         <service android:name=".service.PlayService" />
-        <service android:name=".service.DownloadService" />
 
     </application>
 

@@ -1,17 +1,5 @@
 package org.loader.liteplayer.service;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import org.loader.liteplayer.R;
-import org.loader.liteplayer.activity.PlayActivity;
-import org.loader.liteplayer.utils.Constants;
-import org.loader.liteplayer.utils.ImageTools;
-import org.loader.liteplayer.utils.LogUtil;
-import org.loader.liteplayer.utils.MusicIconLoader;
-import org.loader.liteplayer.utils.MusicUtils;
-import org.loader.liteplayer.utils.SpUtils;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -35,6 +23,18 @@ import android.os.PowerManager.WakeLock;
 import android.os.SystemClock;
 import android.widget.RemoteViews;
 import android.widget.Toast;
+
+import org.loader.liteplayer.R;
+import org.loader.liteplayer.activity.PlayActivity;
+import org.loader.liteplayer.utils.Constants;
+import org.loader.liteplayer.utils.ImageTools;
+import org.loader.liteplayer.utils.LogUtil;
+import org.loader.liteplayer.utils.MusicIconLoader;
+import org.loader.liteplayer.utils.MusicUtils;
+import org.loader.liteplayer.utils.SpUtils;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 2015年8月15日 16:34:37

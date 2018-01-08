@@ -137,9 +137,11 @@ public class HomePageFrmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         bottomViewHolder.recyclerView.setAdapter(adapter);
         bottomViewHolder.recyclerView.setFocusable(false);
         bottomViewHolder.recyclerView.requestFocus();
+        adapter.setOnItemClickListener(onItemClickListener);
     }
-
+    private AdapterView.OnItemClickListener onItemClickListener;
     public void setItemClickListener(AdapterView.OnItemClickListener onItemClickListener){
+        this.onItemClickListener = onItemClickListener;
         if (adapter != null){
             adapter.setOnItemClickListener(onItemClickListener);
         }

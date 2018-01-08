@@ -2,7 +2,6 @@ package org.loader.liteplayer.application;
 
 import android.content.Intent;
 
-import org.loader.liteplayer.service.DownloadService;
 import org.loader.liteplayer.service.PlayService;
 
 /**
@@ -16,7 +15,6 @@ public class App extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         startService(new Intent(context, PlayService.class));
-        startService(new Intent(context, DownloadService.class));
     }
 
 

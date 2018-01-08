@@ -13,6 +13,7 @@ import org.loader.liteplayer.R;
 import org.loader.liteplayer.adapter.HotSongListAdapter;
 import org.loader.liteplayer.application.AppUtil;
 import org.loader.liteplayer.application.BaseApplication;
+import org.loader.liteplayer.event.EventCenter;
 import org.loader.liteplayer.network.NetWorkCallBack;
 import org.loader.liteplayer.network.NetWorkUtil;
 import org.loader.liteplayer.pojo.HotSong;
@@ -50,6 +51,12 @@ public class SongListFragment extends BaseFragment{
         mRecyclerView.setLayoutManager(new LinearLayoutManager(BaseApplication.getContext()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(BaseApplication.getContext(), RecyclerView.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new HotSongListAdapter.OnItemClickListener(){
+            @Override
+            public void onItemClick(int pos, String url) {
+
+            }
+        });
     }
 
     @Override

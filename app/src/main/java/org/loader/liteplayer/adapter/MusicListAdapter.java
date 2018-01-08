@@ -73,8 +73,8 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
 
                 mOnItemClickListener.onItemClick(null,
                         null,
-                        holder.getAdapterPosition(),
-                        holder.getAdapterPosition());
+                        mPlayingPosition,
+                        mPlayingPosition);
             }
         });
 

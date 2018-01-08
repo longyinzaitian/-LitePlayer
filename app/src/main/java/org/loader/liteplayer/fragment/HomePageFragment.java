@@ -96,7 +96,6 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
     public void onStart() {
         super.onStart();
         LogUtil.l(TAG, "onViewCreated");
-        mActivity.allowBindService();
     }
 
     @Override
@@ -216,6 +215,7 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
         public void onItemClick(AdapterView<?> parent, View view, int position,
                 long id) {
             play(position);
+            mActivity.getPlayService().play(position);
         }
     };
 
@@ -255,7 +255,7 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
      * @param position int
      */
     public void onPlay(int position) {
-        if (MusicUtils.sMusicList.isEmpty() || position < 0){
+        if (MusicUtils.sMusicList.isEmpty()){
             Toast.makeText(getActivity(), "当前手机没有MP3文件", Toast.LENGTH_LONG).show();
             return;
         }

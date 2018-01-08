@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import org.loader.liteplayer.event.EventCenter;
 import org.loader.liteplayer.event.PublishProgressEvent;
 import org.loader.liteplayer.event.SongPlayChangeEvent;
-import org.loader.liteplayer.service.DownloadService;
 import org.loader.liteplayer.service.PlayService;
 import org.loader.liteplayer.utils.LogUtil;
 import org.loader.liteplayer.utils.StatusBarCompat;
@@ -24,7 +23,6 @@ import org.loader.liteplayer.utils.StatusBarCompat;
  */
 public abstract class BaseActivity extends AppCompatActivity {
     protected PlayService mPlayService;
-    protected DownloadService mDownloadService;
     private final String TAG = BaseActivity.class.getSimpleName();
     
     private ServiceConnection mPlayServiceConnection = new ServiceConnection() {
@@ -38,19 +36,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         public void onServiceConnected(ComponentName name, IBinder service) {
             mPlayService = ((PlayService.PlayBinder) service).getService();
             mPlayService.setOnMusicEventListener(mMusicEventListener);
-        }
-    };
-    
-    private ServiceConnection mDownloadServiceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            LogUtil.l(TAG, "download--->onServiceDisconnected");
-            mDownloadService = null;
-        }
-        
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            mDownloadService = ((DownloadService.DownloadBinder) service).getService();
         }
     };
     
@@ -98,10 +83,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarCompat.compat(this);
-        //绑定下载服务
-        bindService(new Intent(this, DownloadService.class),
-                mDownloadServiceConnection,
-                Context.BIND_AUTO_CREATE);
         setContentView(getLayoutId());
         bindView();
         bindListener();
@@ -109,14 +90,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        unbindService(mDownloadServiceConnection);
-        super.onDestroy();
-        clearData();
+    protected void onResume() {
+        super.onResume();
+        allowBindService();
     }
 
-    public DownloadService getDownloadService() {
-        return mDownloadService;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        clearData();
     }
 
     /**

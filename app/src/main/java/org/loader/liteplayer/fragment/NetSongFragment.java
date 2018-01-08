@@ -1,51 +1,28 @@
 package org.loader.liteplayer.fragment;
 
 import android.app.DownloadManager;
-import android.app.DownloadManager.Request;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.AbsListView.OnScrollListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
-import android.widget.TableLayout;
-import android.widget.Toast;
 
 import org.loader.liteplayer.R;
-import org.loader.liteplayer.activity.MainActivity;
 import org.loader.liteplayer.adapter.NetSongPagerAdapter;
-import org.loader.liteplayer.adapter.SearchResultAdapter;
 import org.loader.liteplayer.application.BaseApplication;
-import org.loader.liteplayer.engine.GetDownloadInfo;
-import org.loader.liteplayer.engine.GetDownloadInfo.OnDownloadGetListener;
-import org.loader.liteplayer.engine.SearchMusic;
 import org.loader.liteplayer.engine.SongsRecommendation;
 import org.loader.liteplayer.pojo.HotSong;
 import org.loader.liteplayer.pojo.Item;
-import org.loader.liteplayer.pojo.SearchResult;
-import org.loader.liteplayer.utils.Constants;
-import org.loader.liteplayer.utils.MusicUtils;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.id.text1;
 
 /**
  * 2015年8月15日 16:34:37
@@ -206,11 +183,7 @@ public class NetSongFragment extends BaseFragment
             new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GetDownloadInfo
-                            .getInstance()
-                            .setListener(mDownloadUrlListener)
-                            .parse(position,
-                                    mResultData.get(position).getUrl());
+
                     dismissDialog();
                 }
             });
@@ -233,27 +206,6 @@ public class NetSongFragment extends BaseFragment
             mPopupWindow.dismiss();
         }
     }
-
-    private OnDownloadGetListener mDownloadUrlListener =
-            new OnDownloadGetListener() {
-        @Override
-        public void onMusic(int position, String url) {
-            if (position == -1 || url == null) {
-                Toast.makeText(BaseApplication.getContext(), "歌曲链接失效",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-        }
-
-        @Override
-        public void onLrc(int position, String url) {
-            if (url == null){
-                return;
-            }
-
-        }
-    };
 
     @Override
     public void onClick(View v) {
