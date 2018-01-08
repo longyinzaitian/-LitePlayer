@@ -133,4 +133,9 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
     public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener onItemLongClickListener){
         this.mOnItemLongClickListener = onItemLongClickListener;
     }
+
+    public void setPlayingPosition(int mPlayingPosition){
+        this.mPlayingPosition = mPlayingPosition;
+        notifyDataSetChanged();
+    }
 }

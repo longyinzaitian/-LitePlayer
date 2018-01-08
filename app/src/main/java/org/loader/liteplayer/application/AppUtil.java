@@ -3,7 +3,7 @@ package org.loader.liteplayer.application;
 import com.google.gson.Gson;
 
 /**
- * @author husyin
+ * @author longyinzaitian
  * @date 2018/1/5
  */
 

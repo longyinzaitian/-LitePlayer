@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.loader.liteplayer.application.BaseApplication;
+import org.loader.liteplayer.utils.LogUtil;
 
 /**
  * @author longyinzaitian
@@ -22,11 +23,13 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+        LogUtil.l(TAG, "onHiddenChanged hidden:" + hidden);
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        LogUtil.l(TAG, "setUserVisibleHint,  isVisibleToUser:" + isVisibleToUser);
     }
 
     @Override
@@ -61,16 +64,19 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        LogUtil.l(TAG, "onResume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        LogUtil.l(TAG, "onPause");
     }
 
     @Override
     public void onStop() {
         super.onStop();
+        LogUtil.l(TAG, "onStop");
     }
 
     @Override

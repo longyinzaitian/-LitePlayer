@@ -1,9 +1,14 @@
 package org.loader.liteplayer.activity;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -21,11 +26,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.loader.liteplayer.R;
+import org.loader.liteplayer.event.EventCenter;
+import org.loader.liteplayer.event.IEvent;
+import org.loader.liteplayer.event.IEventCallback;
+import org.loader.liteplayer.event.PublishProgressEvent;
+import org.loader.liteplayer.event.SongPlayChangeEvent;
 import org.loader.liteplayer.pojo.Music;
+import org.loader.liteplayer.service.PlayService;
 import org.loader.liteplayer.ui.CDView;
 import org.loader.liteplayer.ui.LrcView;
 import org.loader.liteplayer.ui.PagerIndicator;
 import org.loader.liteplayer.utils.ImageTools;
+import org.loader.liteplayer.utils.LogUtil;
 import org.loader.liteplayer.utils.MobileUtils;
 import org.loader.liteplayer.utils.MusicIconLoader;
 import org.loader.liteplayer.utils.MusicUtils;
@@ -40,7 +52,7 @@ import java.util.ArrayList;
  *  @author longyinzaitian
  */
 public class PlayActivity extends BaseActivity implements OnClickListener {
-
+    private static String TAG = "PlayActivity";
     private LinearLayout mPlayContainer;
     /**back button*/
     private ImageView mPlayBackImageView;
@@ -68,51 +80,18 @@ public class PlayActivity extends BaseActivity implements OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.play_activity_layout);
-        setupViews();
-    }
-
-    /**
-     * 初始化view
-     */
-    private void setupViews() {
-        mPlayContainer = (LinearLayout) findViewById(R.id.ll_play_container);
-        mPlayBackImageView = (ImageView) findViewById(R.id.iv_play_back);
-        mMusicTitle = (TextView) findViewById(R.id.tv_music_title);
-        mViewPager = (ViewPager) findViewById(R.id.vp_play_container);
-        mPlaySeekBar = (SeekBar) findViewById(R.id.sb_play_progress);
-        mStartPlayButton = (ImageButton) findViewById(R.id.ib_play_start);
-        mPagerIndicator = (PagerIndicator) findViewById(R.id.pi_play_indicator);
-
-        // 动态设置seekBar的margin
-        MarginLayoutParams p = (MarginLayoutParams) mPlaySeekBar
-                .getLayoutParams();
-        p.leftMargin = (int) (MobileUtils.getScreenWidth() * 0.1);
-        p.rightMargin = (int) (MobileUtils.getScreenWidth() * 0.1);
-
-        mPlaySeekBar.setOnSeekBarChangeListener(mSeekBarChangeListener);
-
-        initViewPagerContent();
-        // 设置viewpager的切换动画
-        mViewPager.setPageTransformer(true, new PlayPageTransformer());
-        mPagerIndicator.create(mViewPagerContent.size());
-        mViewPager.addOnPageChangeListener(mPageChangeListener);
-        mViewPager.setAdapter(mPagerAdapter);
-
-        mPlayBackImageView.setOnClickListener(this);
+        super.onCreate(savedInstanceState);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        allowBindService();
     }
 
     @Override
     protected void onPause() {
-        allowUnbindService();
+        getApplicationContext().unbindService(mPlayServiceConnection);
         super.onPause();
     }
 
@@ -213,16 +192,19 @@ public class PlayActivity extends BaseActivity implements OnClickListener {
         if(position==0){
             return ;
         }
+
         Bitmap bgBitmap=null;
         if(MusicUtils.sMusicList.size()!=0){
             Music currentMusic = MusicUtils.sMusicList.get(position);
             bgBitmap = MusicIconLoader.getInstance().load(
                     currentMusic.getImage());
         }
+
         if (bgBitmap == null) {
             bgBitmap = BitmapFactory.decodeResource(getResources(),
                     R.drawable.ic_launcher);
         }
+
         mPlayContainer.setDividerDrawable(
                 new ShapeDrawable(new PlayBgShape(bgBitmap)));
     }
@@ -324,26 +306,83 @@ public class PlayActivity extends BaseActivity implements OnClickListener {
 
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.play_activity_layout;
     }
 
     @Override
     protected void bindView() {
-
+        mPlayContainer = findViewById(R.id.ll_play_container);
+        mPlayBackImageView = findViewById(R.id.iv_play_back);
+        mMusicTitle = findViewById(R.id.tv_music_title);
+        mViewPager = findViewById(R.id.vp_play_container);
+        mPlaySeekBar = findViewById(R.id.sb_play_progress);
+        mStartPlayButton = findViewById(R.id.ib_play_start);
+        mPagerIndicator = findViewById(R.id.pi_play_indicator);
     }
 
     @Override
     protected void bindListener() {
+        // 动态设置seekBar的margin
+        MarginLayoutParams p = (MarginLayoutParams) mPlaySeekBar
+                .getLayoutParams();
+        p.leftMargin = (int) (MobileUtils.getScreenWidth() * 0.1);
+        p.rightMargin = (int) (MobileUtils.getScreenWidth() * 0.1);
 
+        mPlaySeekBar.setOnSeekBarChangeListener(mSeekBarChangeListener);
+
+        initViewPagerContent();
+        // 设置viewpager的切换动画
+        mViewPager.setPageTransformer(true, new PlayPageTransformer());
+        mPagerIndicator.create(mViewPagerContent.size());
+        mViewPager.addOnPageChangeListener(mPageChangeListener);
+        mViewPager.setAdapter(mPagerAdapter);
+
+        mPlayBackImageView.setOnClickListener(this);
+
+        EventCenter.getInstance().registerIEvent(PublishProgressEvent.class, mPublishProgressEventCallback);
+        EventCenter.getInstance().registerIEvent(SongPlayChangeEvent.class, mSongPlayEventCallback);
     }
+
+    private IEventCallback mPublishProgressEventCallback = new IEventCallback() {
+        @Override
+        public void eventCallback(IEvent event) {
+            PublishProgressEvent publishProgressEvent = (PublishProgressEvent) event;
+            mPlaySeekBar.setProgress(publishProgressEvent.getProgress());
+        }
+    };
+
+    private IEventCallback mSongPlayEventCallback = new IEventCallback() {
+        @Override
+        public void eventCallback(IEvent event) {
+            SongPlayChangeEvent songPlayChangeEvent = (SongPlayChangeEvent) event;
+            onPlay(songPlayChangeEvent.getPos());
+        }
+    };
 
     @Override
     protected void loadData() {
-
+        getApplicationContext().bindService(new Intent(this, PlayService.class),
+                mPlayServiceConnection,
+                Context.BIND_AUTO_CREATE);
     }
 
     @Override
     protected void clearData() {
-
+        EventCenter.getInstance().removeIEventCallback(PublishProgressEvent.class, mPublishProgressEventCallback);
+        EventCenter.getInstance().removeIEventCallback(PublishProgressEvent.class, mSongPlayEventCallback);
     }
+
+    private ServiceConnection mPlayServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            LogUtil.l(TAG, "play--->onServiceDisconnected");
+            mPlayService = null;
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mPlayService = ((PlayService.PlayBinder) service).getService();
+            onPlay(mPlayService.getPlayingPosition());
+        }
+    };
 }

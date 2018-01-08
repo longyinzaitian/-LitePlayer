@@ -1,7 +1,7 @@
 package org.loader.liteplayer.pojo;
 
 /**
- * @author husyin
+ * @author longyinzaitian
  * @date 2018/1/5
  */
 

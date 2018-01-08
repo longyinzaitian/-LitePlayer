@@ -9,6 +9,9 @@ import android.os.IBinder;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 
+import org.loader.liteplayer.event.EventCenter;
+import org.loader.liteplayer.event.PublishProgressEvent;
+import org.loader.liteplayer.event.SongPlayChangeEvent;
 import org.loader.liteplayer.service.DownloadService;
 import org.loader.liteplayer.service.PlayService;
 import org.loader.liteplayer.utils.LogUtil;
@@ -58,10 +61,12 @@ public abstract class BaseActivity extends AppCompatActivity {
             new PlayService.OnMusicEventListener() {
         @Override
         public void onPublish(int progress) {
+            EventCenter.getInstance().postEvent(new PublishProgressEvent(progress));
         }
 
         @Override
         public void onChange(int position) {
+            EventCenter.getInstance().postEvent(new SongPlayChangeEvent(position));
         }
     };
     

@@ -28,6 +28,11 @@ import org.loader.liteplayer.activity.MainActivity;
 import org.loader.liteplayer.activity.PlayActivity;
 import org.loader.liteplayer.adapter.HomePageFrmAdapter;
 import org.loader.liteplayer.application.BaseApplication;
+import org.loader.liteplayer.event.EventCenter;
+import org.loader.liteplayer.event.IEvent;
+import org.loader.liteplayer.event.IEventCallback;
+import org.loader.liteplayer.event.PublishProgressEvent;
+import org.loader.liteplayer.event.SongPlayChangeEvent;
 import org.loader.liteplayer.pojo.Music;
 import org.loader.liteplayer.utils.ImageTools;
 import org.loader.liteplayer.utils.LogUtil;
@@ -36,6 +41,7 @@ import org.loader.liteplayer.utils.MusicUtils;
 import org.loader.liteplayer.utils.ThreadCenter;
 
 import java.io.File;
+import java.io.LineNumberInputStream;
 
 /**
  * 2015年8月15日 16:34:37
@@ -97,6 +103,15 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
     public void onResume() {
         super.onResume();
         isPause = false;
+        if (mActivity == null){
+            return;
+        }
+
+        if (mActivity.getPlayService() == null){
+            return;
+        }
+
+        play(mActivity.getPlayService().getPlayingPosition());
     }
 
     @Override
@@ -144,6 +159,23 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
         mPreImageView.setOnClickListener(this);
         mPlayImageView.setOnClickListener(this);
         mNextImageView.setOnClickListener(this);
+
+        EventCenter.getInstance().registerIEvent(SongPlayChangeEvent.class, new IEventCallback() {
+            @Override
+            public void eventCallback(IEvent event) {
+                SongPlayChangeEvent songPlayChangeEvent = (SongPlayChangeEvent) event;
+                play(songPlayChangeEvent.getPos());
+                mHomePageFrmAdapter.setPlayingPosition(songPlayChangeEvent.getPos());
+            }
+        });
+
+        EventCenter.getInstance().registerIEvent(PublishProgressEvent.class, new IEventCallback() {
+            @Override
+            public void eventCallback(IEvent event) {
+                PublishProgressEvent publishProgressEvent = (PublishProgressEvent) event;
+                setProgress(publishProgressEvent.getProgress());
+            }
+        });
     }
 
     @Override
@@ -214,8 +246,7 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
      * @param position int
      */
     private void play(int position) {
-        int pos = mActivity.getPlayService().play(position);
-        onPlay(pos);
+        onPlay(position);
     }
 
     /**
@@ -297,12 +328,5 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
         }
 
         mMusicProgress.setProgress(progress);
-    }
-
-    /**
-     * 主界面MainActivity.java中调用更新歌曲列表
-     */
-    public void onMusicListChanged() {
-//        mMusicListAdapter.notifyDataSetChanged();
     }
 }

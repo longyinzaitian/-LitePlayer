@@ -14,7 +14,7 @@ import org.loader.liteplayer.activity.SongListActivity;
 import org.loader.liteplayer.application.BaseApplication;
 
 /**
- * @author husyin
+ * @author longyinzaitian
  * @date 2018/1/3
  */
 
@@ -142,6 +142,12 @@ public class HomePageFrmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void setItemClickListener(AdapterView.OnItemClickListener onItemClickListener){
         if (adapter != null){
             adapter.setOnItemClickListener(onItemClickListener);
+        }
+    }
+
+    public void setPlayingPosition(int mPlayingPosition){
+        if (adapter != null){
+            adapter.setPlayingPosition(mPlayingPosition);
         }
     }
 

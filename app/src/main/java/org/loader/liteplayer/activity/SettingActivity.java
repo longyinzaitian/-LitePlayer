@@ -8,7 +8,7 @@ import android.widget.TextView;
 import org.loader.liteplayer.R;
 
 /**
- * @author husyin
+ * @author longyinzaitian
  * @date 2018/1/2
  */
 
