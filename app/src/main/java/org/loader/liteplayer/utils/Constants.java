@@ -13,4 +13,6 @@ public class Constants {
     public static final String SP_NAME = "lite_player";
     /** 播放位置 */
     public static final String PLAY_POS = "playing_position";
+    /** 播放顺序*/
+    public static final String PLAY_ORDER = "playing_order";
 }

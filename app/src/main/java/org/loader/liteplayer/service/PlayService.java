@@ -64,6 +64,7 @@ public class PlayService extends Service implements
     private int mPlayingPosition;
     private boolean isShaking;
     private boolean isFinish = false;
+    private boolean isMediaPlayCom = false;
 
     public class PlayBinder extends Binder {
         public PlayService getService() {
@@ -368,6 +369,10 @@ public class PlayService extends Service implements
             return play(0);
         }
 
+        if (isMediaPlayCom && (Boolean) SpUtils.get(Constants.PLAY_ORDER, false)){
+            isMediaPlayCom = false;
+            return play(mPlayingPosition);
+        }
         return play(mPlayingPosition + 1);
     }
 
@@ -440,6 +445,7 @@ public class PlayService extends Service implements
      */
     @Override
     public void onCompletion(MediaPlayer mp) {
+        isMediaPlayCom = true;
         next();
     }
 

@@ -34,10 +34,12 @@ import org.loader.liteplayer.event.IEventCallback;
 import org.loader.liteplayer.event.PublishProgressEvent;
 import org.loader.liteplayer.event.SongPlayChangeEvent;
 import org.loader.liteplayer.pojo.Music;
+import org.loader.liteplayer.utils.Constants;
 import org.loader.liteplayer.utils.ImageTools;
 import org.loader.liteplayer.utils.LogUtil;
 import org.loader.liteplayer.utils.MusicIconLoader;
 import org.loader.liteplayer.utils.MusicUtils;
+import org.loader.liteplayer.utils.SpUtils;
 import org.loader.liteplayer.utils.ThreadCenter;
 
 import java.io.File;
@@ -60,6 +62,7 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
     private ImageView mPreImageView;
     private ImageView mPlayImageView;
     private ImageView mNextImageView;
+    private ImageView mPlayOrderImageView;
 
     private SeekBar mMusicProgress;
 
@@ -68,6 +71,7 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
     private MainActivity mActivity;
 
     private boolean isPause;
+    private boolean isOneCycle = false;
 
     public static HomePageFragment getInstance(){
         if (instance == null){
@@ -144,6 +148,7 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
         mPreImageView = layout.findViewById(R.id.iv_pre);
         mPlayImageView = layout.findViewById(R.id.iv_play);
         mNextImageView = layout.findViewById(R.id.iv_next);
+        mPlayOrderImageView = layout.findViewById(R.id.iv_play_order);
 
         mMusicProgress = layout.findViewById(R.id.play_progress);
 
@@ -158,6 +163,7 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
         mPreImageView.setOnClickListener(this);
         mPlayImageView.setOnClickListener(this);
         mNextImageView.setOnClickListener(this);
+        mPlayOrderImageView.setOnClickListener(this);
 
         EventCenter.getInstance().registerIEvent(SongPlayChangeEvent.class, new IEventCallback() {
             @Override
@@ -312,6 +318,16 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
         case R.id.iv_pre:
             // 上一曲
             mActivity.getPlayService().pre();
+            break;
+        case R.id.iv_play_order:
+            isOneCycle = !isOneCycle;
+
+            if (isOneCycle){
+                mPlayOrderImageView.setImageResource(R.drawable.ic_media_play_one_cycle);
+            }else {
+                mPlayOrderImageView.setImageResource(R.drawable.ic_media_play_order);
+            }
+            SpUtils.put(Constants.PLAY_ORDER, isOneCycle);
             break;
         default:
             break;
