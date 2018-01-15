@@ -8,16 +8,15 @@ import android.view.View;
 
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.loader.liteplayer.R;
 import org.loader.liteplayer.adapter.HotSongListAdapter;
 import org.loader.liteplayer.application.AppUtil;
 import org.loader.liteplayer.application.BaseApplication;
-import org.loader.liteplayer.event.EventCenter;
 import org.loader.liteplayer.network.NetWorkCallBack;
 import org.loader.liteplayer.network.NetWorkUtil;
-import org.loader.liteplayer.pojo.HotSong;
-import org.loader.liteplayer.pojo.HotSongPageBean;
+import org.loader.liteplayer.pojo.MusicList;
 
 import java.util.List;
 
@@ -28,7 +27,21 @@ import java.util.List;
 public class SongListFragment extends BaseFragment{
     private RecyclerView mRecyclerView;
     private HotSongListAdapter mAdapter;
-    private int mHotId;
+    private String mHotId;
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser){
+            if (mAdapter == null){
+                return;
+            }
+
+            if (mAdapter.getItemCount() <= 0){
+                getYiTingRankDetaiList();
+            }
+        }
+    }
 
     @Override
     public void onDestroy() {
@@ -65,8 +78,11 @@ public class SongListFragment extends BaseFragment{
         if (bundle == null){
             return;
         }
-        mHotId = getArguments().getInt("id", 0);
-        NetWorkUtil.getHotSongRank(String.valueOf(mHotId), new NetWorkCallBack() {
+        mHotId = getArguments().getString("id", "");
+    }
+
+    private void getYiTingRankDetaiList() {
+        NetWorkUtil.getYiTingRankDetailList(String.valueOf(mHotId), new NetWorkCallBack() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 if (jsonObject == null){
@@ -78,25 +94,19 @@ public class SongListFragment extends BaseFragment{
                     return;
                 }
 
-                JSONObject pageBean = resBody.optJSONObject("pagebean");
+                JSONArray pageBean = resBody.optJSONArray("musicList");
                 if (pageBean == null){
                     return;
                 }
 
-                HotSongPageBean hotSongPageBean = AppUtil.getGson().fromJson(pageBean.toString(),
-                        new TypeToken<HotSongPageBean>(){}.getType());
+                List<MusicList.MusicItem> hotSongPageBean = AppUtil.getGson().fromJson(pageBean.toString(),
+                        new TypeToken<List<MusicList.MusicItem>>(){}.getType());
 
-                int code = hotSongPageBean.getCode();
-                if (code == 0){
-                    List<HotSong> hotSongs = hotSongPageBean.getSonglist();
-                    if (hotSongs == null || hotSongs.isEmpty()){
-                        return;
-                    }else {
-                        mAdapter.setSongsData(hotSongs);
-                    }
-                }else {
-
+                if (hotSongPageBean == null || hotSongPageBean.isEmpty()){
+                    return;
                 }
+
+                mAdapter.setSongsData(hotSongPageBean);
             }
 
             @Override

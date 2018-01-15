@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import org.loader.liteplayer.pojo.Item;
+import org.loader.liteplayer.pojo.RankList;
 
 import java.util.List;
 
@@ -16,9 +17,9 @@ import java.util.List;
 
 public class NetSongPagerAdapter extends FragmentStatePagerAdapter {
     private List<Fragment> fragmentList;
-    private List<Item> items;
+    private List<RankList.Item> items;
 
-    public NetSongPagerAdapter(FragmentManager fm, List<Fragment> fragmentList, List<Item> items) {
+    public NetSongPagerAdapter(FragmentManager fm, List<Fragment> fragmentList, List<RankList.Item> items) {
         super(fm);
         this.fragmentList = fragmentList;
         this.items = items;
@@ -37,6 +38,6 @@ public class NetSongPagerAdapter extends FragmentStatePagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return items.get(position).getTitle();
+        return items.get(position).getName();
     }
 }

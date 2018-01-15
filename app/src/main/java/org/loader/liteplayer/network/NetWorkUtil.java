@@ -90,8 +90,14 @@ public class NetWorkUtil {
             .execute(new Callback() {
                 @Override
                 public Object parseNetworkResponse(Response response) throws IOException {
-                    LogUtil.l(TAG, "getSongLrcById parseNetworkResponse response.body:"+response.body().string());
-                    return response.body().string();
+                    ResponseBody responseBody = response.body();
+                    if (responseBody == null){
+                        return null;
+                    }
+
+                    String responseStr = responseBody.string();
+                    LogUtil.l(TAG, "getHotSongRank parseNetworkResponse response.body:"+responseStr);
+                    return responseStr;
                 }
 
                 @Override
@@ -135,8 +141,14 @@ public class NetWorkUtil {
             .execute(new Callback() {
                 @Override
                 public Object parseNetworkResponse(Response response) throws IOException {
-                    LogUtil.l(TAG, "SearchSongByKeyword parseNetworkResponse response.boyd:"+response.body().string());
-                    return response.body().string();
+                    ResponseBody responseBody = response.body();
+                    if (responseBody == null){
+                        return null;
+                    }
+
+                    String responseStr = responseBody.string();
+                    LogUtil.l(TAG, "getHotSongRank parseNetworkResponse response.body:"+responseStr);
+                    return responseStr;
                 }
 
                 @Override
@@ -181,8 +193,14 @@ public class NetWorkUtil {
             .execute(new Callback() {
                 @Override
                 public Object parseNetworkResponse(Response response) throws IOException {
-                    LogUtil.l(TAG, "getRankList parseNetworkResponse response.boyd:"+response.body().string());
-                    return response.body().string();
+                    ResponseBody responseBody = response.body();
+                    if (responseBody == null){
+                        return null;
+                    }
+
+                    String responseStr = responseBody.string();
+                    LogUtil.l(TAG, "getHotSongRank parseNetworkResponse response.body:"+responseStr);
+                    return responseStr;
                 }
 
                 @Override
@@ -218,6 +236,8 @@ public class NetWorkUtil {
      * 根据榜行榜id 获取榜行榜歌单页面地址。
      */
     public static void getYiTingRankDetailList(String id, final NetWorkCallBack netWorkCallBack){
+        LogUtil.l(TAG, "id:" + id);
+
         String url = "http://route.showapi.com/928-2";
         PostFormBuilder builder = OkHttpUtils.post().url(url)
                 .addParams("id", id);
@@ -228,8 +248,14 @@ public class NetWorkUtil {
             .execute(new Callback() {
                 @Override
                 public Object parseNetworkResponse(Response response) throws IOException {
-                    LogUtil.l(TAG, "getRankDetailList parseNetworkResponse response.boyd:"+response.body().string());
-                    return response.body().string();
+                    ResponseBody responseBody = response.body();
+                    if (responseBody == null){
+                        return null;
+                    }
+
+                    String responseStr = responseBody.string();
+                    LogUtil.l(TAG, "getHotSongRank parseNetworkResponse response.body:"+responseStr);
+                    return responseStr;
                 }
 
                 @Override
@@ -275,8 +301,14 @@ public class NetWorkUtil {
             .execute(new Callback() {
                 @Override
                 public Object parseNetworkResponse(Response response) throws IOException {
-                    LogUtil.l(TAG, "getSearchDetailList parseNetworkResponse response.boyd:"+response.body().string());
-                    return response.body().string();
+                    ResponseBody responseBody = response.body();
+                    if (responseBody == null){
+                        return null;
+                    }
+
+                    String responseStr = responseBody.string();
+                    LogUtil.l(TAG, "getHotSongRank parseNetworkResponse response.body:"+responseStr);
+                    return responseStr;
                 }
 
                 @Override

@@ -368,8 +368,8 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
                     return;
                 }
 
-                List<RankList> rankLists = AppUtil.getGson().fromJson(body.optJSONArray("rankList").toString(),
-                        new TypeToken<List<RankList>>(){}.getType());
+                List<RankList.Item> rankLists = AppUtil.getGson().fromJson(body.optJSONArray("rankList").toString(),
+                        new TypeToken<List<RankList.Item>>(){}.getType());
 
                 if (rankLists == null || rankLists.isEmpty()){
                     return;

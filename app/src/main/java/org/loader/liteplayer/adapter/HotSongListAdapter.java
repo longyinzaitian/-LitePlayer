@@ -14,6 +14,7 @@ import org.loader.liteplayer.application.BaseApplication;
 import org.loader.liteplayer.network.DownFileCallback;
 import org.loader.liteplayer.network.NetWorkUtil;
 import org.loader.liteplayer.pojo.HotSong;
+import org.loader.liteplayer.pojo.MusicList;
 import org.loader.liteplayer.utils.LogUtil;
 import org.loader.liteplayer.utils.MusicUtils;
 
@@ -27,7 +28,7 @@ import java.util.List;
  */
 public class HotSongListAdapter extends RecyclerView.Adapter {
     private static final String TAG = "HotSongListAdapter";
-    private List<HotSong> hotSongs = new ArrayList<>();
+    private List<MusicList.MusicItem> hotSongs = new ArrayList<>();
     private String directory = Environment.getExternalStorageDirectory() + "/liteplayer/song";
 
     @Override
@@ -38,17 +39,24 @@ public class HotSongListAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
 //        if (holder instanceof ItemSongViewHolder){
-            final HotSong hotSong = hotSongs.get(holder.getAdapterPosition());
+            final MusicList.MusicItem hotSong = hotSongs.get(holder.getAdapterPosition());
             if (hotSong == null){
                 return;
             }
 
             ItemSongViewHolder itemSongViewHolder = (ItemSongViewHolder) holder;
 
-            Glide.with(BaseApplication.getContext()).load(hotSong.getAlbumpic_small()).into(itemSongViewHolder.img);
-            itemSongViewHolder.songName.setText(hotSong.getSongname());
-            itemSongViewHolder.singerName.setText(hotSong.getSingername());
-            itemSongViewHolder.timeLength.setText("时长："+MusicUtils.getSongTimeLength(hotSong.getSeconds()));
+        Glide.with(BaseApplication.getContext()).load(R.drawable.ic_launcher).into(itemSongViewHolder.img);
+
+        String title = hotSong.getTitle();
+        if (title.contains("-")){
+            String[] titles = title.split("-");
+            itemSongViewHolder.songName.setText(titles[0].trim());
+            itemSongViewHolder.singerName.setText(titles[1].trim());
+        }else {
+            itemSongViewHolder.songName.setText(title);
+        }
+            itemSongViewHolder.timeLength.setVisibility(View.GONE);
             itemSongViewHolder.rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -56,18 +64,18 @@ public class HotSongListAdapter extends RecyclerView.Adapter {
                         return;
                     }
                     LogUtil.l(TAG, "click hotSong:" + hotSong);
-                    final String fileName = hotSong.getSongname() + "."+hotSong.getSongid()+".mp3";
-                    NetWorkUtil.startDownFile(hotSong.getDownUrl(), directory, fileName, new DownFileCallback() {
-                        @Override
-                        public void updateProgress(int pro) {
-                            LogUtil.l(TAG, "update progress. pro:" + pro);
-                        }
-
-                        @Override
-                        public void onResponseFile(File file) {
-                            LogUtil.l(TAG, "name:" + file.getName() + ", path:" + file.getAbsolutePath());
-                        }
-                    });
+//                    final String fileName = hotSong.getSongname() + "."+hotSong.getSongid()+".mp3";
+//                    NetWorkUtil.startDownFile(hotSong.getDownUrl(), directory, fileName, new DownFileCallback() {
+//                        @Override
+//                        public void updateProgress(int pro) {
+//                            LogUtil.l(TAG, "update progress. pro:" + pro);
+//                        }
+//
+//                        @Override
+//                        public void onResponseFile(File file) {
+//                            LogUtil.l(TAG, "name:" + file.getName() + ", path:" + file.getAbsolutePath());
+//                        }
+//                    });
                 }
             });
 //        }
@@ -94,7 +102,7 @@ public class HotSongListAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public void setSongsData(List<HotSong> hotSongs){
+    public void setSongsData(List<MusicList.MusicItem> hotSongs){
         if (hotSongs == null){
             return;
         }

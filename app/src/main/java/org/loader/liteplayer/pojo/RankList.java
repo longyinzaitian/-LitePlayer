@@ -25,7 +25,7 @@ public class RankList {
                 '}';
     }
 
-    class Item{
+    public static class Item{
         private String id;
         private String name;
 

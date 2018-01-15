@@ -13,7 +13,7 @@ import java.util.List;
  * @author longyinzaitian
  */
 public class App extends BaseApplication {
-    public static List<RankList> rankLists;
+    public static List<RankList.Item> rankLists;
     @Override
     public void onCreate() {
         super.onCreate();

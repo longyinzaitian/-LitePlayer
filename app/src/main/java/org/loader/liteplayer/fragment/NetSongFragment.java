@@ -16,10 +16,12 @@ import android.widget.PopupWindow.OnDismissListener;
 
 import org.loader.liteplayer.R;
 import org.loader.liteplayer.adapter.NetSongPagerAdapter;
+import org.loader.liteplayer.application.App;
 import org.loader.liteplayer.application.BaseApplication;
 import org.loader.liteplayer.engine.SongsRecommendation;
 import org.loader.liteplayer.pojo.HotSong;
 import org.loader.liteplayer.pojo.Item;
+import org.loader.liteplayer.pojo.RankList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +43,7 @@ public class NetSongFragment extends BaseFragment
     private PopupWindow mPopupWindow;
 
     private ArrayList<HotSong> mResultData = new ArrayList<>();
-    private ArrayList<Item> items;
+    private ArrayList<RankList.Item> items;
 
     private int mPage = 0;
     private int mLastItem;
@@ -93,12 +95,7 @@ public class NetSongFragment extends BaseFragment
 
     private void initItem(){
         items = new ArrayList<>();
-        items.add(new Item("内地", 5));
-        items.add(new Item("港台", 6));
-        items.add(new Item("韩国", 16));
-        items.add(new Item("日本", 17));
-        items.add(new Item("热歌", 26));
-        items.add(new Item("新歌", 27));
+        items.addAll(App.rankLists);
 
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -120,10 +117,10 @@ public class NetSongFragment extends BaseFragment
 
     private void initAdapter(){
         List<Fragment> fragments = new ArrayList<>();
-        for (Item item : items){
+        for (RankList.Item item : items){
             SongListFragment songListFragment = new SongListFragment();
             Bundle bundle = new Bundle();
-            bundle.putInt("id", item.getId());
+            bundle.putString("id", item.getId());
             songListFragment.setArguments(bundle);
             fragments.add(songListFragment);
         }

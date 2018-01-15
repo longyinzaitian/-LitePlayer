@@ -25,7 +25,7 @@ public class MusicList {
                 '}';
     }
 
-    class MusicItem{
+    public static class MusicItem{
         private String link;
         private String title;
         private String word_url;
