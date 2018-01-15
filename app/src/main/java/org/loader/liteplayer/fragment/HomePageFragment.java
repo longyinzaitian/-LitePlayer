@@ -23,18 +23,25 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONObject;
 import org.loader.liteplayer.R;
 import org.loader.liteplayer.activity.MainActivity;
 import org.loader.liteplayer.activity.PlayActivity;
 import org.loader.liteplayer.adapter.HomePageFrmAdapter;
+import org.loader.liteplayer.application.App;
+import org.loader.liteplayer.application.AppUtil;
 import org.loader.liteplayer.application.BaseApplication;
 import org.loader.liteplayer.event.EventCenter;
 import org.loader.liteplayer.event.IEvent;
 import org.loader.liteplayer.event.IEventCallback;
 import org.loader.liteplayer.event.PublishProgressEvent;
 import org.loader.liteplayer.event.SongPlayChangeEvent;
+import org.loader.liteplayer.network.NetWorkCallBack;
 import org.loader.liteplayer.network.NetWorkUtil;
 import org.loader.liteplayer.pojo.Music;
+import org.loader.liteplayer.pojo.RankList;
 import org.loader.liteplayer.utils.Constants;
 import org.loader.liteplayer.utils.ImageTools;
 import org.loader.liteplayer.utils.LogUtil;
@@ -45,6 +52,7 @@ import org.loader.liteplayer.utils.ThreadCenter;
 
 import java.io.File;
 import java.io.LineNumberInputStream;
+import java.util.List;
 
 /**
  * 2015年8月15日 16:34:37
@@ -186,7 +194,7 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
 
     @Override
     protected void loadData() {
-
+        getYiTingRankList();
     }
 
     private OnItemLongClickListener mItemLongClickListener = 
@@ -345,5 +353,35 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
         }
 
         mMusicProgress.setProgress(progress);
+    }
+
+    private void getYiTingRankList(){
+        NetWorkUtil.getYiTingRankList(new NetWorkCallBack() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                if (jsonObject == null){
+                    return;
+                }
+
+                JSONObject body = jsonObject.optJSONObject("showapi_res_body");
+                if (body == null){
+                    return;
+                }
+
+                List<RankList> rankLists = AppUtil.getGson().fromJson(body.optJSONArray("rankList").toString(),
+                        new TypeToken<List<RankList>>(){}.getType());
+
+                if (rankLists == null || rankLists.isEmpty()){
+                    return;
+                }
+
+                App.rankLists = rankLists;
+            }
+
+            @Override
+            public void onError(String errorMsg) {
+
+            }
+        });
     }
 }
