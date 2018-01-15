@@ -25,7 +25,7 @@ public class ContentList {
                 '}';
     }
 
-    class ContentItem{
+    public static class ContentItem{
         private String album_link;
         private String title;
         private String word_url;

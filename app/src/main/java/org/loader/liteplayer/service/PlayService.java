@@ -547,6 +547,9 @@ public class PlayService extends Service implements
                 switch (intent.getIntExtra("BUTTON_NOTI", 0)) {
                 case 1:
                     pre();
+                    if (mListener != null) {
+                        mListener.onChange(getPlayingPosition());
+                    }
                     break;
 
                 case 2:
@@ -555,16 +558,27 @@ public class PlayService extends Service implements
                     } else {
                         resume(); // 播放
                     }
+                    if (mListener != null) {
+                        mListener.onChange(getPlayingPosition());
+                    }
                     break;
 
                 case 3:
                     next();
+                    if (mListener != null) {
+                        mListener.onChange(getPlayingPosition());
+                    }
                     break;
 
                 case 4:
                     if (isPlaying()) {
                         pause();
                     }
+
+                    if (mListener != null) {
+                        mListener.onChange(getPlayingPosition());
+                    }
+
                     //取消通知栏
                     notificationManager.cancel(5);
                     break;
@@ -572,10 +586,6 @@ public class PlayService extends Service implements
                 default:
                     break;
                 }
-            }
-
-            if (mListener != null) {
-                mListener.onChange(getPlayingPosition());
             }
         }
     }

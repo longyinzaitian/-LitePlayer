@@ -82,6 +82,7 @@ public class HomePageFrmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         headerViewHolder.centerMiddleImg.setOnClickListener(onClickListener);
         headerViewHolder.centerEndImg.setOnClickListener(onClickListener);
         headerViewHolder.bottomImg.setOnClickListener(onClickListener);
+
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {

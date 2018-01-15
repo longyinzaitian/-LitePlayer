@@ -44,6 +44,10 @@
         <activity android:name=".activity.SettingActivity"/>
         <activity android:name=".activity.AboutActivity"/>
         <activity android:name=".activity.SongListActivity"/>
+        <activity android:name=".activity.SearchResultActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden"
+            />
 
         <service android:name=".service.PlayService" />
 

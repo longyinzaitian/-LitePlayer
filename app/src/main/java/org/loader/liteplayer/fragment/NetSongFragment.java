@@ -2,9 +2,11 @@ package org.loader.liteplayer.fragment;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -15,6 +17,7 @@ import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 
 import org.loader.liteplayer.R;
+import org.loader.liteplayer.activity.SearchResultActivity;
 import org.loader.liteplayer.adapter.NetSongPagerAdapter;
 import org.loader.liteplayer.application.App;
 import org.loader.liteplayer.application.BaseApplication;
@@ -39,6 +42,7 @@ public class NetSongFragment extends BaseFragment
     private ViewPager mViewPager;
     private View mPopView;
     private TabLayout mTabLayout;
+    private FloatingActionButton mFloatingActBtn;
 
     private PopupWindow mPopupWindow;
 
@@ -72,6 +76,7 @@ public class NetSongFragment extends BaseFragment
     protected void bindView(View view) {
         mViewPager = view.findViewById(R.id.net_song_view_pager);
         mTabLayout = view.findViewById(R.id.net_song_tab_layout);
+        mFloatingActBtn = view.findViewById(R.id.net_song_page_float_btn);
 
 //        Toolbar toolbar = view.findViewById(R.id.toolbar);
 //        if (getActivity() != null){
@@ -84,7 +89,13 @@ public class NetSongFragment extends BaseFragment
 
     @Override
     protected void bindListener() {
-
+        mFloatingActBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BaseApplication.getContext(), SearchResultActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -94,6 +105,10 @@ public class NetSongFragment extends BaseFragment
     }
 
     private void initItem(){
+        if (App.rankLists == null){
+            return;
+        }
+
         items = new ArrayList<>();
         items.addAll(App.rankLists);
 
@@ -116,6 +131,10 @@ public class NetSongFragment extends BaseFragment
     }
 
     private void initAdapter(){
+        if (items == null){
+            return;
+        }
+
         List<Fragment> fragments = new ArrayList<>();
         for (RankList.Item item : items){
             SongListFragment songListFragment = new SongListFragment();

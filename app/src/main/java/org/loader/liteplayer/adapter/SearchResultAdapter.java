@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 import org.loader.liteplayer.R;
 import org.loader.liteplayer.application.BaseApplication;
-import org.loader.liteplayer.pojo.HotSong;
-import org.loader.liteplayer.utils.MusicUtils;
+import org.loader.liteplayer.pojo.ContentList;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 2015年8月15日 16:34:37
@@ -22,10 +22,10 @@ import java.util.ArrayList;
  * @author longyinzaitian
  */
 public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ArrayList<HotSong> mSearchResult;
+    private List<ContentList.ContentItem> mSearchResult;
     private AdapterView.OnItemClickListener mOnItemClickListener;
     
-    public SearchResultAdapter(ArrayList<HotSong> searchResult) {
+    public SearchResultAdapter(ArrayList<ContentList.ContentItem> searchResult) {
         mSearchResult = searchResult;
     }
 
@@ -47,13 +47,13 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolderItem){
             ViewHolderItem viewHolderItem = (ViewHolderItem)holder;
-            String singerName = mSearchResult.get(holder.getAdapterPosition()).getSingername();
-            String songName = mSearchResult.get(holder.getAdapterPosition()).getSongname();
-            long length = mSearchResult.get(holder.getAdapterPosition()).getSeconds();
+            String singerName = mSearchResult.get(holder.getAdapterPosition()).getSinger_name();
+            String songName = mSearchResult.get(holder.getAdapterPosition()).getTitle();
+//            long length = mSearchResult.get(holder.getAdapterPosition()).getSeconds();
 
             viewHolderItem.title.setText(songName);
             viewHolderItem.artist.setText(singerName);
-            viewHolderItem.length.setText(MusicUtils.getFileLength(length));
+//            viewHolderItem.length.setText(MusicUtils.getFileLength(length));
 
             viewHolderItem.llRoot.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -72,7 +72,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-        return mSearchResult.size() + 1;
+        return mSearchResult==null?0:mSearchResult.size() + 1;
     }
 
     @Override
@@ -117,5 +117,10 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener){
         this.mOnItemClickListener = onItemClickListener;
+    }
+
+    public void setSearchResult(List<ContentList.ContentItem> searchResults){
+        mSearchResult = searchResults;
+        notifyDataSetChanged();
     }
 }
