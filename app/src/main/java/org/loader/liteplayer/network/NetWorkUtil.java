@@ -168,6 +168,146 @@ public class NetWorkUtil {
             });
     }
 
+    /**
+     * 查询一听音乐的排行榜类型。可根据此类型得到榜行榜歌单。
+     */
+    public static void getYiTingRankList(final NetWorkCallBack netWorkCallBack){
+        String url = "http://route.showapi.com/928-1";
+        PostFormBuilder builder = OkHttpUtils.post().url(url);
+
+        addSystemParams(builder);
+
+        builder.build()
+            .execute(new Callback() {
+                @Override
+                public Object parseNetworkResponse(Response response) throws IOException {
+                    LogUtil.l(TAG, "getRankList parseNetworkResponse response.boyd:"+response.body().string());
+                    return response.body().string();
+                }
+
+                @Override
+                public void onError(Request request, Exception e) {
+                    LogUtil.e(TAG, "getRankList request:" + request + ", exception:" + e.getMessage());
+                    if (netWorkCallBack != null){
+                        netWorkCallBack.onError("服务器异常，稍候重试");
+                    }
+                }
+
+                @Override
+                public void onResponse(Object response) {
+                    LogUtil.l(TAG, "getRankList response:" + response);
+                    JSONObject jsonObject = null;
+                    if (netWorkCallBack != null){
+                        try{
+                            jsonObject = new JSONObject(response.toString());
+                            if (checkResult(jsonObject)){
+                                netWorkCallBack.onResponse(jsonObject);
+                            }else {
+                                netWorkCallBack.onError(jsonObject.optString("showapi_res_error"));
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            LogUtil.e(TAG, "exception:" + e.getMessage());
+                        }
+                    }
+                }
+            });
+    }
+
+    /**
+     * 根据榜行榜id 获取榜行榜歌单页面地址。
+     */
+    public static void getYiTingRankDetailList(String id, final NetWorkCallBack netWorkCallBack){
+        String url = "http://route.showapi.com/928-2";
+        PostFormBuilder builder = OkHttpUtils.post().url(url)
+                .addParams("id", id);
+
+        addSystemParams(builder);
+
+        builder.build()
+            .execute(new Callback() {
+                @Override
+                public Object parseNetworkResponse(Response response) throws IOException {
+                    LogUtil.l(TAG, "getRankDetailList parseNetworkResponse response.boyd:"+response.body().string());
+                    return response.body().string();
+                }
+
+                @Override
+                public void onError(Request request, Exception e) {
+                    LogUtil.e(TAG, "getRankDetailList request:" + request + ", exception:" + e.getMessage());
+                    if (netWorkCallBack != null){
+                        netWorkCallBack.onError("服务器异常，稍候重试");
+                    }
+                }
+
+                @Override
+                public void onResponse(Object response) {
+                    LogUtil.l(TAG, "getRankDetailList response:" + response);
+                    JSONObject jsonObject = null;
+                    if (netWorkCallBack != null){
+                        try{
+                            jsonObject = new JSONObject(response.toString());
+                            if (checkResult(jsonObject)){
+                                netWorkCallBack.onResponse(jsonObject);
+                            }else {
+                                netWorkCallBack.onError(jsonObject.optString("showapi_res_error"));
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            LogUtil.e(TAG, "exception:" + e.getMessage());
+                        }
+                    }
+                }
+            });
+    }
+
+    /**
+     * 根据关键词查询歌曲列表。
+     */
+    public static void getYiTingSearchDetailList(String q, final NetWorkCallBack netWorkCallBack){
+        String url = "http://route.showapi.com/928-3";
+        PostFormBuilder builder = OkHttpUtils.post().url(url)
+                .addParams("q", q);
+
+        addSystemParams(builder);
+
+        builder.build()
+            .execute(new Callback() {
+                @Override
+                public Object parseNetworkResponse(Response response) throws IOException {
+                    LogUtil.l(TAG, "getSearchDetailList parseNetworkResponse response.boyd:"+response.body().string());
+                    return response.body().string();
+                }
+
+                @Override
+                public void onError(Request request, Exception e) {
+                    LogUtil.e(TAG, "getSearchDetailList request:" + request + ", exception:" + e.getMessage());
+                    if (netWorkCallBack != null){
+                        netWorkCallBack.onError("服务器异常，稍候重试");
+                    }
+                }
+
+                @Override
+                public void onResponse(Object response) {
+                    LogUtil.l(TAG, "getSearchDetailList response:" + response);
+                    JSONObject jsonObject = null;
+                    if (netWorkCallBack != null){
+                        try{
+                            jsonObject = new JSONObject(response.toString());
+                            if (checkResult(jsonObject)){
+                                netWorkCallBack.onResponse(jsonObject);
+                            }else {
+                                netWorkCallBack.onError(jsonObject.optString("showapi_res_error"));
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            LogUtil.e(TAG, "exception:" + e.getMessage());
+                        }
+                    }
+                }
+            });
+    }
+
     private static void addSystemParams(OkHttpRequestBuilder builder){
         builder.addParams("showapi_appid", "44940");
         builder.addParams("showapi_sign", "121b5eab89134b539fdf85b527ad30b9");
