@@ -1,5 +1,6 @@
 package org.loader.liteplayer.adapter;
 
+import android.content.Intent;
 import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import org.loader.liteplayer.R;
+import org.loader.liteplayer.activity.BaseWebActivity;
+import org.loader.liteplayer.activity.WebViewActivity;
 import org.loader.liteplayer.application.BaseApplication;
 import org.loader.liteplayer.network.DownFileCallback;
 import org.loader.liteplayer.network.NetWorkUtil;
@@ -56,29 +59,21 @@ public class HotSongListAdapter extends RecyclerView.Adapter {
         }else {
             itemSongViewHolder.songName.setText(title);
         }
-            itemSongViewHolder.timeLength.setVisibility(View.GONE);
-            itemSongViewHolder.rootView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onItemClickListener == null){
-                        return;
-                    }
-                    LogUtil.l(TAG, "click hotSong:" + hotSong);
-//                    final String fileName = hotSong.getSongname() + "."+hotSong.getSongid()+".mp3";
-//                    NetWorkUtil.startDownFile(hotSong.getDownUrl(), directory, fileName, new DownFileCallback() {
-//                        @Override
-//                        public void updateProgress(int pro) {
-//                            LogUtil.l(TAG, "update progress. pro:" + pro);
-//                        }
-//
-//                        @Override
-//                        public void onResponseFile(File file) {
-//                            LogUtil.l(TAG, "name:" + file.getName() + ", path:" + file.getAbsolutePath());
-//                        }
-//                    });
+
+        itemSongViewHolder.timeLength.setVisibility(View.GONE);
+        itemSongViewHolder.rootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener == null){
+                    return;
                 }
-            });
-//        }
+                LogUtil.l(TAG, "click hotSong:" + hotSong);
+                Intent intent = new Intent(BaseApplication.getContext(), WebViewActivity.class);
+                intent.putExtra("url", hotSong.getLink());
+                BaseApplication.getContext().startActivity(intent);
+
+            }
+        });
     }
 
     @Override

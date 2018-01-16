@@ -1,22 +1,20 @@
 package org.loader.liteplayer.activity;
 
 import android.graphics.Bitmap;
+import android.net.http.SslError;
 import android.os.Build;
 import android.view.ViewGroup;
+import android.webkit.SslErrorHandler;
+import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.tencent.smtt.export.external.interfaces.JsPromptResult;
-import com.tencent.smtt.export.external.interfaces.JsResult;
-import com.tencent.smtt.export.external.interfaces.SslError;
-import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
-import com.tencent.smtt.sdk.ValueCallback;
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
-
 import org.loader.liteplayer.R;
+import org.loader.liteplayer.utils.LogUtil;
 
 /**
  * @author husyin
@@ -24,6 +22,7 @@ import org.loader.liteplayer.R;
  */
 
 public abstract class BaseWebActivity extends BaseActivity {
+    private static final String TAG = "BaseWebActivity";
     protected WebView mWebView;
     private ViewGroup mRootView;
     private FrameLayout mWebViewContainer;
@@ -110,7 +109,7 @@ public abstract class BaseWebActivity extends BaseActivity {
         // 在 onStop 和 onResume 里分别把 setJavaScriptEnabled() 给设置成 false 和 true 即可
 
         //支持插件
-        webSettings.setPluginsEnabled(true);
+//        webSettings.setPluginsEnabled(true);
 
         //设置自适应屏幕，两者合用
         //将图片调整到适合webview的大小
@@ -168,6 +167,7 @@ public abstract class BaseWebActivity extends BaseActivity {
         mWebView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                LogUtil.l(TAG, "shouldOverrideUrlLoading -> url:" + url);
                 view.loadUrl(url);
                 return true;
             }
@@ -175,18 +175,21 @@ public abstract class BaseWebActivity extends BaseActivity {
             //开始载入页面调用的，我们可以设定一个loading的页面，告诉用户程序在等待网络响应。
             @Override
             public void onPageStarted(WebView webView, String s, Bitmap bitmap) {
+                LogUtil.l(TAG, "onPageStarted -> s:" + s + ", bitmap:" + bitmap);
                 super.onPageStarted(webView, s, bitmap);
             }
 
             /***JS代码调用一定要在 onPageFinished（） 回调之后才能调用，否则不会调用。*/
             @Override
             public void onPageFinished(WebView webView, String s) {
+                LogUtil.l(TAG, "onPageFinished  -> s" + s);
                 super.onPageFinished(webView, s);
             }
 
             // 在加载页面资源时会调用，每一个资源（比如图片）的加载都会调用一次。
             @Override
             public void onLoadResource(WebView webView, String s) {
+                LogUtil.l(TAG, "onLoadResource -> s:" + s);
                 super.onLoadResource(webView, s);
             }
 
@@ -196,6 +199,7 @@ public abstract class BaseWebActivity extends BaseActivity {
             // 加载一个本地的错误提示页面，即webview如何加载一个本地的页面
             @Override
             public void onReceivedError(WebView webView, int i, String s, String s1) {
+                LogUtil.l(TAG, "onReceivedError -> i:" + i + ", s:" + s + ", s1:" + s1);
                 super.onReceivedError(webView, i, s, s1);
                 switch(i)
                 {
@@ -210,6 +214,7 @@ public abstract class BaseWebActivity extends BaseActivity {
             // webView默认是不处理https请求的，页面显示空白，需要进行如下设置
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                LogUtil.l(TAG, "onReceivedSslError -> handler:" + handler + ", error:" + error);
                 handler.proceed();    //表示等待证书响应
                 // handler.cancel();      //表示挂起连接，为默认方式
                 // handler.handleMessage(null);    //可做其他处理
@@ -226,6 +231,7 @@ public abstract class BaseWebActivity extends BaseActivity {
             //获得网页的加载进度并显示
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
+                LogUtil.l(TAG, "onProgressChanged -> progress:" + newProgress);
                 if (newProgress < 100) {
                     String progress = newProgress + "%";
                 }
@@ -236,25 +242,8 @@ public abstract class BaseWebActivity extends BaseActivity {
             // 那么如何知道当前webview正在加载的页面的title并进行设置呢？
             @Override
             public void onReceivedTitle(WebView view, String title) {
-
+                LogUtil.l(TAG, "onReceivedTitle -> title:" + title);
             }
-
-            @Override
-            public boolean onJsAlert(WebView view, String url, String message, final JsResult result)  {
-                return true;
-            }
-
-            @Override
-            public boolean onJsConfirm(WebView view, String url, String message, final JsResult result) {
-                return true;
-            }
-
-            @Override
-            public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, final JsPromptResult result) {
-                return true;
-            }
-
-
         });
     }
 
