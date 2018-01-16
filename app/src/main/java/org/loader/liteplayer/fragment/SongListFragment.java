@@ -28,10 +28,12 @@ public class SongListFragment extends BaseFragment{
     private RecyclerView mRecyclerView;
     private HotSongListAdapter mAdapter;
     private String mHotId;
+    private boolean isVisibleToUser;
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        this.isVisibleToUser = isVisibleToUser;
         if (isVisibleToUser){
             if (mAdapter == null){
                 return;
@@ -79,6 +81,11 @@ public class SongListFragment extends BaseFragment{
             return;
         }
         mHotId = getArguments().getString("id", "");
+        if (isVisibleToUser){
+            isVisibleToUser = false;
+            getYiTingRankDetaiList();
+        }
+
     }
 
     private void getYiTingRankDetaiList() {

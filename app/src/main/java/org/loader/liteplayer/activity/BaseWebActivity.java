@@ -17,7 +17,7 @@ import org.loader.liteplayer.R;
 import org.loader.liteplayer.utils.LogUtil;
 
 /**
- * @author husyin
+ * @author longyinzaitian
  * @date 2018/1/15
  */
 

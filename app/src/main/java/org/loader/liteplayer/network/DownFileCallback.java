@@ -3,7 +3,7 @@ package org.loader.liteplayer.network;
 import java.io.File;
 
 /**
- * @author husyin
+ * @author longyinzaitian
  * @date 2018/1/8
  */
 

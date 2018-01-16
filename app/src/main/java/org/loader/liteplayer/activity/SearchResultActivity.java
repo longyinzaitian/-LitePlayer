@@ -24,7 +24,7 @@ import org.loader.liteplayer.pojo.ContentList;
 import java.util.List;
 
 /**
- * @author husyin
+ * @author longyinzaitian
  * @date 2018/1/15
  */
 
