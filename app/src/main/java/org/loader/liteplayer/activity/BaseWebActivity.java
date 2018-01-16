@@ -18,8 +18,6 @@ import com.tencent.smtt.sdk.WebViewClient;
 
 import org.loader.liteplayer.R;
 
-import static android.R.attr.value;
-
 /**
  * @author husyin
  * @date 2018/1/15
@@ -151,14 +149,17 @@ public abstract class BaseWebActivity extends BaseActivity {
         webSettings.setDomStorageEnabled(true);
         //开启 database storage API 功能
         webSettings.setDatabaseEnabled(true);
+
+
         //开启 Application Caches 功能
         webSettings.setAppCacheEnabled(true);
-
         // 每个 Application 只调用一次
         // WebSettings.setAppCachePath()，WebSettings.setAppCacheMaxSize()
         String cacheDirPath = getExternalCacheDir().getAbsolutePath();
         //设置  Application Caches 缓存目录
         webSettings.setAppCachePath(cacheDirPath);
+        //20Mb
+        webSettings.setAppCacheMaxSize(1024*1024*20);
 
     }
 
