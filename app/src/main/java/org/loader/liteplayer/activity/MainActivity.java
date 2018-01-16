@@ -1,5 +1,6 @@
 package org.loader.liteplayer.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import org.loader.liteplayer.R;
+import org.loader.liteplayer.application.BaseApplication;
 import org.loader.liteplayer.fragment.BaseFragment;
 import org.loader.liteplayer.fragment.HomePageFragment;
 import org.loader.liteplayer.fragment.MinePageFragment;
@@ -31,7 +33,7 @@ public class MainActivity extends BaseActivity {
     private MinePageFragment mMinePageFrm;
     private BaseFragment mPreShowFrm;
 
-    private    FragmentManager fragmentManager = getSupportFragmentManager();
+    private FragmentManager fragmentManager = getSupportFragmentManager();
 
     private void initFragments() {
         mHomePageFrm = HomePageFragment.getInstance();
@@ -144,7 +146,6 @@ public class MainActivity extends BaseActivity {
                 onClick(id);
             }
         });
-
     }
 
     @Override

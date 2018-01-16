@@ -1,9 +1,6 @@
 package org.loader.liteplayer.application;
 
-import android.content.Intent;
-
 import org.loader.liteplayer.pojo.RankList;
-import org.loader.liteplayer.service.PlayService;
 
 import java.util.List;
 
@@ -17,7 +14,6 @@ public class App extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        startService(new Intent(context, PlayService.class));
     }
 
 
