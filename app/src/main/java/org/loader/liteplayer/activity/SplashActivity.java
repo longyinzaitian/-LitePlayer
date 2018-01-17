@@ -39,7 +39,7 @@ public class SplashActivity extends AppCompatActivity {
         // 全屏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.splash_layout);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+        setContentView(R.layout.splash_layout);
         SplashActivityPermissionsDispatcher.needsPermissionWithPermissionCheck(this);
     }
 
@@ -84,6 +84,7 @@ public class SplashActivity extends AppCompatActivity {
     @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void onPermissionDenied() {
         LogUtil.l(TAG, "onPermissionDenied");
+        finish();
     }
 
     @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
