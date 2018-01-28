@@ -25,5 +25,6 @@ allprojects {
         maven { url "https://jitpack.io"}
         maven { url "https://maven.google.com"}
         maven { url "http://repol.maven.org/maven2" }
+        maven { url "https://raw.github.com/bmob/bmob-android-sdk/master" }
     }
 }
