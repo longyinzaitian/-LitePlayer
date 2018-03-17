@@ -14,7 +14,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -23,25 +22,17 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONObject;
 import org.loader.liteplayer.R;
 import org.loader.liteplayer.activity.MainActivity;
 import org.loader.liteplayer.activity.PlayActivity;
 import org.loader.liteplayer.adapter.HomePageFrmAdapter;
-import org.loader.liteplayer.application.App;
-import org.loader.liteplayer.application.AppUtil;
 import org.loader.liteplayer.application.BaseApplication;
 import org.loader.liteplayer.event.EventCenter;
 import org.loader.liteplayer.event.IEvent;
 import org.loader.liteplayer.event.IEventCallback;
 import org.loader.liteplayer.event.PublishProgressEvent;
 import org.loader.liteplayer.event.SongPlayChangeEvent;
-import org.loader.liteplayer.network.NetWorkCallBack;
-import org.loader.liteplayer.network.NetWorkUtil;
 import org.loader.liteplayer.pojo.Music;
-import org.loader.liteplayer.pojo.RankList;
 import org.loader.liteplayer.utils.Constants;
 import org.loader.liteplayer.utils.ImageTools;
 import org.loader.liteplayer.utils.LogUtil;
@@ -51,8 +42,6 @@ import org.loader.liteplayer.utils.SpUtils;
 import org.loader.liteplayer.utils.ThreadCenter;
 
 import java.io.File;
-import java.io.LineNumberInputStream;
-import java.util.List;
 
 /**
  * 2015年8月15日 16:34:37
@@ -60,9 +49,6 @@ import java.util.List;
  * @author longyinzaitian
  */
 public class HomePageFragment extends BaseFragment implements OnClickListener {
-
-    private static HomePageFragment instance;
-
     private RecyclerView mMusicListView;
     private ImageView mMusicIcon;
     private TextView mMusicTitle;
@@ -83,10 +69,7 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
     private boolean isOneCycle = false;
 
     public static HomePageFragment getInstance(){
-        if (instance == null){
-            instance = new HomePageFragment();
-        }
-
+        HomePageFragment instance = new HomePageFragment();
         return instance;
     }
 

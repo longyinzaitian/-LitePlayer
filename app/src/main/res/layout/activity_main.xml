@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,57 +11,65 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/ac_line"
-        android:layout_below="@+id/toolbar"
+        android:layout_gravity="top"
+        android:layout_marginBottom="46dp"
         />
-    <View
-        android:id="@+id/ac_line"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_above="@+id/ac_radio_group"
-        android:background="@color/gray"
-        />
-    <RadioGroup
-        android:id="@+id/ac_radio_group"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:weightSum="3"
-        android:orientation="horizontal"
+        android:layout_height="46dp"
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
         >
-        <RadioButton
-            android:id="@+id/ac_rb_home_page"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="首页"
-            android:textSize="12sp"
-            android:textColor="@color/springgreen"
-            android:button="@null"
-            android:gravity="center"
-            android:checked="true"
+        <View
+            android:id="@+id/ac_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/ac_radio_group"
+            android:background="@color/gray"
             />
+        <RadioGroup
+            android:id="@+id/ac_radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:weightSum="3"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+                android:id="@+id/ac_rb_home_page"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="首页"
+                android:textSize="12sp"
+                android:textColor="@color/springgreen"
+                android:button="@null"
+                android:gravity="center"
+                android:checked="true"
+                />
 
-        <RadioButton
-            android:id="@+id/ac_rb_network_page"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="歌曲"
-            android:textSize="12sp"
-            android:button="@null"
-            android:gravity="center"
-            />
+            <RadioButton
+                android:id="@+id/ac_rb_network_page"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="歌曲"
+                android:textSize="12sp"
+                android:button="@null"
+                android:gravity="center"
+                />
 
-        <RadioButton
-            android:id="@+id/ac_rb_mine_page"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="我的"
-            android:textSize="12sp"
-            android:button="@null"
-            android:gravity="center"
-            />
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/ac_rb_mine_page"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="我的"
+                android:textSize="12sp"
+                android:button="@null"
+                android:gravity="center"
+                />
+        </RadioGroup>
+    </LinearLayout>
 
-</RelativeLayout>
+</FrameLayout>

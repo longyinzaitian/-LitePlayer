@@ -34,9 +34,6 @@ import java.util.List;
  */
 public class NetSongFragment extends BaseFragment
                     implements OnClickListener {
-
-    private static NetSongFragment instance;
-
     private ViewPager mViewPager;
     private View mPopView;
     private TabLayout mTabLayout;
@@ -58,10 +55,7 @@ public class NetSongFragment extends BaseFragment
     private boolean isFirstShown = true;
 
     public static NetSongFragment getInstance(){
-        if (instance == null){
-            instance = new NetSongFragment();
-        }
-
+        NetSongFragment instance = new NetSongFragment();
         return instance;
     }
 
