@@ -2,6 +2,7 @@ package org.loader.liteplayer.adapter;
 
 import android.content.Intent;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +12,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import org.loader.liteplayer.R;
-import org.loader.liteplayer.activity.BaseWebActivity;
 import org.loader.liteplayer.activity.WebViewActivity;
 import org.loader.liteplayer.application.BaseApplication;
-import org.loader.liteplayer.network.DownFileCallback;
-import org.loader.liteplayer.network.NetWorkUtil;
-import org.loader.liteplayer.pojo.HotSong;
 import org.loader.liteplayer.pojo.MusicList;
+import org.loader.liteplayer.pojo.Wiki;
 import org.loader.liteplayer.utils.LogUtil;
-import org.loader.liteplayer.utils.MusicUtils;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,36 +25,31 @@ import java.util.List;
  * @author longyinzaitian
  * @date 2017/12/27.
  */
-public class HotSongListAdapter extends RecyclerView.Adapter {
+public class HotSongListAdapter extends RecyclerView.Adapter<HotSongListAdapter.ItemSongViewHolder> {
     private static final String TAG = "HotSongListAdapter";
-    private List<MusicList.MusicItem> hotSongs = new ArrayList<>();
-    private String directory = Environment.getExternalStorageDirectory() + "/liteplayer/song";
+    private List<Wiki> hotSongs;
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public HotSongListAdapter.ItemSongViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ItemSongViewHolder(View.inflate(BaseApplication.getContext(), R.layout.search_result_item, null));
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final HotSongListAdapter.ItemSongViewHolder holder, int position) {
 //        if (holder instanceof ItemSongViewHolder){
-            final MusicList.MusicItem hotSong = hotSongs.get(holder.getAdapterPosition());
+            final Wiki hotSong = hotSongs.get(holder.getAdapterPosition());
             if (hotSong == null){
                 return;
             }
 
             ItemSongViewHolder itemSongViewHolder = (ItemSongViewHolder) holder;
 
-        Glide.with(BaseApplication.getContext()).load(R.drawable.ic_launcher).into(itemSongViewHolder.img);
+        Glide.with(BaseApplication.getContext())
+                .load(hotSong.getWiki_cover().getSmall())
+                .into(itemSongViewHolder.img);
 
-        String title = hotSong.getTitle();
-        if (title.contains("-")){
-            String[] titles = title.split("-");
-            itemSongViewHolder.songName.setText(titles[0].trim());
-            itemSongViewHolder.singerName.setText(titles[1].trim());
-        }else {
-            itemSongViewHolder.songName.setText(title);
-        }
+        String title = hotSong.getWiki_title();
+        itemSongViewHolder.songName.setText(title);
 
         itemSongViewHolder.timeLength.setVisibility(View.GONE);
         itemSongViewHolder.rootView.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +60,7 @@ public class HotSongListAdapter extends RecyclerView.Adapter {
                 }
                 LogUtil.l(TAG, "click hotSong:" + hotSong);
                 Intent intent = new Intent(BaseApplication.getContext(), WebViewActivity.class);
-                intent.putExtra("url", hotSong.getLink());
+                intent.putExtra("url", hotSong.getWiki_url());
                 BaseApplication.getContext().startActivity(intent);
 
             }
@@ -78,10 +69,10 @@ public class HotSongListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return hotSongs.size();
+        return hotSongs == null ? 0 : hotSongs.size();
     }
 
-    private class ItemSongViewHolder extends RecyclerView.ViewHolder{
+    public class ItemSongViewHolder extends RecyclerView.ViewHolder{
         private ImageView img;
         private TextView songName;
         private TextView singerName;
@@ -97,11 +88,13 @@ public class HotSongListAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public void setSongsData(List<MusicList.MusicItem> hotSongs){
+    public void setSongsData(List<Wiki> hotSongs){
         if (hotSongs == null){
             return;
         }
-
+        if (this.hotSongs == null) {
+            this.hotSongs = new ArrayList<>();
+        }
         this.hotSongs.addAll(hotSongs);
         LogUtil.l(TAG, "hotSongs：" + hotSongs);
         notifyDataSetChanged();

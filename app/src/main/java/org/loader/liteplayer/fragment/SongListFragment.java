@@ -6,17 +6,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.loader.liteplayer.R;
 import org.loader.liteplayer.adapter.HotSongListAdapter;
-import org.loader.liteplayer.application.AppUtil;
 import org.loader.liteplayer.application.BaseApplication;
 import org.loader.liteplayer.network.NetWorkCallBack;
 import org.loader.liteplayer.network.NetWorkUtil;
-import org.loader.liteplayer.pojo.MusicList;
+import org.loader.liteplayer.pojo.Wiki;
+import org.loader.liteplayer.utils.LogUtil;
 
 import java.util.List;
 
@@ -27,22 +27,22 @@ import java.util.List;
 public class SongListFragment extends BaseFragment{
     private RecyclerView mRecyclerView;
     private HotSongListAdapter mAdapter;
-    private String mHotId;
-    private boolean isVisibleToUser;
+
+    private int page = 1;
+    private String type;
+
+    public static SongListFragment getInstance(String type) {
+        Bundle bundle = new Bundle();
+        bundle.putString("type", type);
+        SongListFragment fragment = new SongListFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        this.isVisibleToUser = isVisibleToUser;
-        if (isVisibleToUser){
-            if (mAdapter == null){
-                return;
-            }
-
-            if (mAdapter.getItemCount() <= 0){
-                getYiTingRankDetaiList();
-            }
-        }
     }
 
     @Override
@@ -80,40 +80,26 @@ public class SongListFragment extends BaseFragment{
         if (bundle == null){
             return;
         }
-        mHotId = getArguments().getString("id", "");
-        if (isVisibleToUser){
-            isVisibleToUser = false;
-            getYiTingRankDetaiList();
-        }
-
+        type = getArguments().getString("type", "");
+        getYiTingRankDetaiList();
     }
 
     private void getYiTingRankDetaiList() {
-        NetWorkUtil.getYiTingRankDetailList(String.valueOf(mHotId), new NetWorkCallBack() {
+        NetWorkUtil.getWikisItem(type, page, new NetWorkCallBack() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                if (jsonObject == null){
-                    return;
+                LogUtil.l(TAG, "rsult:" + jsonObject);
+                try {
+                    List<Wiki> wikis = new Gson().fromJson(
+                            jsonObject.optJSONArray("wikis").toString(),
+                            new TypeToken<List<Wiki>>(){}.getType());
+                    LogUtil.l(TAG, "wiki:" + wikis);
+                    if (mAdapter != null) {
+                        mAdapter.setSongsData(wikis);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-
-                JSONObject resBody = jsonObject.optJSONObject("showapi_res_body");
-                if (resBody == null){
-                    return;
-                }
-
-                JSONArray pageBean = resBody.optJSONArray("musicList");
-                if (pageBean == null){
-                    return;
-                }
-
-                List<MusicList.MusicItem> hotSongPageBean = AppUtil.getGson().fromJson(pageBean.toString(),
-                        new TypeToken<List<MusicList.MusicItem>>(){}.getType());
-
-                if (hotSongPageBean == null || hotSongPageBean.isEmpty()){
-                    return;
-                }
-
-                mAdapter.setSongsData(hotSongPageBean);
             }
 
             @Override

@@ -199,7 +199,6 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
 
     @Override
     protected void loadData() {
-        getYiTingRankList();
     }
 
     private OnItemLongClickListener mItemLongClickListener = 
@@ -358,35 +357,5 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
         }
 
         mMusicProgress.setProgress(progress);
-    }
-
-    private void getYiTingRankList(){
-        NetWorkUtil.getYiTingRankList(new NetWorkCallBack() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                if (jsonObject == null){
-                    return;
-                }
-
-                JSONObject body = jsonObject.optJSONObject("showapi_res_body");
-                if (body == null){
-                    return;
-                }
-
-                List<RankList.Item> rankLists = AppUtil.getGson().fromJson(body.optJSONArray("rankList").toString(),
-                        new TypeToken<List<RankList.Item>>(){}.getType());
-
-                if (rankLists == null || rankLists.isEmpty()){
-                    return;
-                }
-
-                App.rankLists = rankLists;
-            }
-
-            @Override
-            public void onError(String errorMsg) {
-
-            }
-        });
     }
 }

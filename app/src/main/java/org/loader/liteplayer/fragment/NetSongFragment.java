@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -23,7 +22,6 @@ import org.loader.liteplayer.application.App;
 import org.loader.liteplayer.application.BaseApplication;
 import org.loader.liteplayer.engine.SongsRecommendation;
 import org.loader.liteplayer.pojo.HotSong;
-import org.loader.liteplayer.pojo.Item;
 import org.loader.liteplayer.pojo.RankList;
 
 import java.util.ArrayList;
@@ -106,7 +104,14 @@ public class NetSongFragment extends BaseFragment
 
     private void initItem(){
         if (App.rankLists == null){
-            return;
+            App.rankLists = new ArrayList<>();
+            App.rankLists.add(new RankList.Item("tv", "电视动画"));
+            App.rankLists.add(new RankList.Item("ova", "OVA动画"));
+            App.rankLists.add(new RankList.Item("oad", "OAD动画"));
+            App.rankLists.add(new RankList.Item("movie", "剧场版动画"));
+            App.rankLists.add(new RankList.Item("comic", "漫画"));
+            App.rankLists.add(new RankList.Item("music", "音乐专辑"));
+//            App.rankLists.add(new RankList.Item("radio", "音乐电台"));
         }
 
         items = new ArrayList<>();
@@ -137,10 +142,7 @@ public class NetSongFragment extends BaseFragment
 
         List<Fragment> fragments = new ArrayList<>();
         for (RankList.Item item : items){
-            SongListFragment songListFragment = new SongListFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("id", item.getId());
-            songListFragment.setArguments(bundle);
+            SongListFragment songListFragment = SongListFragment.getInstance(item.getId());
             fragments.add(songListFragment);
         }
 

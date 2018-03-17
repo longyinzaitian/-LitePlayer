@@ -3,25 +3,14 @@ package org.loader.liteplayer.activity;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.loader.liteplayer.R;
 import org.loader.liteplayer.adapter.SearchResultAdapter;
-import org.loader.liteplayer.application.AppUtil;
 import org.loader.liteplayer.application.BaseApplication;
-import org.loader.liteplayer.network.NetWorkCallBack;
-import org.loader.liteplayer.network.NetWorkUtil;
-import org.loader.liteplayer.pojo.ContentList;
-
-import java.util.List;
 
 /**
  * @author longyinzaitian
@@ -78,46 +67,5 @@ public class SearchResultActivity extends BaseActivity {
     }
 
     private void getYiTingSearchResult(String q){
-        if (TextUtils.isEmpty(q)){
-            return;
-        }
-
-        NetWorkUtil.getYiTingSearchDetailList(q, new NetWorkCallBack() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                if (jsonObject == null){
-                    return;
-                }
-
-                JSONObject body = jsonObject.optJSONObject("showapi_res_body");
-                if (body == null){
-                    return;
-                }
-
-                JSONObject pageBean = body.optJSONObject("pagebean");
-                if (pageBean == null){
-                    return;
-                }
-
-                JSONArray jsonArray = pageBean.optJSONArray("contentlist");
-                if (jsonArray == null){
-                    return;
-                }
-
-                List<ContentList.ContentItem> hotSongPageBean = AppUtil.getGson().fromJson(jsonArray.toString(),
-                        new TypeToken<List<ContentList.ContentItem>>(){}.getType());
-
-                if (hotSongPageBean == null || hotSongPageBean.isEmpty()){
-                    return;
-                }
-
-                mAdapter.setSearchResult(hotSongPageBean);
-            }
-
-            @Override
-            public void onError(String errorMsg) {
-
-            }
-        });
     }
 }

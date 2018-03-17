@@ -16,8 +16,6 @@ import org.loader.liteplayer.application.BaseApplication;
  * @date 2017/12/24.
  */
 public class MinePageFragment extends BaseFragment {
-    private static MinePageFragment instance;
-
     private ImageView mImgAvatar;
     private TextView mTxName;
     private TextView mTxSex;
@@ -25,10 +23,7 @@ public class MinePageFragment extends BaseFragment {
     private LinearLayout mAboutLv;
 
     public static MinePageFragment getInstance(){
-        if (instance == null){
-            instance = new MinePageFragment();
-        }
-
+        MinePageFragment instance = new MinePageFragment();
         return instance;
     }
 
