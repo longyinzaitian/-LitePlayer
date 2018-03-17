@@ -17,7 +17,6 @@ import org.loader.liteplayer.utils.LogUtil;
  */
 public abstract class BaseFragment extends Fragment {
     protected final String TAG = this.getClass().getSimpleName();
-
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);

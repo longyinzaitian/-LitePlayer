@@ -37,8 +37,8 @@ public class MainActivity extends BaseActivity {
         mRbHomePage.setTextColor(ActivityCompat.getColor(MainActivity.this, R.color.black));
         mRbNetworkPage.setTextColor(ActivityCompat.getColor(MainActivity.this, R.color.black));
         mRbMinePage.setTextColor(ActivityCompat.getColor(MainActivity.this, R.color.black));
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment fragment;
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         switch (id) {
             //网络歌曲页
             case R.id.ac_rb_network_page:
@@ -47,6 +47,11 @@ public class MainActivity extends BaseActivity {
                 fragment = fragmentManager.findFragmentByTag("NETWORK_PAGE");
                 if (fragment == null) {
                     fragment = NetSongFragment.getInstance();
+                    fragmentTransaction.hide(mPreShowFrm)
+                            .add(R.id.am_content, fragment, "NETWORK_PAGE")
+                            .commitAllowingStateLoss();
+                    mPreShowFrm = fragment;
+                    return;
                 }
 
                 if (mPreShowFrm == null) {
@@ -67,6 +72,11 @@ public class MainActivity extends BaseActivity {
                 fragment = fragmentManager.findFragmentByTag("MINE_PAGE");
                 if (fragment == null) {
                     fragment = MinePageFragment.getInstance();
+                    fragmentTransaction.hide(mPreShowFrm)
+                            .add(R.id.am_content, fragment, "MINE_PAGE")
+                            .commitAllowingStateLoss();
+                    mPreShowFrm = fragment;
+                    return;
                 }
 
                 if (mPreShowFrm == null) {
@@ -82,12 +92,16 @@ public class MainActivity extends BaseActivity {
                 break;
             //首页
             case R.id.ac_rb_home_page:
-            default:
                 mRbHomePage.setTextColor(ActivityCompat.getColor(MainActivity.this, R.color.springgreen));
 
                 fragment = fragmentManager.findFragmentByTag("HOME_PAGE");
                 if (fragment == null) {
                     fragment = HomePageFragment.getInstance();
+                    fragmentTransaction
+                            .add(R.id.am_content, fragment, "HOME_PAGE")
+                            .commitAllowingStateLoss();
+                    mPreShowFrm = fragment;
+                    return;
                 }
 
                 if (mPreShowFrm == null) {
@@ -100,6 +114,8 @@ public class MainActivity extends BaseActivity {
                             .commitAllowingStateLoss();
                 }
                 mPreShowFrm = fragment;
+                break;
+            default:
                 break;
         }
     }
