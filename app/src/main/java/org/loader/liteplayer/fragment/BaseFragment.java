@@ -2,7 +2,6 @@ package org.loader.liteplayer.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.loader.liteplayer.application.BaseApplication;
 import org.loader.liteplayer.utils.LogUtil;
 
 /**
@@ -64,19 +62,16 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        LogUtil.l(TAG, "onResume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        LogUtil.l(TAG, "onPause");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        LogUtil.l(TAG, "onStop");
     }
 
     @Override

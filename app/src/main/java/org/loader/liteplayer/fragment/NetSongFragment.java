@@ -20,8 +20,6 @@ import org.loader.liteplayer.activity.SearchResultActivity;
 import org.loader.liteplayer.adapter.NetSongPagerAdapter;
 import org.loader.liteplayer.application.App;
 import org.loader.liteplayer.application.BaseApplication;
-import org.loader.liteplayer.engine.SongsRecommendation;
-import org.loader.liteplayer.pojo.HotSong;
 import org.loader.liteplayer.pojo.RankList;
 
 import java.util.ArrayList;
@@ -32,16 +30,13 @@ import java.util.List;
  * 博文地址：http://blog.csdn.net/u010156024
  * @author longyinzaitian
  */
-public class NetSongFragment extends BaseFragment
-                    implements OnClickListener {
+public class NetSongFragment extends BaseFragment {
     private ViewPager mViewPager;
     private View mPopView;
     private TabLayout mTabLayout;
     private FloatingActionButton mFloatingActBtn;
-
     private PopupWindow mPopupWindow;
 
-    private ArrayList<HotSong> mResultData = new ArrayList<>();
     private ArrayList<RankList.Item> items;
 
     private int mPage = 0;
@@ -51,8 +46,6 @@ public class NetSongFragment extends BaseFragment
      * 该类是android系统中的下载工具类，非常好用
      */
     private DownloadManager mDownloadManager;
-
-    private boolean isFirstShown = true;
 
     public static NetSongFragment getInstance(){
         NetSongFragment instance = new NetSongFragment();
@@ -69,12 +62,6 @@ public class NetSongFragment extends BaseFragment
         mViewPager = view.findViewById(R.id.net_song_view_pager);
         mTabLayout = view.findViewById(R.id.net_song_tab_layout);
         mFloatingActBtn = view.findViewById(R.id.net_song_page_float_btn);
-
-//        Toolbar toolbar = view.findViewById(R.id.toolbar);
-//        if (getActivity() != null){
-//            ((MainActivity)getActivity()).setSupportActionBar(toolbar);
-//        }
-
         mDownloadManager = (DownloadManager) BaseApplication.getContext()
                 .getSystemService(Context.DOWNLOAD_SERVICE);
     }
@@ -105,28 +92,13 @@ public class NetSongFragment extends BaseFragment
             App.rankLists.add(new RankList.Item("movie", "剧场版动画"));
             App.rankLists.add(new RankList.Item("comic", "漫画"));
             App.rankLists.add(new RankList.Item("music", "音乐专辑"));
-//            App.rankLists.add(new RankList.Item("radio", "音乐电台"));
+            /*
+            App.rankLists.add(new RankList.Item("radio", "音乐电台"));
+             */
         }
 
         items = new ArrayList<>();
         items.addAll(App.rankLists);
-
-        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int pos = tab.getPosition();
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
     }
 
     private void initAdapter(){
@@ -144,27 +116,6 @@ public class NetSongFragment extends BaseFragment
         mViewPager.setAdapter(adapter);
         mViewPager.setOffscreenPageLimit(items.size());
         mTabLayout.setupWithViewPager(mViewPager);
-    }
-
-    /**
-     * 该方法实现的功能是： 当该Fragment不可见时，isVisibleToUser=false
-     * 当该Fragment可见时，isVisibleToUser=true
-     * 该方法由系统调用，重写该方法实现用户可见当前Fragment时再进行数据的加载
-     */
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        // 当Fragment可见且是第一次加载时
-        if (isVisibleToUser && isFirstShown) {
-
-            isFirstShown = false;
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        SongsRecommendation.getInstance().cleanWork();
     }
 
     /**
@@ -216,14 +167,6 @@ public class NetSongFragment extends BaseFragment
     private void dismissDialog() {
         if (mPopupWindow != null && mPopupWindow.isShowing()) {
             mPopupWindow.dismiss();
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-        default:
-            break;
         }
     }
 }

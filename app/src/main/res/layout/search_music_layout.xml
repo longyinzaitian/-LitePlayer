@@ -61,7 +61,6 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginRight="15dp"
-        android:src="@drawable/icon_net_work_search_song"
         app:borderWidth="0dp"
         app:layout_anchor="@id/toolbar"
         app:layout_anchorGravity="bottom|end|right"

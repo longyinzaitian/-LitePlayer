@@ -2,15 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
     tools:context=".activity.MainActivity"
     >
     <FrameLayout
         android:id="@+id/am_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/ac_line"
         android:layout_gravity="top"
         android:layout_marginBottom="46dp"
         />
@@ -24,14 +21,12 @@
             android:id="@+id/ac_line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_above="@+id/ac_radio_group"
             android:background="@color/gray"
             />
         <RadioGroup
             android:id="@+id/ac_radio_group"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:layout_alignParentBottom="true"
             android:weightSum="3"
             android:orientation="horizontal"
             >
@@ -45,7 +40,6 @@
                 android:textColor="@color/springgreen"
                 android:button="@null"
                 android:gravity="center"
-                android:checked="true"
                 />
 
             <RadioButton
