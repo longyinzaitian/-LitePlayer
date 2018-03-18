@@ -1,9 +1,11 @@
 package org.loader.liteplayer.adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -27,22 +29,30 @@ import java.util.List;
  */
 public class HotSongListAdapter extends RecyclerView.Adapter<HotSongListAdapter.ItemSongViewHolder> {
     private static final String TAG = "HotSongListAdapter";
-    private List<Wiki> hotSongs;
+    private List<Wiki> hotSongs = new ArrayList<>();
+    private Context mContext;
+    private LayoutInflater mLayoutInflater;
+    public HotSongListAdapter(Context context) {
+        this.mContext = context;
+        mLayoutInflater = LayoutInflater.from(mContext);
+    }
 
     @Override
     public HotSongListAdapter.ItemSongViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ItemSongViewHolder(View.inflate(BaseApplication.getContext(), R.layout.search_result_item, null));
+        LogUtil.l(TAG, "onCreateViewHolder");
+        return new ItemSongViewHolder(mLayoutInflater.inflate(R.layout.search_result_item, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull final HotSongListAdapter.ItemSongViewHolder holder, int position) {
+        LogUtil.l(TAG, "onBindViewHolder");
 //        if (holder instanceof ItemSongViewHolder){
-            final Wiki hotSong = hotSongs.get(holder.getAdapterPosition());
-            if (hotSong == null){
-                return;
-            }
+        final Wiki hotSong = hotSongs.get(holder.getAdapterPosition());
+        if (hotSong == null) {
+            return;
+        }
 
-            ItemSongViewHolder itemSongViewHolder = (ItemSongViewHolder) holder;
+        ItemSongViewHolder itemSongViewHolder = (ItemSongViewHolder) holder;
 
         Glide.with(BaseApplication.getContext())
                 .load(hotSong.getWiki_cover().getSmall())
@@ -55,9 +65,6 @@ public class HotSongListAdapter extends RecyclerView.Adapter<HotSongListAdapter.
         itemSongViewHolder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onItemClickListener == null){
-                    return;
-                }
                 LogUtil.l(TAG, "click hotSong:" + hotSong);
                 Intent intent = new Intent(BaseApplication.getContext(), WebViewActivity.class);
                 intent.putExtra("url", hotSong.getWiki_url());
@@ -69,10 +76,17 @@ public class HotSongListAdapter extends RecyclerView.Adapter<HotSongListAdapter.
 
     @Override
     public int getItemCount() {
-        return hotSongs == null ? 0 : hotSongs.size();
+        LogUtil.l(TAG, "getItemCount");
+        return 9;
     }
 
-    public class ItemSongViewHolder extends RecyclerView.ViewHolder{
+    @Override
+    public long getItemId(int position) {
+        LogUtil.l(TAG, "getItemId");
+        return position;
+    }
+
+    public class ItemSongViewHolder extends RecyclerView.ViewHolder {
         private ImageView img;
         private TextView songName;
         private TextView singerName;
@@ -80,6 +94,7 @@ public class HotSongListAdapter extends RecyclerView.Adapter<HotSongListAdapter.
         private View rootView;
         ItemSongViewHolder(View itemView) {
             super(itemView);
+            LogUtil.l(TAG, "ItemSongViewHolder");
             img = itemView.findViewById(R.id.search_song_img);
             songName = itemView.findViewById(R.id.search_song_name);
             singerName = itemView.findViewById(R.id.search_song_singer_name);
@@ -88,16 +103,14 @@ public class HotSongListAdapter extends RecyclerView.Adapter<HotSongListAdapter.
         }
     }
 
-    public void setSongsData(List<Wiki> hotSongs){
-        if (hotSongs == null){
+    public void setSongsData(List<Wiki> hotSongs) {
+        if (hotSongs == null) {
             return;
         }
-        if (this.hotSongs == null) {
-            this.hotSongs = new ArrayList<>();
-        }
+
         this.hotSongs.addAll(hotSongs);
-        LogUtil.l(TAG, "hotSongs：" + hotSongs);
         notifyDataSetChanged();
+        LogUtil.l(TAG, "setSongsData");
     }
 
     private OnItemClickListener onItemClickListener;

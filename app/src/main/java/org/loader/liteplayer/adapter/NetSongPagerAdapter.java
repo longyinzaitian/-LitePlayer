@@ -4,8 +4,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.view.View;
-import android.view.ViewGroup;
 
 import org.loader.liteplayer.pojo.RankList;
 
@@ -40,17 +38,5 @@ public class NetSongPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return items.get(position).getName();
-    }
-
-    @Override
-    public boolean isViewFromObject(View view, Object object) {
-        return view == object;
-    }
-
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        if (fragmentList != null) {
-            fragmentList.remove(position);
-        }
     }
 }

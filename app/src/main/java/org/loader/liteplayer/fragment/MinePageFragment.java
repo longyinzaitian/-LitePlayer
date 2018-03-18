@@ -21,9 +21,9 @@ public class MinePageFragment extends BaseFragment {
     private TextView mTxSex;
     private LinearLayout mSettingLv;
     private LinearLayout mAboutLv;
+    static MinePageFragment instance = new MinePageFragment();
 
     public static MinePageFragment getInstance(){
-        MinePageFragment instance = new MinePageFragment();
         return instance;
     }
 

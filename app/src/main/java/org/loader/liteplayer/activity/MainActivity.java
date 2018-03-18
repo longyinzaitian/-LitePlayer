@@ -45,10 +45,16 @@ public class MainActivity extends BaseActivity {
                 mRbNetworkPage.setTextColor(ActivityCompat.getColor(MainActivity.this, R.color.springgreen));
 
                 fragment = fragmentManager.findFragmentByTag("NETWORK_PAGE");
+                if (fragment != null && mPreShowFrm != null) {
+                    if (fragment == mPreShowFrm) {
+                        return;
+                    }
+                }
                 if (fragment == null) {
                     fragment = NetSongFragment.getInstance();
                     fragmentTransaction.hide(mPreShowFrm)
                             .add(R.id.am_content, fragment, "NETWORK_PAGE")
+                            .show(fragment)
                             .commitAllowingStateLoss();
                     mPreShowFrm = fragment;
                     return;
@@ -57,6 +63,7 @@ public class MainActivity extends BaseActivity {
                 if (mPreShowFrm == null) {
                     fragmentTransaction
                             .add(R.id.am_content, fragment, "NETWORK_PAGE")
+                            .show(fragment)
                             .commitAllowingStateLoss();
                 } else {
                     fragmentTransaction.hide(mPreShowFrm)
@@ -70,10 +77,17 @@ public class MainActivity extends BaseActivity {
             case R.id.ac_rb_mine_page:
                 mRbMinePage.setTextColor(ActivityCompat.getColor(MainActivity.this, R.color.springgreen));
                 fragment = fragmentManager.findFragmentByTag("MINE_PAGE");
+                if (fragment != null && mPreShowFrm != null) {
+                    if (fragment == mPreShowFrm) {
+                        return;
+                    }
+                }
+
                 if (fragment == null) {
                     fragment = MinePageFragment.getInstance();
                     fragmentTransaction.hide(mPreShowFrm)
                             .add(R.id.am_content, fragment, "MINE_PAGE")
+                            .show(fragment)
                             .commitAllowingStateLoss();
                     mPreShowFrm = fragment;
                     return;
@@ -82,6 +96,7 @@ public class MainActivity extends BaseActivity {
                 if (mPreShowFrm == null) {
                     fragmentTransaction
                             .add(R.id.am_content, fragment, "MINE_PAGE")
+                            .show(fragment)
                             .commitAllowingStateLoss();
                 } else {
                     fragmentTransaction.hide(mPreShowFrm)
@@ -95,11 +110,26 @@ public class MainActivity extends BaseActivity {
                 mRbHomePage.setTextColor(ActivityCompat.getColor(MainActivity.this, R.color.springgreen));
 
                 fragment = fragmentManager.findFragmentByTag("HOME_PAGE");
+                if (fragment != null && mPreShowFrm != null) {
+                    if (fragment == mPreShowFrm) {
+                        return;
+                    }
+                }
+
                 if (fragment == null) {
                     fragment = HomePageFragment.getInstance();
-                    fragmentTransaction
-                            .add(R.id.am_content, fragment, "HOME_PAGE")
-                            .commitAllowingStateLoss();
+                    if (mPreShowFrm == null) {
+                        fragmentTransaction
+                                .add(R.id.am_content, fragment, "HOME_PAGE")
+                                .show(fragment)
+                                .commitAllowingStateLoss();
+                    } else {
+                        fragmentTransaction
+                                .hide(mPreShowFrm)
+                                .add(R.id.am_content, fragment, "HOME_PAGE")
+                                .show(fragment)
+                                .commitAllowingStateLoss();
+                    }
                     mPreShowFrm = fragment;
                     return;
                 }
@@ -107,6 +137,7 @@ public class MainActivity extends BaseActivity {
                 if (mPreShowFrm == null) {
                     fragmentTransaction
                             .add(R.id.am_content, fragment, "HOME_PAGE")
+                            .show(fragment)
                             .commitAllowingStateLoss();
                 } else {
                     fragmentTransaction.hide(mPreShowFrm)

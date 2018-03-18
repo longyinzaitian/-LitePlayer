@@ -39,43 +39,34 @@ public class SongListFragment extends BaseFragment{
         return fragment;
     }
 
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
     @Override
     protected int getLayoutId() {
+        LogUtil.l(TAG, "getLayoutId");
         return R.layout.fragment_song_list;
     }
 
     @Override
     protected void bindView(View view) {
+        LogUtil.l(TAG, "bindView");
         mRecyclerView = view.findViewById(R.id.rv_song_list);
     }
 
     @Override
     protected void bindListener() {
-        mAdapter = new HotSongListAdapter();
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(BaseApplication.getContext()));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(BaseApplication.getContext(), RecyclerView.VERTICAL));
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(new HotSongListAdapter.OnItemClickListener(){
-            @Override
-            public void onItemClick(int pos, String url) {
+        LogUtil.l(TAG, "bindListener");
+    }
 
-            }
-        });
+    private void setAdapter() {
+        mAdapter = new HotSongListAdapter(getContext());
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(BaseApplication.getContext(), RecyclerView.VERTICAL));
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
     protected void loadData() {
+        LogUtil.l(TAG, "loadData");
         Bundle bundle = getArguments();
         if (bundle == null){
             return;
@@ -94,6 +85,7 @@ public class SongListFragment extends BaseFragment{
                             jsonObject.optJSONArray("wikis").toString(),
                             new TypeToken<List<Wiki>>(){}.getType());
                     LogUtil.l(TAG, "wiki:" + wikis);
+                    setAdapter();
                     if (mAdapter != null) {
                         mAdapter.setSongsData(wikis);
                     }
