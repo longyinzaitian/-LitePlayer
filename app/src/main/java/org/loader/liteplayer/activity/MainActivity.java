@@ -52,18 +52,25 @@ public class MainActivity extends BaseActivity {
                 }
                 if (fragment == null) {
                     fragment = NetSongFragment.getInstance();
+                }
+
+                if (!fragment.isAdded()) {
+                    if (mPreShowFrm == null) {
+                        fragmentTransaction
+                                .add(R.id.am_content, fragment, "NETWORK_PAGE")
+                                .commitAllowingStateLoss();
+                    } else {
+                        fragmentTransaction
+                                .hide(mPreShowFrm)
+                                .add(R.id.am_content, fragment, "NETWORK_PAGE")
+                                .commitAllowingStateLoss();
+                    }
+                } else {
                     fragmentTransaction
                             .hide(mPreShowFrm)
                             .show(fragment)
-                            .add(R.id.am_content, fragment, "NETWORK_PAGE")
                             .commitAllowingStateLoss();
-                    mPreShowFrm = fragment;
-                    return;
                 }
-
-                fragmentTransaction.hide(mPreShowFrm)
-                        .show(fragment)
-                        .commitAllowingStateLoss();
                 mPreShowFrm = fragment;
                 break;
 
@@ -79,18 +86,25 @@ public class MainActivity extends BaseActivity {
 
                 if (fragment == null) {
                     fragment = MinePageFragment.getInstance();
+                }
+
+                if (!fragment.isAdded()) {
+                    if (mPreShowFrm == null) {
+                        fragmentTransaction
+                                .add(R.id.am_content, fragment, "MINE_PAGE")
+                                .commitAllowingStateLoss();
+                    } else {
+                        fragmentTransaction
+                                .hide(mPreShowFrm)
+                                .add(R.id.am_content, fragment, "MINE_PAGE")
+                                .commitAllowingStateLoss();
+                    }
+                } else {
                     fragmentTransaction
                             .hide(mPreShowFrm)
                             .show(fragment)
-                            .add(R.id.am_content, fragment, "MINE_PAGE")
                             .commitAllowingStateLoss();
-                    mPreShowFrm = fragment;
-                    return;
                 }
-
-                fragmentTransaction.hide(mPreShowFrm)
-                        .show(fragment)
-                        .commitAllowingStateLoss();
                 mPreShowFrm = fragment;
                 break;
             //首页
@@ -106,6 +120,9 @@ public class MainActivity extends BaseActivity {
 
                 if (fragment == null) {
                     fragment = HomePageFragment.getInstance();
+                }
+
+                if (!fragment.isAdded()) {
                     if (mPreShowFrm == null) {
                         fragmentTransaction
                                 .add(R.id.am_content, fragment, "HOME_PAGE")
@@ -113,16 +130,15 @@ public class MainActivity extends BaseActivity {
                     } else {
                         fragmentTransaction
                                 .hide(mPreShowFrm)
-                                .show(fragment)
+                                .add(R.id.am_content, fragment, "HOME_PAGE")
                                 .commitAllowingStateLoss();
                     }
-                    mPreShowFrm = fragment;
-                    return;
+                } else {
+                    fragmentTransaction
+                            .hide(mPreShowFrm)
+                            .show(fragment)
+                            .commitAllowingStateLoss();
                 }
-
-                fragmentTransaction.hide(mPreShowFrm)
-                        .show(fragment)
-                        .commitAllowingStateLoss();
                 mPreShowFrm = fragment;
                 break;
             default:
@@ -169,6 +185,8 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
+        onClick(R.id.ac_rb_mine_page);
+        onClick(R.id.ac_rb_network_page);
         onClick(R.id.ac_rb_home_page);
     }
 

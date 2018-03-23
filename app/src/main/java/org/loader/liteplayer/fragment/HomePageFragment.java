@@ -158,6 +158,9 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
         EventCenter.getInstance().registerIEvent(SongPlayChangeEvent.class, new IEventCallback() {
             @Override
             public void eventCallback(IEvent event) {
+                if (mActivity == null || mActivity.getPlayService() == null) {
+                    return;
+                }
                 if (!mActivity.getPlayService().isPlaying()){
                     mPlayImageView.setImageResource(android.R.drawable.ic_media_play);
                 }else {
