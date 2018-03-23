@@ -62,11 +62,7 @@
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden"
             />
         <activity android:name=".activity.WebViewActivity"
-
             />
-
         <service android:name=".service.PlayService" />
-
     </application>
-
 </manifest>
