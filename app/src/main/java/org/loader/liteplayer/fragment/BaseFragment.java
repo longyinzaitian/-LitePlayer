@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import org.loader.liteplayer.utils.LogUtil;
 
+import java.lang.reflect.Field;
+
 /**
  * @author longyinzaitian
  * @date 2017年12月24日
@@ -32,6 +34,20 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        try {
+            Field childFragmentManager = Fragment.class .getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Nullable

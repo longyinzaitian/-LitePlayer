@@ -23,10 +23,9 @@ public class NetSongFragment extends BaseFragment {
     private TabLayout mTabLayout;
 
     private ArrayList<RankList.Item> items;
-    static NetSongFragment instance = new NetSongFragment();
 
     public static NetSongFragment getInstance() {
-        return instance;
+        return new NetSongFragment();
     }
 
     @Override

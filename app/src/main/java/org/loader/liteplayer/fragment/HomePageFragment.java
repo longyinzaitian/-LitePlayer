@@ -67,9 +67,8 @@ public class HomePageFragment extends BaseFragment implements OnClickListener {
 
     private boolean isPause;
     private boolean isOneCycle = false;
-    static HomePageFragment instance = new HomePageFragment();
     public static HomePageFragment getInstance(){
-        return instance;
+        return new HomePageFragment();
     }
 
     @Override

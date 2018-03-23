@@ -145,11 +145,6 @@ public class MainActivity extends BaseActivity {
         mRbNetworkPage = findViewById(R.id.ac_rb_network_page);
         mRbMinePage = findViewById(R.id.ac_rb_mine_page);
 
-//        Fragment fragment = HomePageFragment.getInstance();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.add(R.id.am_content, fragment, "HOME_PAGE")
-//                .commitAllowingStateLoss();
-//        mPreShowFrm = fragment;
         mRbMinePage.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -188,6 +183,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void clearData() {
-
+        mPreShowFrm = null;
     }
 }
