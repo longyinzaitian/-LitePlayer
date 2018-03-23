@@ -52,24 +52,18 @@ public class MainActivity extends BaseActivity {
                 }
                 if (fragment == null) {
                     fragment = NetSongFragment.getInstance();
-                    fragmentTransaction.hide(mPreShowFrm)
-                            .add(R.id.am_content, fragment, "NETWORK_PAGE")
+                    fragmentTransaction
+                            .hide(mPreShowFrm)
                             .show(fragment)
+                            .add(R.id.am_content, fragment, "NETWORK_PAGE")
                             .commitAllowingStateLoss();
                     mPreShowFrm = fragment;
                     return;
                 }
 
-                if (mPreShowFrm == null) {
-                    fragmentTransaction
-                            .add(R.id.am_content, fragment, "NETWORK_PAGE")
-                            .show(fragment)
-                            .commitAllowingStateLoss();
-                } else {
-                    fragmentTransaction.hide(mPreShowFrm)
-                            .show(fragment)
-                            .commitAllowingStateLoss();
-                }
+                fragmentTransaction.hide(mPreShowFrm)
+                        .show(fragment)
+                        .commitAllowingStateLoss();
                 mPreShowFrm = fragment;
                 break;
 
@@ -85,24 +79,18 @@ public class MainActivity extends BaseActivity {
 
                 if (fragment == null) {
                     fragment = MinePageFragment.getInstance();
-                    fragmentTransaction.hide(mPreShowFrm)
-                            .add(R.id.am_content, fragment, "MINE_PAGE")
+                    fragmentTransaction
+                            .hide(mPreShowFrm)
                             .show(fragment)
+                            .add(R.id.am_content, fragment, "MINE_PAGE")
                             .commitAllowingStateLoss();
                     mPreShowFrm = fragment;
                     return;
                 }
 
-                if (mPreShowFrm == null) {
-                    fragmentTransaction
-                            .add(R.id.am_content, fragment, "MINE_PAGE")
-                            .show(fragment)
-                            .commitAllowingStateLoss();
-                } else {
-                    fragmentTransaction.hide(mPreShowFrm)
-                            .show(fragment)
-                            .commitAllowingStateLoss();
-                }
+                fragmentTransaction.hide(mPreShowFrm)
+                        .show(fragment)
+                        .commitAllowingStateLoss();
                 mPreShowFrm = fragment;
                 break;
             //首页
@@ -121,12 +109,10 @@ public class MainActivity extends BaseActivity {
                     if (mPreShowFrm == null) {
                         fragmentTransaction
                                 .add(R.id.am_content, fragment, "HOME_PAGE")
-                                .show(fragment)
                                 .commitAllowingStateLoss();
                     } else {
                         fragmentTransaction
                                 .hide(mPreShowFrm)
-                                .add(R.id.am_content, fragment, "HOME_PAGE")
                                 .show(fragment)
                                 .commitAllowingStateLoss();
                     }
@@ -134,16 +120,9 @@ public class MainActivity extends BaseActivity {
                     return;
                 }
 
-                if (mPreShowFrm == null) {
-                    fragmentTransaction
-                            .add(R.id.am_content, fragment, "HOME_PAGE")
-                            .show(fragment)
-                            .commitAllowingStateLoss();
-                } else {
-                    fragmentTransaction.hide(mPreShowFrm)
-                            .show(fragment)
-                            .commitAllowingStateLoss();
-                }
+                fragmentTransaction.hide(mPreShowFrm)
+                        .show(fragment)
+                        .commitAllowingStateLoss();
                 mPreShowFrm = fragment;
                 break;
             default:
