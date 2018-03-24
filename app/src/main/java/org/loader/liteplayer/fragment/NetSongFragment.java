@@ -73,15 +73,16 @@ public class NetSongFragment extends BaseFragment {
             return;
         }
 
+        NetSongPagerAdapter adapter = new NetSongPagerAdapter(getChildFragmentManager());
         List<Fragment> fragments = new ArrayList<>();
         for (RankList.Item item : items) {
             SongListFragment songListFragment = SongListFragment.getInstance(item.getId());
             fragments.add(songListFragment);
         }
 
-        NetSongPagerAdapter adapter = new NetSongPagerAdapter(getChildFragmentManager(), fragments, items);
-        mViewPager.setOffscreenPageLimit(items.size());
+        adapter.addFragments(fragments, items);
         mViewPager.setAdapter(adapter);
+        mViewPager.setOffscreenPageLimit(items.size());
         mTabLayout.setupWithViewPager(mViewPager);
     }
 }

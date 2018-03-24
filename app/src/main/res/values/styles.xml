@@ -24,4 +24,21 @@
         <item name="android:windowExitAnimation">@anim/pop_gone_anim</item>
     </style>
 
+    <declare-styleable name="MyNoticeView">
+        <attr name="nvIcon" format="reference" />
+        <attr name="nvIconPadding" format="dimension" />
+        <attr name="nvIconTint" format="color" />
+        <attr name="nvTextSize" format="dimension" />
+        <attr name="nvTextColor" format="color" />
+        <attr name="nvTextMaxLines" format="integer" />
+        <attr name="nvOrient" format="boolean" />
+        <attr name="nvTextGravity" format="integer">
+            <enum name="left" value="3" />
+            <enum name="center" value="17" />
+            <enum name="right" value="5" />
+        </attr>
+        <attr name="nvInterval" format="integer" />
+        <attr name="nvDuration" format="integer" />
+    </declare-styleable>
+
 </resources>

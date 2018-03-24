@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
+import org.loader.liteplayer.R;
 import org.loader.liteplayer.utils.LogUtil;
 
 import java.lang.reflect.Field;
@@ -19,16 +22,15 @@ import java.lang.reflect.Field;
  */
 public abstract class BaseFragment extends Fragment {
     protected final String TAG = this.getClass().getSimpleName();
+    private View mPageRoot;
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        LogUtil.l(TAG, "onHiddenChanged hidden:" + hidden);
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        LogUtil.l(TAG, "setUserVisibleHint,  isVisibleToUser:" + isVisibleToUser);
     }
 
     @Override
@@ -50,12 +52,38 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         LogUtil.l(TAG, "onCreateView");
-        return  inflater.inflate(getLayoutId(),
-                null, false);
+        mPageRoot = View.inflate(getContext(), getLayoutId(),null);
+        if (null != mPageRoot) {
+            ViewGroup parent = (ViewGroup) mPageRoot.getParent();
+            if (parent != null) {
+                parent.removeView(mPageRoot);
+            }
+            return mPageRoot;
+        } else {
+            RelativeLayout relativeLayout = new RelativeLayout(getContext());
+            relativeLayout.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            relativeLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
+            LogUtil.l(TAG, "return relative layout");
+            return relativeLayout;
+        }
     }
 
     @Override

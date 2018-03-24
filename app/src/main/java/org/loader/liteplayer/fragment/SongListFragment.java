@@ -72,26 +72,31 @@ public class SongListFragment extends BaseFragment{
             return;
         }
         type = getArguments().getString("type", "");
+        setAdapter();
         getYiTingRankDetaiList();
     }
 
     private void getYiTingRankDetaiList() {
         NetWorkUtil.getWikisItem(type, page, new NetWorkCallBack() {
             @Override
-            public void onResponse(JSONObject jsonObject) {
+            public void onResponse(final JSONObject jsonObject) {
                 LogUtil.l(TAG, "rsult:" + jsonObject);
-                try {
-                    List<Wiki> wikis = new Gson().fromJson(
-                            jsonObject.optJSONArray("wikis").toString(),
-                            new TypeToken<List<Wiki>>(){}.getType());
-                    LogUtil.l(TAG, "wiki:" + wikis);
-                    setAdapter();
-                    if (mAdapter != null) {
-                        mAdapter.setSongsData(wikis);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            List<Wiki> wikis = new Gson().fromJson(
+                                    jsonObject.optJSONArray("wikis").toString(),
+                                    new TypeToken<List<Wiki>>(){}.getType());
+                            LogUtil.l(TAG, "wiki:" + wikis);
+                            if (mAdapter != null) {
+                                mAdapter.setSongsData(wikis);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                });
             }
 
             @Override

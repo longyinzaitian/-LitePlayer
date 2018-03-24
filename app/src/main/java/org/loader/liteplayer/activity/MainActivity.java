@@ -4,6 +4,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 
@@ -45,31 +46,37 @@ public class MainActivity extends BaseActivity {
                 mRbNetworkPage.setTextColor(ActivityCompat.getColor(MainActivity.this, R.color.springgreen));
 
                 fragment = fragmentManager.findFragmentByTag("NETWORK_PAGE");
-                if (fragment != null && mPreShowFrm != null) {
-                    if (fragment == mPreShowFrm) {
-                        return;
-                    }
-                }
                 if (fragment == null) {
                     fragment = NetSongFragment.getInstance();
-                }
-
-                if (!fragment.isAdded()) {
-                    if (mPreShowFrm == null) {
-                        fragmentTransaction
-                                .add(R.id.am_content, fragment, "NETWORK_PAGE")
-                                .commitAllowingStateLoss();
+                    if (mPreShowFrm != null) {
+                        if (mPreShowFrm != fragment) {
+                            fragmentTransaction
+                                    .hide(mPreShowFrm)
+                                    .add(R.id.am_content, fragment, "NETWORK_PAGE")
+                                    .commitAllowingStateLoss();
+                        } else {
+                            fragmentTransaction
+                                    .add(R.id.am_content, fragment, "NETWORK_PAGE")
+                                    .commitAllowingStateLoss();
+                        }
                     } else {
                         fragmentTransaction
-                                .hide(mPreShowFrm)
                                 .add(R.id.am_content, fragment, "NETWORK_PAGE")
                                 .commitAllowingStateLoss();
                     }
                 } else {
-                    fragmentTransaction
-                            .hide(mPreShowFrm)
-                            .show(fragment)
-                            .commitAllowingStateLoss();
+                    if (mPreShowFrm != null) {
+                        if (mPreShowFrm != fragment) {
+                            fragmentTransaction
+                                    .hide(mPreShowFrm)
+                                    .show(fragment)
+                                    .commitAllowingStateLoss();
+                        } else {
+                            fragmentTransaction
+                                    .show(fragment)
+                                    .commitAllowingStateLoss();
+                        }
+                    }
                 }
                 mPreShowFrm = fragment;
                 break;
@@ -78,32 +85,37 @@ public class MainActivity extends BaseActivity {
             case R.id.ac_rb_mine_page:
                 mRbMinePage.setTextColor(ActivityCompat.getColor(MainActivity.this, R.color.springgreen));
                 fragment = fragmentManager.findFragmentByTag("MINE_PAGE");
-                if (fragment != null && mPreShowFrm != null) {
-                    if (fragment == mPreShowFrm) {
-                        return;
-                    }
-                }
-
                 if (fragment == null) {
                     fragment = MinePageFragment.getInstance();
-                }
-
-                if (!fragment.isAdded()) {
-                    if (mPreShowFrm == null) {
-                        fragmentTransaction
-                                .add(R.id.am_content, fragment, "MINE_PAGE")
-                                .commitAllowingStateLoss();
+                    if (mPreShowFrm != null) {
+                        if (mPreShowFrm != fragment) {
+                            fragmentTransaction
+                                    .hide(mPreShowFrm)
+                                    .add(R.id.am_content, fragment, "MINE_PAGE")
+                                    .commitAllowingStateLoss();
+                        } else {
+                            fragmentTransaction
+                                    .add(R.id.am_content, fragment, "MINE_PAGE")
+                                    .commitAllowingStateLoss();
+                        }
                     } else {
                         fragmentTransaction
-                                .hide(mPreShowFrm)
                                 .add(R.id.am_content, fragment, "MINE_PAGE")
                                 .commitAllowingStateLoss();
                     }
                 } else {
-                    fragmentTransaction
-                            .hide(mPreShowFrm)
-                            .show(fragment)
-                            .commitAllowingStateLoss();
+                    if (mPreShowFrm != null) {
+                        if (mPreShowFrm != fragment) {
+                            fragmentTransaction
+                                    .hide(mPreShowFrm)
+                                    .show(fragment)
+                                    .commitAllowingStateLoss();
+                        } else {
+                            fragmentTransaction
+                                    .show(fragment)
+                                    .commitAllowingStateLoss();
+                        }
+                    }
                 }
                 mPreShowFrm = fragment;
                 break;
@@ -112,32 +124,37 @@ public class MainActivity extends BaseActivity {
                 mRbHomePage.setTextColor(ActivityCompat.getColor(MainActivity.this, R.color.springgreen));
 
                 fragment = fragmentManager.findFragmentByTag("HOME_PAGE");
-                if (fragment != null && mPreShowFrm != null) {
-                    if (fragment == mPreShowFrm) {
-                        return;
-                    }
-                }
-
                 if (fragment == null) {
                     fragment = HomePageFragment.getInstance();
-                }
-
-                if (!fragment.isAdded()) {
-                    if (mPreShowFrm == null) {
-                        fragmentTransaction
-                                .add(R.id.am_content, fragment, "HOME_PAGE")
-                                .commitAllowingStateLoss();
+                    if (mPreShowFrm != null) {
+                        if (mPreShowFrm != fragment) {
+                            fragmentTransaction
+                                    .hide(mPreShowFrm)
+                                    .add(R.id.am_content, fragment, "HOME_PAGE")
+                                    .commitAllowingStateLoss();
+                        } else {
+                            fragmentTransaction
+                                    .add(R.id.am_content, fragment, "HOME_PAGE")
+                                    .commitAllowingStateLoss();
+                        }
                     } else {
                         fragmentTransaction
-                                .hide(mPreShowFrm)
                                 .add(R.id.am_content, fragment, "HOME_PAGE")
                                 .commitAllowingStateLoss();
                     }
                 } else {
-                    fragmentTransaction
-                            .hide(mPreShowFrm)
-                            .show(fragment)
-                            .commitAllowingStateLoss();
+                    if (mPreShowFrm != null) {
+                        if (mPreShowFrm != fragment) {
+                            fragmentTransaction
+                                    .hide(mPreShowFrm)
+                                    .show(fragment)
+                                    .commitAllowingStateLoss();
+                        } else {
+                            fragmentTransaction
+                                    .show(fragment)
+                                    .commitAllowingStateLoss();
+                        }
+                    }
                 }
                 mPreShowFrm = fragment;
                 break;
@@ -185,8 +202,7 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
-        onClick(R.id.ac_rb_mine_page);
-        onClick(R.id.ac_rb_network_page);
+
         onClick(R.id.ac_rb_home_page);
     }
 

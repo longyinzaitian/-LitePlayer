@@ -77,7 +77,7 @@ public class HotSongListAdapter extends RecyclerView.Adapter<HotSongListAdapter.
     @Override
     public int getItemCount() {
         LogUtil.l(TAG, "getItemCount");
-        return 9;
+        return hotSongs == null ? 0: hotSongs.size();
     }
 
     @Override
