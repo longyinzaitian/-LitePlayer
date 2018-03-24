@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 
+import org.loader.liteplayer.application.AppUtil;
 import org.loader.liteplayer.event.EventCenter;
 import org.loader.liteplayer.event.PublishProgressEvent;
 import org.loader.liteplayer.event.SongPlayChangeEvent;
@@ -82,6 +83,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppUtil.getInstance().addActivity(this);
         StatusBarCompat.compat(this);
         setContentView(getLayoutId());
         bindView();
@@ -97,6 +99,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        AppUtil.getInstance().removeActivity(this);
         super.onDestroy();
         clearData();
     }

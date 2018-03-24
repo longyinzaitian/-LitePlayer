@@ -9,6 +9,7 @@ import android.widget.CompoundButton;
 import android.widget.RadioButton;
 
 import org.loader.liteplayer.R;
+import org.loader.liteplayer.application.AppUtil;
 import org.loader.liteplayer.fragment.HomePageFragment;
 import org.loader.liteplayer.fragment.MinePageFragment;
 import org.loader.liteplayer.fragment.NetSongFragment;
@@ -218,5 +219,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void clearData() {
         mPreShowFrm = null;
+        AppUtil.getInstance().removeAllActivity();
     }
 }

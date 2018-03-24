@@ -81,22 +81,17 @@ public class SongListFragment extends BaseFragment{
             @Override
             public void onResponse(final JSONObject jsonObject) {
                 LogUtil.l(TAG, "rsult:" + jsonObject);
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            List<Wiki> wikis = new Gson().fromJson(
-                                    jsonObject.optJSONArray("wikis").toString(),
-                                    new TypeToken<List<Wiki>>(){}.getType());
-                            LogUtil.l(TAG, "wiki:" + wikis);
-                            if (mAdapter != null) {
-                                mAdapter.setSongsData(wikis);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                try {
+                    List<Wiki> wikis = new Gson().fromJson(
+                            jsonObject.optJSONArray("wikis").toString(),
+                            new TypeToken<List<Wiki>>(){}.getType());
+                    LogUtil.l(TAG, "wiki:" + wikis);
+                    if (mAdapter != null) {
+                        mAdapter.setSongsData(wikis);
                     }
-                });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
