@@ -2,6 +2,7 @@ package org.loader.liteplayer.activity;
 
 import android.content.Intent;
 
+import org.loader.liteplayer.application.Const;
 import org.loader.liteplayer.utils.LogUtil;
 
 /**
@@ -27,7 +28,7 @@ public class WebViewActivity extends BaseWebActivity {
             return;
         }
 
-        String url = intent.getStringExtra("url");
+        String url = intent.getStringExtra(Const.INTENT_KEY_URL);
         LogUtil.l(TAG, "url:" + url);
         mWebView.loadUrl(url);
     }

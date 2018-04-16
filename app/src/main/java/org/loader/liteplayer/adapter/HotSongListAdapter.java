@@ -2,7 +2,6 @@ package org.loader.liteplayer.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +15,7 @@ import com.bumptech.glide.Glide;
 import org.loader.liteplayer.R;
 import org.loader.liteplayer.activity.WebViewActivity;
 import org.loader.liteplayer.application.BaseApplication;
-import org.loader.liteplayer.pojo.MusicList;
+import org.loader.liteplayer.application.Const;
 import org.loader.liteplayer.pojo.Wiki;
 import org.loader.liteplayer.utils.LogUtil;
 
@@ -67,7 +66,7 @@ public class HotSongListAdapter extends RecyclerView.Adapter<HotSongListAdapter.
             public void onClick(View v) {
                 LogUtil.l(TAG, "click hotSong:" + hotSong);
                 Intent intent = new Intent(BaseApplication.getContext(), WebViewActivity.class);
-                intent.putExtra("url", hotSong.getWiki_url());
+                intent.putExtra(Const.INTENT_KEY_URL, hotSong.getWiki_url());
                 BaseApplication.getContext().startActivity(intent);
 
             }

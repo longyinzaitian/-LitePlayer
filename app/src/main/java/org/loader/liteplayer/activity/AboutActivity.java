@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import org.loader.liteplayer.R;
 import org.loader.liteplayer.application.BaseApplication;
+import org.loader.liteplayer.application.Const;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +40,7 @@ public class AboutActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.music_introduce:
                 Intent intent = new Intent(BaseApplication.getContext(), WebViewActivity.class);
-                intent.putExtra("url", "http://192.168.5.2:80/index.html");
+                intent.putExtra(Const.INTENT_KEY_URL, Const.SERVER_LOCAL_URL + "index.html");
                 startActivity(intent);
                 break;
 
