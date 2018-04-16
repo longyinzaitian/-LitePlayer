@@ -1,9 +1,10 @@
 package org.loader.liteplayer.network;
 
-import com.squareup.okhttp.Request;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import org.json.JSONObject;
+
+import okhttp3.Request;
 
 /**
  * @author longyinzaitian

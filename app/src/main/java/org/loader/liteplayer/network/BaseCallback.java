@@ -2,15 +2,15 @@ package org.loader.liteplayer.network;
 
 import android.app.Activity;
 
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 import com.zhy.http.okhttp.callback.Callback;
 
 import org.json.JSONObject;
 import org.loader.liteplayer.application.AppUtil;
 import org.loader.liteplayer.utils.LogUtil;
 
-import java.io.IOException;
+import okhttp3.Call;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * @author longyinzaitian
@@ -18,8 +18,9 @@ import java.io.IOException;
  */
 public abstract class BaseCallback extends Callback {
     private static final String TAG = "http:BaseCallback";
+
     @Override
-    public Object parseNetworkResponse(Response response) throws IOException {
+    public Object parseNetworkResponse(Response response, int id) throws Exception {
         try {
             String result = response.body().string();
             LogUtil.l(TAG, "result:" + result);
@@ -43,20 +44,20 @@ public abstract class BaseCallback extends Callback {
     }
 
     @Override
-    public void onError(final Request request, final Exception e) {
+    public void onError(Call call, final Exception e, int id) {
         Activity activity = AppUtil.getInstance().getTopActivity();
         if (activity != null) {
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    onFail(request, e);
+                    onFail(null, e);
                 }
             });
         }
     }
 
     @Override
-    public void onResponse(Object response) {
+    public void onResponse(Object response, int id) {
         LogUtil.l(TAG, "response:" + response);
     }
 
